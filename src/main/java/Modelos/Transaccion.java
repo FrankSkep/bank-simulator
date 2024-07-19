@@ -1,18 +1,18 @@
 package Modelos;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 public class Transaccion {
 
     private int id;
     private long idCuentaBancaria;
-    private Date fecha;
+    private LocalDateTime fecha;
     private String tipo; // (Deposito, Retiro o Transferencia)
     private double monto;
     private String descripcion;
 
     // Constructor
-    public Transaccion(int id, long idCuenta, Date fecha, String tipo, double monto, String descripcion) {
+    public Transaccion(int id, long idCuenta, LocalDateTime fecha, String tipo, double monto, String descripcion) {
         this.id = id;
         this.idCuentaBancaria = idCuenta;
         this.fecha = fecha;
@@ -38,11 +38,11 @@ public class Transaccion {
         this.idCuentaBancaria = numCuenta;
     }
 
-    public Date getFecha() {
+    public LocalDateTime getFecha() {
         return fecha;
     }
 
-    public void setFecha(Date fecha) {
+    public void setFecha(LocalDateTime fecha) {
         this.fecha = fecha;
     }
 

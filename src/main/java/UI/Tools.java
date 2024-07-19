@@ -150,4 +150,8 @@ public class Tools {
         mainPanel.repaint();
     }
 
+    // Método para verificar si un String es numérico
+    public static boolean esNumerico(String str) {
+        return str != null && str.matches("\\d*\\.?\\d+");
+    }
 }

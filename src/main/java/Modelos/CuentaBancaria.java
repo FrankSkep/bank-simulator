@@ -2,7 +2,7 @@ package Modelos;
 
 public class CuentaBancaria {
 
-    private long numeroCuenta;
+    private int numeroCuenta;
     private double saldo;
     private int clienteId;
 
@@ -17,7 +17,7 @@ public class CuentaBancaria {
         return numeroCuenta;
     }
 
-    public void setNumeroCuenta(long numeroCuenta) {
+    public void setNumeroCuenta(int numeroCuenta) {
         this.numeroCuenta = numeroCuenta;
     }
 

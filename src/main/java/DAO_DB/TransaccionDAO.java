@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -46,7 +47,7 @@ public class TransaccionDAO {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
-                Date fecha = resultSet.getTimestamp("fecha");
+                LocalDateTime fecha = resultSet.getObject("fecha_hora", LocalDateTime.class);
                 String tipo = resultSet.getString("tipo");
                 double monto = resultSet.getDouble("monto");
                 String descripcion = resultSet.getString("descripcion");

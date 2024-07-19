@@ -2,7 +2,9 @@ UI\AbrirCuentaPanel$1.class
 UI\Dashboard$16.class
 UI\Dashboard$5.class
 UI\Dashboard$8.class
+UI\DepositarPNL.class
 Modelos\CuentaBancaria.class
+UI\DepositarPNL$1.class
 Autenticacion\Session.class
 Modelos\Cliente.class
 UI\ConsultarCuentasPanel$1.class
@@ -13,7 +15,6 @@ DAO_DB\ClienteDAO.class
 DAO_DB\CuentaBancariaDAO.class
 UI\Dashboard$13.class
 UI\Dashboard$2.class
-Modelos\Banco.class
 UI\BuscarClientePanel$1.class
 Modelos\Transaccion.class
 UI\Dashboard$MODO.class

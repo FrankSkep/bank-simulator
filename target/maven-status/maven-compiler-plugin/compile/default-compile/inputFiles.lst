@@ -7,7 +7,6 @@ C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\DAO_DB\DBConexion.j
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\DAO_DB\PasswordUtils.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\DAO_DB\TransaccionDAO.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\DAO_DB\UsuarioDAO.java
-C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\Modelos\Banco.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\Modelos\Cliente.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\Modelos\CuentaBancaria.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\Modelos\Transaccion.java
@@ -17,6 +16,7 @@ C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\UI\AutenticarPanel.
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\UI\BuscarClientePanel.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\UI\ConsultarCuentasPanel.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\UI\Dashboard.java
+C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\UI\DepositarPNL.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\UI\ElimClientePanel.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\UI\HistorialTransaccPanel.java
 C:\Users\fran\Documents\NetBeansProjects\Banco\src\main\java\UI\InicioPanel.java

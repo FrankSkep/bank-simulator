@@ -21,7 +21,7 @@ public class CuentaBancariaDAO {
     }
 
     // Metodo para guardar cuenta en la base de datos
-    public void saveCuenta(CuentaBancaria cuenta) {
+    public void guardarCuenta(CuentaBancaria cuenta) {
         String query = "INSERT INTO CuentaBancaria (saldo, cliente_id) VALUES (?, ?)";
 
         try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
@@ -34,7 +34,7 @@ public class CuentaBancariaDAO {
             if (affectedRows > 0) {
                 try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
-                        cuenta.setNumeroCuenta(generatedKeys.getLong(1));
+                        cuenta.setNumeroCuenta(generatedKeys.getInt(1));
                     }
                 }
             }
@@ -44,23 +44,24 @@ public class CuentaBancariaDAO {
     }
 
     // Metodo para depositar saldo a una cuenta
-    public void depositar(long numeroCuenta, double monto, int clienteId) {
+    public boolean depositar(int numeroCuenta, double monto, int clienteId) {
 
         if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
             JOptionPane.showMessageDialog(null, "No existe esa cuenta para el cliente con ID " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
-            return;
+            return false;
         }
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo + ? WHERE numeroCuenta = ?";
         try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
 
             statement.setDouble(1, monto);
-            statement.setLong(2, numeroCuenta);
+            statement.setInt(2, numeroCuenta);
             statement.executeUpdate();
+            return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
-
+        return false;
     }
 
     // Metodo para retirar saldo de una cuenta
@@ -83,7 +84,7 @@ public class CuentaBancariaDAO {
     }
 
     // Método para transferir dinero
-    public void transferir(long numeroCuentaOrigen, long numeroCuentaDestino, double monto, int clienteId) {
+    public void transferir(int numeroCuentaOrigen, int numeroCuentaDestino, double monto, int clienteId) {
         if (!esPropietarioDeCuenta(numeroCuentaOrigen, clienteId)) {
             System.out.println("El cliente no es propietario de la cuenta origen.");
             return;

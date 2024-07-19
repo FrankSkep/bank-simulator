@@ -409,7 +409,8 @@ public final class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_buscarClienteBtnActionPerformed
 
     private void depositarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositarBtnActionPerformed
-        // TODO add your handling code here:
+        DepositarPNL p = new DepositarPNL();
+        Tools.showPanel(p, contenidoPanel);
     }//GEN-LAST:event_depositarBtnActionPerformed
 
     private void retirarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarBtnActionPerformed
