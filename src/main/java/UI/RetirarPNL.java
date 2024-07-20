@@ -1,23 +1,20 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
+ */
 package UI;
 
-import Autenticacion.SessionInstance;
-import DAO.CuentaBancariaDAO;
-import Modelos.Usuario;
-import javax.swing.JOptionPane;
+/**
+ *
+ * @author fran
+ */
+public class RetirarPNL extends javax.swing.JPanel {
 
-public class DepositarPNL extends javax.swing.JPanel {
-
-    private Usuario usuario;
-    private int idCliente;
-
-    public DepositarPNL() {
+    /**
+     * Creates new form RetirarPNL
+     */
+    public RetirarPNL() {
         initComponents();
-
-        // Obtener el usuario autenticado
-        usuario = SessionInstance.getInstance().getUsuario();
-
-        // Obtener id del cliente
-        idCliente = usuario.getClienteId();
     }
 
     /**
@@ -31,33 +28,35 @@ public class DepositarPNL extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        numCuentaTF = new javax.swing.JTextField();
+        jTextField1 = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         montoTF = new javax.swing.JTextField();
-        depositarBtn = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        saldoTF = new javax.swing.JTextField();
+        retirarBtn = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel1.setText("DEPOSITAR");
+        jLabel1.setText("RETIRAR SALDO");
 
         jPanel2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Numero de cuenta destino:");
+        jLabel2.setText("Numero de cuenta a retirar:");
 
-        numCuentaTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Monto:");
+        jLabel3.setText("Monto a retirar:");
 
         montoTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
-        depositarBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        depositarBtn.setText("Depositar");
-        depositarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                depositarBtnActionPerformed(evt);
-            }
-        });
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        jLabel4.setText("Saldo disponible:");
+
+        saldoTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+
+        retirarBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        retirarBtn.setText("Retirar");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -66,31 +65,37 @@ public class DepositarPNL extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(59, 59, 59)
+                        .addGap(36, 36, 36)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3)
-                            .addComponent(numCuentaTF, javax.swing.GroupLayout.DEFAULT_SIZE, 367, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jTextField1)
+                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(montoTF)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(saldoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(200, 200, 200)
-                        .addComponent(depositarBtn)))
-                .addContainerGap(58, Short.MAX_VALUE))
+                        .addGap(205, 205, 205)
+                        .addComponent(retirarBtn)))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(43, 43, 43)
+                .addGap(32, 32, 32)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(numCuentaTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19)
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(montoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(depositarBtn)
-                .addContainerGap(43, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(saldoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(retirarBtn)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -98,23 +103,23 @@ public class DepositarPNL extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(297, Short.MAX_VALUE)
+                .addContainerGap(293, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(275, 275, 275))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(427, 427, 427))))
+                        .addGap(378, 378, 378))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(265, 265, 265))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(80, 80, 80)
+                .addGap(84, 84, 84)
                 .addComponent(jLabel1)
-                .addGap(35, 35, 35)
+                .addGap(44, 44, 44)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(205, Short.MAX_VALUE))
+                .addContainerGap(155, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -129,37 +134,17 @@ public class DepositarPNL extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void depositarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_depositarBtnActionPerformed
-        String numCuenta = numCuentaTF.getText();
-        String monto = montoTF.getText();
-
-        if (numCuenta.isBlank() || monto.isBlank()) {
-            JOptionPane.showMessageDialog(null, "Ingresa todos los datos", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        if (!Tools.esNumerico(numCuenta) || !Tools.esNumerico(monto)) {
-            JOptionPane.showMessageDialog(null, "Ingresa solo datos numericos", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return;
-        }
-
-        CuentaBancariaDAO db = new CuentaBancariaDAO();
-
-        if (db.depositar(Integer.parseInt(numCuenta), Double.parseDouble(monto), idCliente, false)) {
-            JOptionPane.showMessageDialog(null, "Depositaste a tu cuenta con numero: " + numCuenta + " el monto de: " + monto, "Deposito realizado", JOptionPane.INFORMATION_MESSAGE);
-        }
-
-    }//GEN-LAST:event_depositarBtnActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton depositarBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField montoTF;
-    private javax.swing.JTextField numCuentaTF;
+    private javax.swing.JButton retirarBtn;
+    private javax.swing.JTextField saldoTF;
     // End of variables declaration//GEN-END:variables
 }

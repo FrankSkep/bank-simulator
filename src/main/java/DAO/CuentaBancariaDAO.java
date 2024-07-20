@@ -1,4 +1,4 @@
-package DAO_DB;
+package DAO;
 
 import Modelos.CuentaBancaria;
 import Modelos.Transaccion;
@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
 
@@ -45,11 +44,13 @@ public class CuentaBancariaDAO {
     }
 
     // Metodo para depositar saldo a una cuenta
-    public boolean depositar(int numeroCuenta, double monto, int clienteId) {
+    public boolean depositar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) {
 
-        if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
-            JOptionPane.showMessageDialog(null, "No existe esa cuenta para el cliente con ID " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
-            return false;
+        if (!esTransferencia) {
+            if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
+                JOptionPane.showMessageDialog(null, "No existe esa cuenta para el cliente con ID " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+                return false;
+            }
         }
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo + ? WHERE numeroCuenta = ?";
@@ -58,6 +59,14 @@ public class CuentaBancariaDAO {
             statement.setDouble(1, monto);
             statement.setInt(2, numeroCuenta);
             statement.executeUpdate();
+
+            if (!esTransferencia) {
+                // Registrar la transacción
+                LocalDateTime fechaTransaccion = LocalDateTime.now();
+                Transaccion transaccionOrigen = new Transaccion(numeroCuenta, fechaTransaccion, "Deposito", monto, "Deposito a mi cuenta numero : " + numeroCuenta);
+                transDAO.registrarTransaccion(transaccionOrigen);
+            }
+
             return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
@@ -66,7 +75,7 @@ public class CuentaBancariaDAO {
     }
 
     // Metodo para retirar saldo de una cuenta
-    public void retirar(long numeroCuenta, double monto, int clienteId) {
+    public void retirar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) {
         if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
             JOptionPane.showMessageDialog(null, "No existe esa cuenta para el cliente con ID " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
             return;
@@ -82,6 +91,12 @@ public class CuentaBancariaDAO {
             JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
 
+        if (!esTransferencia) {
+            // Registrar la transacción
+            LocalDateTime fechaTransaccion = LocalDateTime.now();
+            Transaccion transaccionOrigen = new Transaccion(numeroCuenta, fechaTransaccion, "Retiro", monto, "Retiro de mi cuenta numero : " + numeroCuenta);
+            transDAO.registrarTransaccion(transaccionOrigen);
+        }
     }
 
     // Método para transferir dinero
@@ -97,21 +112,20 @@ public class CuentaBancariaDAO {
             connection.setAutoCommit(false);
 
             // Retirar del origen
-            retirar(numeroCuentaOrigen, monto, clienteId);
+            retirar(numeroCuentaOrigen, monto, clienteId, true);
 
             // Depositar en el destino
-            depositar(numeroCuentaDestino, monto, clienteId);
+            depositar(numeroCuentaDestino, monto, clienteId, true);
 
             connection.commit();
 
-            // Registrar la transacción
-            LocalDateTime fechaTransaccion = LocalDateTime.now();
-            Transaccion transaccionOrigen = new Transaccion(0, numeroCuentaOrigen, fechaTransaccion, "Transferencia", monto, "Transferencia a cuenta " + numeroCuentaDestino);
-            transDAO.registrarTransaccion(transaccionOrigen);
-
-            Transaccion transaccionDestino = new Transaccion(0, numeroCuentaDestino, fechaTransaccion, "Transferencia", monto, "Transferencia desde cuenta " + numeroCuentaOrigen);
-            transDAO.registrarTransaccion(transaccionDestino);
-
+//            // Registrar la transacción
+//            LocalDateTime fechaTransaccion = LocalDateTime.now();
+//            Transaccion transaccionOrigen = new Transaccion(numeroCuentaOrigen, fechaTransaccion, "Transferencia", monto, "Transferencia a cuenta " + numeroCuentaDestino);
+//            transDAO.registrarTransaccion(transaccionOrigen);
+//
+//            Transaccion transaccionDestino = new Transaccion(numeroCuentaDestino, fechaTransaccion, "Transferencia", monto, "Transferencia desde cuenta " + numeroCuentaOrigen);
+//            transDAO.registrarTransaccion(transaccionDestino);
         } catch (SQLException e) {
             if (connection != null) {
                 try {
@@ -134,7 +148,7 @@ public class CuentaBancariaDAO {
     }
 
     // Metodo para consultar saldo de una cuenta
-    public double consultarSaldo(long numCuenta, int clienteId) {
+    public double consultarSaldo(int numCuenta, int clienteId) {
         if (!esPropietarioDeCuenta(numCuenta, clienteId)) {
             JOptionPane.showMessageDialog(null, "No existe esa cuenta para el cliente con ID " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
             return Double.NaN;
@@ -156,7 +170,7 @@ public class CuentaBancariaDAO {
     }
 
     // Metodo para verificar si una cuenta le pertenece a un cliente
-    public boolean esPropietarioDeCuenta(long numeroCuenta, int clienteId) {
+    public boolean esPropietarioDeCuenta(int numeroCuenta, int clienteId) {
         String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
         try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
 
@@ -169,6 +183,22 @@ public class CuentaBancariaDAO {
             JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
+    }
+
+    // Metodo para obtener id cliente, mediante numero de cuenta
+    public Integer getIDporNumCuenta(int numcuenta) {
+        String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
+        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+
+            statement.setInt(1, numcuenta);
+            ResultSet resultSet = statement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("cliente_id");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        return null;
     }
 
     // Método para obtener todas las cuentas bancarias asociadas a un cliente   

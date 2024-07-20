@@ -1,7 +1,8 @@
 package UI;
 
-import DAO_DB.ClienteDAO;
-import DAO_DB.CuentaBancariaDAO;
+import DAO.ClienteDAO;
+import DAO.CuentaBancariaDAO;
+import DAO.UsuarioDAO;
 import Modelos.Cliente;
 import Modelos.CuentaBancaria;
 import java.awt.BorderLayout;
@@ -16,8 +17,8 @@ import javax.swing.table.DefaultTableModel;
 
 public class Tools {
 
-    public static void mouseListenerTable(JTable tabla, JTextField idTextField, JTextField nombreTextField,
-            JTextField direccTextField, JTextField telTextField) {
+    public static void mouseListenerTable(JTable tabla, JTextField idTF, JTextField nombreTF,
+            JTextField correoTF, JTextField telTF) {
         tabla.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -29,26 +30,26 @@ public class Tools {
                     // Obtener los valores de la fila seleccionada
                     String id = model.getValueAt(row, 0).toString();
                     String nombre = model.getValueAt(row, 1).toString();
-                    String direccion = model.getValueAt(row, 2).toString();
+                    String correo = model.getValueAt(row, 2).toString();
                     String telefono = model.getValueAt(row, 3).toString();
 
                     // Mostrar los valores de la fila en el formulario
-                    idTextField.setText(id);
-                    nombreTextField.setText(nombre);
-                    direccTextField.setText(direccion);
-                    telTextField.setText(telefono);
+                    idTF.setText(id);
+                    nombreTF.setText(nombre);
+                    correoTF.setText(correo);
+                    telTF.setText(telefono);
                 }
             }
         });
     }
 
-    public static void limpiarFormulario(JTable tabla, JTextField idTextField, JTextField nombreTextField,
-            JTextField direccTextField, JTextField telTextField) {
+    public static void limpiarFormulario(JTable tabla, JTextField idTF, JTextField nombreTF,
+            JTextField correoTF, JTextField telTF) {
 
-        idTextField.setText("");
-        nombreTextField.setText("");
-        direccTextField.setText("");
-        telTextField.setText("");
+        idTF.setText("");
+        nombreTF.setText("");
+        correoTF.setText("");
+        telTF.setText("");
 
     }
 
@@ -141,7 +142,7 @@ public class Tools {
 
     // Cambia entre paneles
     public static void showPanel(JPanel p, JPanel mainPanel) {
-        p.setSize(1080, 660);
+        p.setSize(1060, 670);
         p.setLocation(0, 0);
 
         mainPanel.removeAll();

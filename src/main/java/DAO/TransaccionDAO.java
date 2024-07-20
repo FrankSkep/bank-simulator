@@ -1,4 +1,4 @@
-package DAO_DB;
+package DAO;
 
 import Modelos.Transaccion;
 import java.sql.Connection;
@@ -29,13 +29,13 @@ public class TransaccionDAO {
             return rowsAffected > 0;
 
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error al realizar la transaccion : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al registrar la transaccion : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
 
     // Metodo para obtener las transacciones de una cuenta bancaria
-    public List<Transaccion> obtenerTransacciones(long idCuentaBancaria) {
+    public List<Transaccion> obtenerTransacciones(int idCuentaBancaria) {
         List<Transaccion> transacciones = new ArrayList<>();
 
         String query = "SELECT id, fecha, tipo, monto, descripcion, cuentaBancaria_id FROM Transaccion WHERE cuentaBancaria_id = ?";
@@ -46,14 +46,13 @@ public class TransaccionDAO {
             ResultSet resultSet = statement.executeQuery();
 
             while (resultSet.next()) {
-                int id = resultSet.getInt("id");
                 LocalDateTime fecha = resultSet.getObject("fecha_hora", LocalDateTime.class);
                 String tipo = resultSet.getString("tipo");
                 double monto = resultSet.getDouble("monto");
                 String descripcion = resultSet.getString("descripcion");
-                long cuentaId = resultSet.getLong("cuentaBancaria_id");
+                int cuentaId = resultSet.getInt("cuentaBancaria_id");
 
-                Transaccion transaccion = new Transaccion(id, cuentaId, fecha, tipo, monto, descripcion);
+                Transaccion transaccion = new Transaccion(cuentaId, fecha, tipo, monto, descripcion);
                 transacciones.add(transaccion);
             }
         } catch (SQLException e) {

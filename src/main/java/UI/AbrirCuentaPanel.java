@@ -1,7 +1,7 @@
 package UI;
 
-import Autenticacion.Session;
-import DAO_DB.CuentaBancariaDAO;
+import Autenticacion.SessionInstance;
+import DAO.CuentaBancariaDAO;
 import Modelos.CuentaBancaria;
 import Modelos.Usuario;
 import javax.swing.JOptionPane;
@@ -15,7 +15,7 @@ public class AbrirCuentaPanel extends javax.swing.JPanel {
         initComponents();
 
         // Obtener el usuario
-        usuario = Session.getInstance().getUsuario();
+        usuario = SessionInstance.getInstance().getUsuario();
 
         idCliente = usuario.getClienteId();
 
@@ -134,7 +134,7 @@ public class AbrirCuentaPanel extends javax.swing.JPanel {
                 .addComponent(labelAbrirCuenta)
                 .addGap(58, 58, 58)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

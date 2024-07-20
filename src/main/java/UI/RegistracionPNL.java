@@ -4,14 +4,16 @@ import Autenticacion.Registro;
 import Modelos.Cliente;
 import java.util.Arrays;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-public class RegistrarsePanel extends javax.swing.JPanel {
+public class RegistracionPNL extends javax.swing.JPanel {
 
-    /**
-     * Creates new form AggClienteForm
-     */
-    public RegistrarsePanel() {
+    private Dashboard dashboard;
+
+    public RegistracionPNL(Dashboard dashboard) {
         initComponents();
+
+        this.dashboard = dashboard;
     }
 
     /**
@@ -144,7 +146,7 @@ public class RegistrarsePanel extends javax.swing.JPanel {
 
     private void registrarseBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_registrarseBtnActionPerformed
         String nomUsuario = usernameTF.getText();
-        String contrasenia = Arrays.toString(passTF.getPassword());
+        String contrasenia = String.valueOf(passTF.getPassword());
         String nombreCompleto = nombreComTF.getText();
         String correo = correoTF.getText();
         String telefono = telefonoTF.getText();
@@ -164,10 +166,11 @@ public class RegistrarsePanel extends javax.swing.JPanel {
         if (reg.registrarClienteYUsuario(nomUsuario, contrasenia, cliente)) {
             String mensaje = """
                              Se registro correctamente\n
-                             ID generado : """ + cliente.getID();
+                             ID de cliente : """ + cliente.getID();
             JOptionPane.showMessageDialog(null, mensaje, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            Tools.showPanel(new MenuSesionPNL(this.dashboard), (JPanel) this.getParent());
         } else {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : ", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ya existe un cliente registrado con ese nombre de usuario", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_registrarseBtnActionPerformed
 

@@ -4,7 +4,6 @@ import java.time.LocalDateTime;
 
 public class Transaccion {
 
-    private int id;
     private long idCuentaBancaria;
     private LocalDateTime fecha;
     private String tipo; // (Deposito, Retiro o Transferencia)
@@ -12,8 +11,7 @@ public class Transaccion {
     private String descripcion;
 
     // Constructor
-    public Transaccion(int id, long idCuenta, LocalDateTime fecha, String tipo, double monto, String descripcion) {
-        this.id = id;
+    public Transaccion(int idCuenta, LocalDateTime fecha, String tipo, double monto, String descripcion) {
         this.idCuentaBancaria = idCuenta;
         this.fecha = fecha;
         this.tipo = tipo;
@@ -22,14 +20,6 @@ public class Transaccion {
     }
 
     // Getters y Setters
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public long getNumCuenta() {
         return idCuentaBancaria;
     }
