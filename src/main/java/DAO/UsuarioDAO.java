@@ -10,24 +10,12 @@ import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
 
-    private static UsuarioDAO instance;
-
-    private UsuarioDAO() {
-    }
-
-    public static UsuarioDAO getInstance() {
-        if (instance == null) {
-            instance = new UsuarioDAO();
-        }
-        return instance;
-    }
-
     // Método para registrar un nuevo usuario
     public boolean registrarUsuario(String username, String password, int clienteId) {
         String salt = HashPassword.getSalt();
         String hashedPassword = HashPassword.hashPassword(password, salt);
         String query = "INSERT INTO Usuario (username, password, salt, cliente_id) VALUES (?, ?, ?, ?)";
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             statement.setString(2, hashedPassword);
@@ -45,7 +33,7 @@ public class UsuarioDAO {
     // Método para verificar las credenciales de usuario
     public Usuario autenticar(String username, String password) {
         String query = "SELECT id, username, password, salt, cliente_id FROM Usuario WHERE username = ?";
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
@@ -71,7 +59,7 @@ public class UsuarioDAO {
     // Método para verificar si el nombre de usuario ya existe
     public boolean usernameExiste(String username) {
         String query = "SELECT 1 FROM Usuario WHERE username = ?";
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             return statement.executeQuery().next();

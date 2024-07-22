@@ -207,7 +207,7 @@ public class ElimClientePNL extends javax.swing.JPanel {
             return;
         }
 
-        ClienteDAO db = ClienteDAO.getInstance();
+        ClienteDAO db = new ClienteDAO();
 
         int res = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Confirmacion requerida", JOptionPane.YES_NO_OPTION, QUESTION_MESSAGE);
 

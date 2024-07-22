@@ -12,23 +12,11 @@ import javax.swing.JOptionPane;
 
 public class TransaccionDAO {
 
-    private static TransaccionDAO instance;
-
-    private TransaccionDAO() {
-    }
-
-    public static synchronized TransaccionDAO getInstance() {
-        if (instance == null) {
-            instance = new TransaccionDAO();
-        }
-        return instance;
-    }
-
     // Registrar una transaccion
     public void registrarTransaccion(Transaccion transaccion) throws SQLException {
         String query = "INSERT INTO Transaccion (fecha, tipo, monto, descripcion, cuentabancaria_id) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setObject(1, transaccion.getFecha());
             st.setString(2, transaccion.getTipo());
@@ -49,7 +37,7 @@ public class TransaccionDAO {
 
         String query = "SELECT fecha, tipo, monto, descripcion FROM Transaccion WHERE cuentaBancaria_id = ?";
 
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setInt(1, idCuentaBancaria);
             ResultSet resultSet = st.executeQuery();

@@ -160,7 +160,7 @@ public class AbrirCuentaPanel extends javax.swing.JPanel {
 
         CuentaBancaria cuenta = new CuentaBancaria(Double.parseDouble(saldo), idCliente);
 
-        CuentaBancariaDAO db = CuentaBancariaDAO.getInstance();
+        CuentaBancariaDAO db = new CuentaBancariaDAO();
 
         db.guardarCuenta(cuenta);
 

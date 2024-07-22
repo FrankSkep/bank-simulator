@@ -132,7 +132,7 @@ public class AutenticacionPNL extends javax.swing.JPanel {
             return;
         }
 
-        UsuarioDAO db = UsuarioDAO.getInstance(); // Obtener la instancia única del DAO
+        UsuarioDAO db = new UsuarioDAO(); // Obtener la instancia única del DAO
         Usuario usuario = db.autenticar(nombreUsuario, contraString);
 
         if (usuario != null) {

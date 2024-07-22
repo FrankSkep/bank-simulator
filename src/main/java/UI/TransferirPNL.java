@@ -173,7 +173,7 @@ public class TransferirPNL extends javax.swing.JPanel {
             return;
         }
 
-        CuentaBancariaDAO db = CuentaBancariaDAO.getInstance();
+        CuentaBancariaDAO db = new CuentaBancariaDAO();
 
         double montoTransferir = Double.parseDouble(monto);
         double saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuentaOrigen), idCliente);

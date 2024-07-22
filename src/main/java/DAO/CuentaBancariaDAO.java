@@ -14,28 +14,17 @@ import javax.swing.JOptionPane;
 
 public class CuentaBancariaDAO {
 
-    // Instancia única de CuentaBancariaDAO
-    private static CuentaBancariaDAO instance;
+    private TransaccionDAO transDAO;
 
-    // Constructor privado para evitar instanciación externa
-    private CuentaBancariaDAO() {}
-
-    // Método para obtener la instancia única de CuentaBancariaDAO
-    public static synchronized CuentaBancariaDAO getInstance() {
-        if (instance == null) {
-            instance = new CuentaBancariaDAO();
-        }
-        return instance;
+    public CuentaBancariaDAO() {
+        transDAO = new TransaccionDAO();
     }
 
-    // Instancia de TransaccionDAO
-    private TransaccionDAO transDAO = TransaccionDAO.getInstance();
-
-    // Metodo para guardar cuenta en la base de datos
+    // Método para guardar cuenta en la base de datos
     public void guardarCuenta(CuentaBancaria cuenta) {
         String query = "INSERT INTO CuentaBancaria (saldo, cliente_id) VALUES (?, ?)";
 
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             st.setDouble(1, cuenta.getSaldo());
             st.setInt(2, cuenta.getClienteId());
@@ -63,17 +52,17 @@ public class CuentaBancariaDAO {
 
         Connection conexion = null;
         try {
-            conexion = DatabaseConnection.getConnection();
+            conexion = DatabaseConnection.getInstance().getConnection();
             conexion.setAutoCommit(false);
 
             // Retirar del origen
-            if (!retirar(numeroCuentaOrigen, monto, clienteId, true)) {
+            if (!retirar(numeroCuentaOrigen, monto, clienteId, true, conexion)) {
                 conexion.rollback();
                 return false;
             }
 
             // Depositar en el destino
-            if (!depositar(numeroCuentaDestino, monto, clienteId, true)) {
+            if (!depositar(numeroCuentaDestino, monto, clienteId, true, conexion)) {
                 conexion.rollback();
                 return false;
             }
@@ -113,14 +102,16 @@ public class CuentaBancariaDAO {
     }
 
     // Método para depositar saldo a una cuenta con conexión externa
-    public boolean depositar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) throws SQLException {
+    public boolean depositar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia, Connection conexion) throws SQLException {
         if (!esTransferencia && !esPropietarioDeCuenta(numeroCuenta, clienteId)) {
             JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta origen " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo + ? WHERE numeroCuenta = ?";
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try {
+            conexion = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement st = conexion.prepareStatement(query);
             st.setDouble(1, monto);
             st.setInt(2, numeroCuenta);
             st.executeUpdate();
@@ -139,14 +130,16 @@ public class CuentaBancariaDAO {
     }
 
     // Método para retirar saldo de una cuenta con conexión externa
-    public boolean retirar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) throws SQLException {
+    public boolean retirar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia, Connection conexion) throws SQLException {
         if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
             JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta origen (" + numeroCuenta + ")", "Operacion fallida", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo - ? WHERE numeroCuenta = ?";
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+        try {
+            conexion = DatabaseConnection.getInstance().getConnection();
+            PreparedStatement st = conexion.prepareStatement(query);
             st.setDouble(1, monto);
             st.setInt(2, numeroCuenta);
             st.executeUpdate();
@@ -173,7 +166,7 @@ public class CuentaBancariaDAO {
 
         String query = "SELECT saldo FROM CuentaBancaria WHERE numeroCuenta = ?";
 
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setLong(1, numCuenta);
             ResultSet resultSet = st.executeQuery();
@@ -189,7 +182,7 @@ public class CuentaBancariaDAO {
     // Metodo para verificar si una cuenta le pertenece a un cliente
     public boolean esPropietarioDeCuenta(int numeroCuenta, int clienteId) {
         String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setLong(1, numeroCuenta);
             ResultSet resultSet = st.executeQuery();
@@ -208,7 +201,7 @@ public class CuentaBancariaDAO {
         List<CuentaBancaria> cuentas = new ArrayList<>();
         String query = "SELECT numeroCuenta, saldo FROM CuentaBancaria WHERE cliente_id = ?";
 
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
 
             st.setInt(1, idCliente);
 
@@ -235,7 +228,7 @@ public class CuentaBancariaDAO {
 
         String query = "SELECT numeroCuenta FROM CuentaBancaria WHERE cliente_id = ?";
 
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
 
             st.setInt(1, idCliente);
 
@@ -255,7 +248,7 @@ public class CuentaBancariaDAO {
     // Metodo para obtener el id del cliente propietario de una cuenta bancaria
     public Integer getIDcliente_CuentaB(int numcuenta) {
         String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setInt(1, numcuenta);
             ResultSet resultSet = st.executeQuery();

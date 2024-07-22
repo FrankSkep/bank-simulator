@@ -149,7 +149,7 @@ public class RetirarPNL extends javax.swing.JPanel {
         String numCuenta = numCuentaTF.getText();
         String monto = montoTF.getText();
 
-        CuentaBancariaDAO db = CuentaBancariaDAO.getInstance();
+        CuentaBancariaDAO db = new CuentaBancariaDAO();
         double saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuenta), idCliente);
         saldoTF.setText(String.valueOf(saldoDisponible));
 
@@ -170,8 +170,8 @@ public class RetirarPNL extends javax.swing.JPanel {
             return;
         }
 
-        try {
-            if (db.retirar(Integer.parseInt(numCuenta), montoTransferir, idCliente, false)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection();){
+            if (db.retirar(Integer.parseInt(numCuenta), montoTransferir, idCliente, false, conexion)) {
                 saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuenta), idCliente);
                 saldoTF.setText(String.valueOf(saldoDisponible));
                 JOptionPane.showInternalMessageDialog(null, "Has retirado de tu cuenta numero : " + numCuenta + " el monto de : " + monto, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);

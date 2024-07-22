@@ -10,8 +10,8 @@ public class RegistroUsuario {
     private ClienteDAO clienteDAO;
 
     public RegistroUsuario() {
-        usuarioDAO = UsuarioDAO.getInstance();
-        clienteDAO = ClienteDAO.getInstance();
+        usuarioDAO = new UsuarioDAO();
+        clienteDAO = new ClienteDAO();
     }
 
     // Método para registrar un nuevo usuario y cliente

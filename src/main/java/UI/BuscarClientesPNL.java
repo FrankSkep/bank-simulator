@@ -231,7 +231,7 @@ public class BuscarClientesPNL extends javax.swing.JPanel {
             // Si se hicieron cambios, crea un objeto de cliente y lo sobreescribe en la db
             Cliente cliente = new Cliente(nombreTF.getText(), correoTF.getText(), telTF.getText());
             cliente.setID(Integer.parseInt(id));
-            ClienteDAO db = ClienteDAO.getInstance();
+            ClienteDAO db = new ClienteDAO();
 
             if (db.actualizarCliente(cliente, Integer.parseInt(id))) {
                 JOptionPane.showMessageDialog(null, "Se ha actualizado el cliente con ID " + id, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);

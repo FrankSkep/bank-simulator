@@ -20,9 +20,9 @@ import javax.swing.table.DefaultTableModel;
 
 public class Tools {
 
-    private static final ClienteDAO clienteDAO = ClienteDAO.getInstance();
-    private static final CuentaBancariaDAO cuentaBancariaDAO = CuentaBancariaDAO.getInstance();
-    private static final TransaccionDAO transaccionDAO = TransaccionDAO.getInstance();
+    private static final ClienteDAO clienteDAO = new ClienteDAO();
+    private static final CuentaBancariaDAO cuentaBancariaDAO = new CuentaBancariaDAO();
+    private static final TransaccionDAO transaccionDAO = new TransaccionDAO();
 
     public static void mouseListenerTable(JTable tabla, JTextField idTF, JTextField nombreTF,
             JTextField correoTF, JTextField telTF) {

@@ -2,7 +2,9 @@ package UI;
 
 import Autenticacion.SesionUsuario;
 import DAO.CuentaBancariaDAO;
+import DAO.DatabaseConnection;
 import Entidades.Usuario;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -146,10 +148,10 @@ public class DepositarPNL extends javax.swing.JPanel {
             return;
         }
 
-        CuentaBancariaDAO db = CuentaBancariaDAO.getInstance();
+        CuentaBancariaDAO db = new CuentaBancariaDAO();
 
-        try {
-            if (db.depositar(Integer.parseInt(numCuenta), Double.parseDouble(monto), idCliente, false)) {
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection();){
+            if (db.depositar(Integer.parseInt(numCuenta), Double.parseDouble(monto), idCliente, false, conexion)) {
                 JOptionPane.showMessageDialog(null, "Depositaste a tu cuenta con numero: " + numCuenta + " el monto de: " + monto, "Deposito realizado", JOptionPane.INFORMATION_MESSAGE);
             }
         } catch (SQLException ex) {

@@ -3,7 +3,6 @@ package UI;
 import Autenticacion.SesionUsuario;
 import DAO.DatabaseConnection;
 import Entidades.Usuario;
-import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
@@ -340,9 +339,13 @@ public final class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_histTransaccionesBtnActionPerformed
 
     private void cerrarSesionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBtnActionPerformed
-        SesionUsuario.getInstance().cerrarSesion();
-        actualizarEstado();
-        Tools.showPanel(inicio, contenidoPanel);
+        int cerrar = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas cerrar la sesion?", "Confirmacion", JOptionPane.YES_NO_OPTION);
+
+        if (cerrar == JOptionPane.YES_OPTION) {
+            SesionUsuario.getInstance().cerrarSesion();
+            actualizarEstado();
+            Tools.showPanel(inicio, contenidoPanel);
+        }
     }//GEN-LAST:event_cerrarSesionBtnActionPerformed
 
     private void cerrarCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarCuentaBtnActionPerformed
