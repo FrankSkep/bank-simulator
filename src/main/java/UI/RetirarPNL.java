@@ -3,7 +3,6 @@ package UI;
 import Autenticacion.SesionUsuario;
 import DAO.CuentaBancariaDAO;
 import DAO.DatabaseConnection;
-import Entidades.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -12,17 +11,13 @@ import javax.swing.JOptionPane;
 
 public class RetirarPNL extends javax.swing.JPanel {
 
-    private Usuario usuario;
     private int idCliente;
 
     public RetirarPNL() {
         initComponents();
 
-        // Obtener el usuario autenticado
-        usuario = SesionUsuario.getInstance().getUsuario();
-
-        // Obtener id del cliente
-        idCliente = usuario.getClienteId();
+        // Obtener id del cliente autenticado
+        idCliente = SesionUsuario.getInstance().getUsuario().getClienteId();
     }
 
     @SuppressWarnings("unchecked")
@@ -42,23 +37,23 @@ public class RetirarPNL extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel2.setText("Numero de cuenta a retirar:");
+        jLabel2.setText("NUMERO DE CUENTA A RETIRAR:");
 
         numCuentaTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel3.setText("Monto a retirar:");
+        jLabel3.setText("MONTO A RETIRAR:");
 
         montoTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        jLabel4.setText("Saldo disponible:");
+        jLabel4.setText("SALDO DISPONIBLE:");
 
         saldoTF.setEditable(false);
         saldoTF.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
 
         retirarBtn.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        retirarBtn.setText("Retirar");
+        retirarBtn.setText("RETIRAR");
         retirarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 retirarBtnActionPerformed(evt);
@@ -74,14 +69,14 @@ public class RetirarPNL extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(36, 36, 36)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(numCuentaTF)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(montoTF)
                             .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(saldoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)))
+                            .addComponent(saldoTF, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 308, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(205, 205, 205)
+                        .addGap(195, 195, 195)
                         .addComponent(retirarBtn)))
                 .addContainerGap(38, Short.MAX_VALUE))
         );
@@ -163,10 +158,6 @@ public class RetirarPNL extends javax.swing.JPanel {
         String numCuenta = numCuentaTF.getText();
         String monto = montoTF.getText();
 
-        CuentaBancariaDAO db = new CuentaBancariaDAO();
-        double saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuenta), idCliente);
-        saldoTF.setText(String.valueOf(saldoDisponible));
-
         if (!Tools.validarCamposVacios(new String[]{numCuenta, monto})) {
             JOptionPane.showMessageDialog(null, "Por favor rellena todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
@@ -177,6 +168,11 @@ public class RetirarPNL extends javax.swing.JPanel {
             return;
         }
 
+        CuentaBancariaDAO db = new CuentaBancariaDAO();
+
+        Double saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuenta), idCliente);
+        saldoTF.setText(String.valueOf(saldoDisponible));
+
         double montoTransferir = Double.parseDouble(monto);
 
         if (montoTransferir > saldoDisponible) {
@@ -184,12 +180,12 @@ public class RetirarPNL extends javax.swing.JPanel {
             return;
         }
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection();){
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection();) {
             if (db.retirar(Integer.parseInt(numCuenta), montoTransferir, idCliente, false, conexion)) {
-                saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuenta), idCliente);
-                saldoTF.setText(String.valueOf(saldoDisponible));
                 JOptionPane.showInternalMessageDialog(null, "Has retirado de tu cuenta numero : " + numCuenta + " el monto de : " + monto, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
             }
+            saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuenta), idCliente);
+            saldoTF.setText(String.valueOf(saldoDisponible));
         } catch (SQLException ex) {
             Logger.getLogger(RetirarPNL.class.getName()).log(Level.SEVERE, null, ex);
         }

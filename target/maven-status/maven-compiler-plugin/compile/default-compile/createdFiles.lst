@@ -1,5 +1,6 @@
 UI\ElimClientePNL$2.class
 UI\AbrirCuentaPanel$1.class
+UI\CerrarCuentaPNL$1.class
 UI\Dashboard$5.class
 UI\Dashboard$8.class
 UI\MenuSesionPNL$2.class
@@ -8,6 +9,7 @@ UI\DepositarPNL.class
 Entidades\Cliente.class
 UI\TransferirPNL.class
 UI\DepositarPNL$1.class
+UI\CerrarCuentaPNL.class
 DAO\DatabaseConnection.class
 UI\BuscarClientesPNL.class
 UI\RetirarPNL.class

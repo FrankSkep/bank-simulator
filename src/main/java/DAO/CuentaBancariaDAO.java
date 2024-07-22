@@ -160,7 +160,7 @@ public class CuentaBancariaDAO {
     // Metodo para consultar saldo de una cuenta
     public double consultarSaldo(int numCuenta, int clienteId) {
         if (!esPropietarioDeCuenta(numCuenta, clienteId)) {
-            JOptionPane.showMessageDialog(null, "No existe esa cuenta para el cliente con ID " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta " + numCuenta, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
             return Double.NaN;
         }
 
@@ -260,4 +260,26 @@ public class CuentaBancariaDAO {
         }
         return null;
     }
+
+    // Metodo para eliminar una cuenta bancaria
+    public boolean eliminarCuenta(int numCuenta, int clienteId) {
+
+        if (!esPropietarioDeCuenta(numCuenta, clienteId)) {
+            JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta " + numCuenta, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            return false;
+        }
+        String query = "DELETE FROM CuentaBancaria WHERE numeroCuenta = ?";
+
+        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+
+            st.setInt(1, numCuenta);
+            int affectedRows = st.executeUpdate();
+            return affectedRows > 0;
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        return false;
+    }
+
 }
