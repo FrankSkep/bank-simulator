@@ -345,7 +345,8 @@ public final class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_cerrarSesionBtnActionPerformed
 
     private void cerrarCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarCuentaBtnActionPerformed
-
+        CerrarCuentaPNL p = new CerrarCuentaPNL();
+        Tools.showPanel(p, contenidoPanel);
     }//GEN-LAST:event_cerrarCuentaBtnActionPerformed
 
     private void elimClienteBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elimClienteBtnActionPerformed
