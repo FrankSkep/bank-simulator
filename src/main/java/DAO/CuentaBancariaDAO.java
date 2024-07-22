@@ -110,7 +110,7 @@ public class CuentaBancariaDAO {
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo + ? WHERE numeroCuenta = ?";
         try {
-            conexion = DatabaseConnection.getInstance().getConnection();
+            conexion = conexion == null ? DatabaseConnection.getInstance().getConnection() : conexion;
             PreparedStatement st = conexion.prepareStatement(query);
             st.setDouble(1, monto);
             st.setInt(2, numeroCuenta);
@@ -138,7 +138,7 @@ public class CuentaBancariaDAO {
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo - ? WHERE numeroCuenta = ?";
         try {
-            conexion = DatabaseConnection.getInstance().getConnection();
+            conexion = conexion == null ? DatabaseConnection.getInstance().getConnection() : conexion;
             PreparedStatement st = conexion.prepareStatement(query);
             st.setDouble(1, monto);
             st.setInt(2, numeroCuenta);
