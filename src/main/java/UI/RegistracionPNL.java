@@ -2,7 +2,6 @@ package UI;
 
 import Autenticacion.Registro;
 import Modelos.Cliente;
-import java.util.Arrays;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -151,12 +150,17 @@ public class RegistracionPNL extends javax.swing.JPanel {
         String correo = correoTF.getText();
         String telefono = telefonoTF.getText();
 
-        if (!Tools.validarFormulario(nomUsuario, contrasenia, nombreCompleto, correo, telefono)) {
+        if (!Tools.validarCamposVacios(new String[]{nomUsuario, contrasenia, nombreCompleto, correo, telefono})) {
+            JOptionPane.showMessageDialog(null, "Por favor rellena todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (contrasenia.length() < 6) {
-            JOptionPane.showMessageDialog(null, "La contraseña debe tener mas de 6 caracteres");
+        if (!Tools.correoTelefonoValidos(correo, telefono)) {
+            return;
+        }
+
+        if (!Tools.esContraseniaValida(correo)) {
+            JOptionPane.showMessageDialog(null, "Ingresa una contraseña valida, debe tener mas de 6 caracteres, sin espacios", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 

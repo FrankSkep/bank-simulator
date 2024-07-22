@@ -1,13 +1,13 @@
-package DAO_DB;
+package DAO;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.Base64;
 
-public class PasswordUtils {
+public class HashingPassword {
 
-    // Método para generar un hash de la contraseña
+    // Metodo para generar un hash de la contraseña
     public static String hashPassword(String password, String salt) {
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-256");

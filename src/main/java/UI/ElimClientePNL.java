@@ -4,6 +4,7 @@ import DAO.ClienteDAO;
 import java.awt.Font;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
+import javax.swing.JTextField;
 import javax.swing.table.JTableHeader;
 
 public class ElimClientePNL extends javax.swing.JPanel {
@@ -15,8 +16,8 @@ public class ElimClientePNL extends javax.swing.JPanel {
         Tools.mouseListenerTable(tabla_clientes, idTF, nombreTF, correoTF, telTF);
 
         // Muestra la lista de clientes al entrar al panel
-        Tools.listarClientes(tabla_clientes);
-        
+        Tools.entablarClientes(tabla_clientes);
+
         // Fuente header tabla
         JTableHeader header = tabla_clientes.getTableHeader();
         Font headerFont = new Font("Segoe UI", Font.BOLD, 14);
@@ -56,6 +57,7 @@ public class ElimClientePNL extends javax.swing.JPanel {
         id_label.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         id_label.setText("ID:");
 
+        eliminarBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         eliminarBtn.setText("Eliminar");
         eliminarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -205,7 +207,7 @@ public class ElimClientePNL extends javax.swing.JPanel {
             return;
         }
 
-        ClienteDAO db = new ClienteDAO();
+        ClienteDAO db = ClienteDAO.getInstance();
 
         int res = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Confirmacion requerida", JOptionPane.YES_NO_OPTION, QUESTION_MESSAGE);
 
@@ -213,9 +215,9 @@ public class ElimClientePNL extends javax.swing.JPanel {
             int clienteID = Integer.parseInt(idTF.getText());
             if (db.eliminarClienteCompleto(clienteID)) {
                 JOptionPane.showMessageDialog(null, "Se elimino al cliente con ID : " + clienteID, "Operacion Exitosa", JOptionPane.INFORMATION_MESSAGE);
-                Tools.listarClientes(tabla_clientes);
+                Tools.entablarClientes(tabla_clientes);
             }
-            Tools.limpiarFormulario(tabla_clientes, idTF, nombreTF, correoTF, telTF);
+            Tools.limpiarFormulario(new JTextField[]{idTF, nombreTF, correoTF, telTF});
         }
 
     }//GEN-LAST:event_eliminarBtnActionPerformed

@@ -21,7 +21,7 @@ public class ConsultarSaldosPNL extends javax.swing.JPanel {
 
         labelTitulo.setText("CUENTAS BANCARIAS DE : " + usuario.getUsername().toUpperCase());
 
-        Tools.listarCuentasB(tablaCuentas, idCliente);
+        Tools.entablarCuentas(tablaCuentas, idCliente);
 
         // Fuente header tabla
         JTableHeader header = tablaCuentas.getTableHeader();

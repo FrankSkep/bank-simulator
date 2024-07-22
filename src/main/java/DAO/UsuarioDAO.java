@@ -5,18 +5,27 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JOptionPane;
 
 public class UsuarioDAO {
 
+    private static UsuarioDAO instance;
+
+    private UsuarioDAO() {}
+
+    public static UsuarioDAO getInstance() {
+        if (instance == null) {
+            instance = new UsuarioDAO();
+        }
+        return instance;
+    }
+
     // Método para registrar un nuevo usuario
     public boolean registrarUsuario(String username, String password, int clienteId) {
-        String salt = PasswordUtils.getSalt();
-        String hashedPassword = PasswordUtils.hashPassword(password, salt);
+        String salt = HashingPassword.getSalt();
+        String hashedPassword = HashingPassword.hashPassword(password, salt);
         String query = "INSERT INTO Usuario (username, password, salt, cliente_id) VALUES (?, ?, ?, ?)";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             statement.setString(2, hashedPassword);
@@ -26,7 +35,7 @@ public class UsuarioDAO {
             int rowsAffected = statement.executeUpdate();
             return rowsAffected > 0;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Ocurrio un error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
@@ -34,7 +43,7 @@ public class UsuarioDAO {
     // Método para verificar las credenciales de usuario
     public Usuario autenticar(String username, String password) {
         String query = "SELECT id, username, password, salt, cliente_id FROM Usuario WHERE username = ?";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
@@ -42,7 +51,7 @@ public class UsuarioDAO {
             if (resultSet.next()) {
                 String storedPassword = resultSet.getString("password");
                 String storedSalt = resultSet.getString("salt"); // Recupera el salt de la base de datos
-                String hashedPassword = PasswordUtils.hashPassword(password, storedSalt);
+                String hashedPassword = HashingPassword.hashPassword(password, storedSalt);
 
                 // Compara la contraseña hasheada con la almacenada en la base de datos
                 if (storedPassword.equals(hashedPassword)) {
@@ -52,7 +61,7 @@ public class UsuarioDAO {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Ocurrio un error", JOptionPane.WARNING_MESSAGE);
         }
         return null;
     }
@@ -60,33 +69,13 @@ public class UsuarioDAO {
     // Método para verificar si el nombre de usuario ya existe
     public boolean usernameExiste(String username) {
         String query = "SELECT 1 FROM Usuario WHERE username = ?";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             return statement.executeQuery().next();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Ocurrio un error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
-
-//    public List<String> obtenerUsername() {
-//        List<String> nombresDeUsuario = new ArrayList<>();
-//
-//        String query = "SELECT username FROM usuario wher";
-//
-//        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query);) {
-//
-//            ResultSet resultSet = statement.executeQuery();
-//
-//            while (resultSet.next()) {
-//                String username = resultSet.getString("username");
-//                nombresDeUsuario.add(username);
-//            }
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Detalles del error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-//        }
-//
-//        return nombresDeUsuario;
-//    }
 }

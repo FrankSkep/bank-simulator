@@ -5,12 +5,12 @@ import DAO.CuentaBancariaDAO;
 import Modelos.Usuario;
 import javax.swing.JOptionPane;
 
-public class TransaccionPNL extends javax.swing.JPanel {
+public class TransferirPNL extends javax.swing.JPanel {
 
     private Usuario usuario;
     private int idCliente;
 
-    public TransaccionPNL() {
+    public TransferirPNL() {
         initComponents();
 
         // Obtener el usuario autenticado
@@ -163,17 +163,17 @@ public class TransaccionPNL extends javax.swing.JPanel {
         String numCuentaDest = numCuentaDestinoTF.getText();
         String monto = montoTF.getText();
 
-        if (numCuentaOrigen.isBlank() || numCuentaDest.isBlank() || monto.isBlank()) {
-            JOptionPane.showMessageDialog(null, "Rellena todos los campos", "Error", JOptionPane.WARNING_MESSAGE);
+        if (!Tools.validarCamposVacios(new String[]{numCuentaOrigen, numCuentaDest, monto})) {
+            JOptionPane.showMessageDialog(null, "Por favor rellena todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (!Tools.esNumerico(numCuentaOrigen) || !Tools.esNumerico(numCuentaDest) || !Tools.esNumerico(monto)) {
-            JOptionPane.showMessageDialog(null, "Ingresa solo numeros en los campos numero de cuenta y monto", "Error", JOptionPane.WARNING_MESSAGE);
+        if (!Tools.sonNumericos(new String[]{numCuentaOrigen, numCuentaDest, monto})) {
+            JOptionPane.showMessageDialog(null, "Ingresa solo valores numericos en los campos que lo requieran", "Error", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        CuentaBancariaDAO db = new CuentaBancariaDAO();
+        CuentaBancariaDAO db = CuentaBancariaDAO.getInstance();
 
         double montoTransferir = Double.parseDouble(monto);
         double saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuentaOrigen), idCliente);
@@ -183,10 +183,10 @@ public class TransaccionPNL extends javax.swing.JPanel {
             return;
         }
 
-        db.transferir(Integer.parseInt(numCuentaOrigen), Integer.parseInt(numCuentaDest), montoTransferir, idCliente);
-
-        int idCLDestino = db.getIDporNumCuenta(Integer.parseInt(numCuentaDest));
-        JOptionPane.showMessageDialog(null, "Se ha transferido exitosamente el monto de " + montoTransferir + " al cliente con id: " + idCLDestino, "Transaccion exitosa", JOptionPane.INFORMATION_MESSAGE);
+        if (db.transferir(Integer.parseInt(numCuentaOrigen), Integer.parseInt(numCuentaDest), montoTransferir, idCliente)) {
+            int idCLDestino = db.getIDcliente_CuentaB(Integer.parseInt(numCuentaDest));
+            JOptionPane.showMessageDialog(null, "Se ha transferido exitosamente el monto de " + montoTransferir + " al cliente con id: " + idCLDestino, "Transaccion exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_transferirBtnActionPerformed
 
 

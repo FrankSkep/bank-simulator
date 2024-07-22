@@ -124,21 +124,21 @@ public class AutenticacionPNL extends javax.swing.JPanel {
 
     private void iniciarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarBtnActionPerformed
         String nombreUsuario = userTF.getText();
-        char[] contraChar= passTF.getPassword();
+        char[] contraChar = passTF.getPassword();
         String contraString = String.valueOf(contraChar);
 
-        if (nombreUsuario.isBlank() || contraString.isBlank()) {
+        if (!Tools.validarCamposVacios(new String[]{nombreUsuario, contraString})) {
             JOptionPane.showMessageDialog(null, "Rellena todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        UsuarioDAO db = new UsuarioDAO();
+        UsuarioDAO db = UsuarioDAO.getInstance(); // Obtener la instancia única del DAO
         Usuario usuario = db.autenticar(nombreUsuario, contraString);
-        
-        if (usuario != null) {
-            JOptionPane.showMessageDialog(null, "Inicio de sesion exitoso.");
 
-            // Almacenar el usuario en la sesión
+        if (usuario != null) {
+            JOptionPane.showInternalMessageDialog(null, "Has iniciado sesion correctamente.", "Autenticacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+
+            // Almacenar el usuario en la sesión    
             SessionInstance.getInstance().setUsuario(usuario);
 
             // Actualizar el estado del Dashboard
@@ -147,7 +147,7 @@ public class AutenticacionPNL extends javax.swing.JPanel {
             // Cambiar a la vista principal del usuario
             Tools.showPanel(new SesionIniciadaPNL(), (JPanel) this.getParent());
         } else {
-            JOptionPane.showMessageDialog(null, "Usuario o contraseña incorrectos.");
+            JOptionPane.showInternalMessageDialog(null, "Usuario o contraseña incorrectos.", "Autenticacion fallida", JOptionPane.WARNING_MESSAGE);
         }
     }//GEN-LAST:event_iniciarBtnActionPerformed
 

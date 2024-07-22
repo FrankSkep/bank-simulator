@@ -1,10 +1,10 @@
 package UI;
 
 import Autenticacion.SessionInstance;
+import DAO.DatabaseConnection;
 import Modelos.Usuario;
 import java.sql.SQLException;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
@@ -16,9 +16,12 @@ public final class Dashboard extends javax.swing.JFrame {
     }
 
     MODO modo;
-    MenuSesionPNL inicio;
 
-    public Dashboard() throws SQLException {
+    MenuSesionPNL inicio; // Interfaz de inicio de sesion o registro
+
+    DatabaseConnection db;
+
+    public Dashboard() {
 
         try {
             UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
@@ -29,24 +32,15 @@ public final class Dashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Sistema bancario");
 
-        // *************************
-//        ImageIcon icon = (ImageIcon) ImagenLBL.getIcon();
-//
-//        ImageIcon scaledIcon = new ImageIcon(
-//                icon.getImage().getScaledInstance(ImagenLBL.getWidth(), ImagenLBL.getHeight(), 0)
-//        );
-//
-//        ImagenLBL.setIcon(scaledIcon);
-        // *************************
-        modo = MODO.NOTHING;
-        ocultarBotonesDeterminados();
+        modo = MODO.NOTHING; // Inicialmente, no tiene ningun rol
+        ocultarBotonesDeterminados(); // Muestra solo los botones necesarios para el rol nothing
 
-        inicio = new MenuSesionPNL(this);
-        Tools.showPanel(inicio, contenidoPanel);
+        inicio = new MenuSesionPNL(this); // Instancio interfaz, pasandole referencia a la clase actual
+        Tools.showPanel(inicio, contenidoPanel); // Muestro la interfaz en el panel de contenido
 
 //        try {
 //            // Prueba conexion
-//            DBConexion.getConnection();
+//            DatabaseConnection.getInstance().getConnection();
 //            JOptionPane.showMessageDialog(null, "Conexion correcta");
 //        } catch (SQLException ex) {
 //            JOptionPane.showMessageDialog(null, "Error al conectar");
@@ -78,6 +72,7 @@ public final class Dashboard extends javax.swing.JFrame {
         cerrarSesionBtn = new javax.swing.JButton();
         histTransaccionesBtn = new javax.swing.JButton();
         inicio_btn = new javax.swing.JButton();
+        volverBtn = new javax.swing.JButton();
         contenidoPanel = new javax.swing.JPanel();
 
         jMenu1.setText("jMenu1");
@@ -197,31 +192,41 @@ public final class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        volverBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        volverBtn.setText("Inicio");
+        volverBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                volverBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cerrarSesionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(consultaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(elimClienteBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(buscarClienteBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(depositarBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(retirarBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(histTransaccionesBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(transBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(abrirCuentaBtn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(cerrarCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(inicio_btn, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(cerrarSesionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(consultaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(elimClienteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(buscarClienteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(depositarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(retirarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(histTransaccionesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(transBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(abrirCuentaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(cerrarCuentaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(inicio_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(volverBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(8, Short.MAX_VALUE))
         );
         menuPanelLayout.setVerticalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(menuPanelLayout.createSequentialGroup()
-                .addGap(142, 142, 142)
+                .addGap(132, 132, 132)
+                .addComponent(volverBtn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(elimClienteBtn)
                 .addGap(6, 6, 6)
                 .addComponent(buscarClienteBtn)
@@ -237,7 +242,7 @@ public final class Dashboard extends javax.swing.JFrame {
                 .addComponent(consultaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cerrarSesionBtn)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 135, Short.MAX_VALUE)
                 .addComponent(abrirCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(cerrarCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -298,6 +303,7 @@ public final class Dashboard extends javax.swing.JFrame {
                 inicio_btn.setVisible(true);
                 cerrarSesionBtn.setVisible(true);
                 inicio_btn.setVisible(false);
+                volverBtn.setVisible(true);
             }
             case USER -> {
                 abrirCuentaBtn.setVisible(true);
@@ -309,6 +315,7 @@ public final class Dashboard extends javax.swing.JFrame {
                 histTransaccionesBtn.setVisible(true);
                 cerrarSesionBtn.setVisible(true);
                 inicio_btn.setVisible(false);
+                volverBtn.setVisible(true);
             }
             case NOTHING -> {
                 elimClienteBtn.setVisible(false);
@@ -322,12 +329,14 @@ public final class Dashboard extends javax.swing.JFrame {
                 histTransaccionesBtn.setVisible(false);
                 cerrarSesionBtn.setVisible(false);
                 inicio_btn.setVisible(false);
+                volverBtn.setVisible(false);
             }
         }
     }
 
     private void histTransaccionesBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_histTransaccionesBtnActionPerformed
-        // TODO add your handling code here:
+        HistorialTransaccPNL p = new HistorialTransaccPNL();
+        Tools.showPanel(p, contenidoPanel);
     }//GEN-LAST:event_histTransaccionesBtnActionPerformed
 
     private void cerrarSesionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBtnActionPerformed
@@ -356,11 +365,12 @@ public final class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_depositarBtnActionPerformed
 
     private void retirarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_retirarBtnActionPerformed
-        // TODO add your handling code here:
+        RetirarPNL p = new RetirarPNL();
+        Tools.showPanel(p, contenidoPanel);
     }//GEN-LAST:event_retirarBtnActionPerformed
 
     private void transBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_transBtnActionPerformed
-        TransaccionPNL p = new TransaccionPNL();
+        TransferirPNL p = new TransferirPNL();
         Tools.showPanel(p, contenidoPanel);
     }//GEN-LAST:event_transBtnActionPerformed
 
@@ -378,6 +388,11 @@ public final class Dashboard extends javax.swing.JFrame {
         Tools.showPanel(inicio, contenidoPanel);
         inicio_btn.setVisible(false);
     }//GEN-LAST:event_inicio_btnActionPerformed
+
+    private void volverBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_volverBtnActionPerformed
+        SesionIniciadaPNL p = new SesionIniciadaPNL();
+        Tools.showPanel(p, contenidoPanel);
+    }//GEN-LAST:event_volverBtnActionPerformed
 
     public void setVolverInicioBtn(boolean estado) {
         inicio_btn.setVisible(estado);
@@ -418,5 +433,6 @@ public final class Dashboard extends javax.swing.JFrame {
     private javax.swing.JPanel menuPanel;
     private javax.swing.JButton retirarBtn;
     private javax.swing.JButton transBtn;
+    private javax.swing.JButton volverBtn;
     // End of variables declaration//GEN-END:variables
 }

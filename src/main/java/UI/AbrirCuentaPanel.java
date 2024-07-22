@@ -152,15 +152,15 @@ public class AbrirCuentaPanel extends javax.swing.JPanel {
     private void abrirCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_abrirCuentaBtnActionPerformed
 
         String saldo = saldoTF.getText();
-        
-        if(!Tools.esNumerico(saldo)) {
-            JOptionPane.showMessageDialog(null, "Ingresa solo datos numericos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+
+        if (!Tools.esNumerico(saldo)) {
+            JOptionPane.showMessageDialog(null, "Ingresa solo numeros", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
         CuentaBancaria cuenta = new CuentaBancaria(Double.parseDouble(saldo), idCliente);
 
-        CuentaBancariaDAO db = new CuentaBancariaDAO();
+        CuentaBancariaDAO db = CuentaBancariaDAO.getInstance();
 
         db.guardarCuenta(cuenta);
 

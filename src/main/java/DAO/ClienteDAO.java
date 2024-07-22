@@ -12,11 +12,22 @@ import javax.swing.JOptionPane;
 
 public class ClienteDAO {
 
+    private static ClienteDAO instance;
+
+    private ClienteDAO() {}
+
+    public static synchronized ClienteDAO getInstance() {
+        if (instance == null) {
+            instance = new ClienteDAO();
+        }
+        return instance;
+    }
+
     // Metodo para registrar un cliente
     public boolean registrarCliente(Cliente cliente) {
         String query = "INSERT INTO Cliente (nombre, correo, telefono) VALUES (?, ?, ?)";
 
-        try (Connection conexion = DBConexion.getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             st.setString(1, cliente.getNombre());
             st.setString(2, cliente.getCorreo());
@@ -33,7 +44,7 @@ public class ClienteDAO {
                 }
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
@@ -41,18 +52,18 @@ public class ClienteDAO {
     // Metodo para actualizar datos de un cliente
     public boolean actualizarCliente(Cliente cliente, int clienteId) {
         String query = "UPDATE Cliente SET nombre = ?, correo = ?, telefono = ? WHERE id = ?";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
-            statement.setString(1, cliente.getNombre());
-            statement.setString(2, cliente.getCorreo());
-            statement.setString(3, cliente.getTelefono());
-            statement.setInt(4, clienteId);
+            st.setString(1, cliente.getNombre());
+            st.setString(2, cliente.getCorreo());
+            st.setString(3, cliente.getTelefono());
+            st.setInt(4, clienteId);
 
-            int rowsAffected = statement.executeUpdate();
+            int rowsAffected = st.executeUpdate();
 
             return rowsAffected > 0;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
@@ -63,47 +74,47 @@ public class ClienteDAO {
         String queryCuentas = "DELETE FROM CuentaBancaria WHERE cliente_id = ?";
         String queryCliente = "DELETE FROM Cliente WHERE id = ?";
 
-        Connection connection = null;
+        Connection conexion = null;
         PreparedStatement stUsuario = null;
         PreparedStatement stCuentas = null;
         PreparedStatement stCliente = null;
 
         try {
-            connection = DBConexion.getConnection();
-            connection.setAutoCommit(false); // Iniciar transacción
+            conexion = DatabaseConnection.getConnection();
+            conexion.setAutoCommit(false); // Iniciar transacción
 
             // Eliminar usuario asociado
-            stUsuario = connection.prepareStatement(queryUsuario);
+            stUsuario = conexion.prepareStatement(queryUsuario);
             stUsuario.setInt(1, clienteId);
             stUsuario.executeUpdate();
 
             // Eliminar cuentas bancarias asociadas (esto eliminará también las transacciones asociadas debido a ON DELETE CASCADE)
-            stCuentas = connection.prepareStatement(queryCuentas);
+            stCuentas = conexion.prepareStatement(queryCuentas);
             stCuentas.setInt(1, clienteId);
             stCuentas.executeUpdate();
 
             // Eliminar cliente
-            stCliente = connection.prepareStatement(queryCliente);
+            stCliente = conexion.prepareStatement(queryCliente);
             stCliente.setInt(1, clienteId);
             int affectedRowsCliente = stCliente.executeUpdate();
 
             // Verificar que la eliminación del cliente fue exitosa
             if (affectedRowsCliente > 0) {
-                connection.commit(); // Confirmar la transacción
+                conexion.commit(); // Confirmar la transacción
                 return true;
             } else {
                 throw new SQLException("No se pudo eliminar el cliente.");
             }
 
         } catch (SQLException e) {
-            if (connection != null) {
+            if (conexion != null) {
                 try {
-                    connection.rollback(); // Revertir la transacción en caso de error
+                    conexion.rollback(); // Revertir la transacción en caso de error
                 } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Detalles del error : " + ex.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
                 }
             }
-            JOptionPane.showMessageDialog(null, "Detalles del error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
             return false;
 
         } finally {
@@ -118,12 +129,12 @@ public class ClienteDAO {
                 if (stCliente != null) {
                     stCliente.close();
                 }
-                if (connection != null) {
-                    connection.setAutoCommit(true); // Restaurar el modo de auto-commit
-                    connection.close();
+                if (conexion != null) {
+                    conexion.setAutoCommit(true); // Restaurar el modo de auto-commit
+                    conexion.close();
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
             }
         }
     }
@@ -133,7 +144,7 @@ public class ClienteDAO {
         List<Cliente> clientes = new ArrayList<>();
         String query = "SELECT id, nombre, correo, telefono FROM Cliente";
 
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query); ResultSet resultSet = statement.executeQuery()) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query); ResultSet resultSet = st.executeQuery()) {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -146,7 +157,7 @@ public class ClienteDAO {
                 clientes.add(cliente);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Detalles del error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
 
         return clientes;
@@ -155,16 +166,16 @@ public class ClienteDAO {
     public boolean obtenerCliente(int idBuscado) {
         String query = "SELECT * FROM Cliente WHERE id = ?";
 
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement preparedStatement = connection.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
-            preparedStatement.setInt(1, idBuscado);
-            ResultSet resultSet = preparedStatement.executeQuery();
+            st.setInt(1, idBuscado);
+            ResultSet resultSet = st.executeQuery();
 
             if (resultSet.next()) {
                 return true;
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Detalles del error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
@@ -172,16 +183,16 @@ public class ClienteDAO {
     // Método para obtener el ID del cliente por su nombre
     public int obtenerIdPorNombre(String nombre) {
         String query = "SELECT id FROM Cliente WHERE nombre = ?";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
-            statement.setString(1, nombre);
-            ResultSet resultSet = statement.executeQuery();
+            st.setString(1, nombre);
+            ResultSet resultSet = st.executeQuery();
 
             if (resultSet.next()) {
                 return resultSet.getInt("id");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Detalles del error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return -1; // Retorna -1 si el cliente no se encuentra
     }

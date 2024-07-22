@@ -3,12 +3,13 @@ package Modelos;
 import java.time.LocalDateTime;
 
 public class Transaccion {
-
-    private long idCuentaBancaria;
+    
+    private int idCuentaBancaria;
     private LocalDateTime fecha;
     private String tipo; // (Deposito, Retiro o Transferencia)
     private double monto;
     private String descripcion;
+    
 
     // Constructor
     public Transaccion(int idCuenta, LocalDateTime fecha, String tipo, double monto, String descripcion) {
@@ -20,11 +21,11 @@ public class Transaccion {
     }
 
     // Getters y Setters
-    public long getNumCuenta() {
+    public int getNumCuenta() {
         return idCuentaBancaria;
     }
 
-    public void setNumCuenta(long numCuenta) {
+    public void setNumCuenta(int numCuenta) {
         this.idCuentaBancaria = numCuenta;
     }
 

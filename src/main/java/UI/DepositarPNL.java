@@ -3,6 +3,9 @@ package UI;
 import Autenticacion.SessionInstance;
 import DAO.CuentaBancariaDAO;
 import Modelos.Usuario;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DepositarPNL extends javax.swing.JPanel {
@@ -133,20 +136,24 @@ public class DepositarPNL extends javax.swing.JPanel {
         String numCuenta = numCuentaTF.getText();
         String monto = montoTF.getText();
 
-        if (numCuenta.isBlank() || monto.isBlank()) {
-            JOptionPane.showMessageDialog(null, "Ingresa todos los datos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        if (!Tools.validarCamposVacios(new String[]{numCuenta, monto})) {
+            JOptionPane.showMessageDialog(null, "Por favor rellena todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        if (!Tools.esNumerico(numCuenta) || !Tools.esNumerico(monto)) {
-            JOptionPane.showMessageDialog(null, "Ingresa solo datos numericos", "Advertencia", JOptionPane.WARNING_MESSAGE);
+        if (!Tools.sonNumericos(new String[]{numCuenta, monto})) {
+            JOptionPane.showMessageDialog(null, "Ingresa solo datos numericos en los campos numero de cuenta y monto", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        CuentaBancariaDAO db = new CuentaBancariaDAO();
+        CuentaBancariaDAO db = CuentaBancariaDAO.getInstance();
 
-        if (db.depositar(Integer.parseInt(numCuenta), Double.parseDouble(monto), idCliente, false)) {
-            JOptionPane.showMessageDialog(null, "Depositaste a tu cuenta con numero: " + numCuenta + " el monto de: " + monto, "Deposito realizado", JOptionPane.INFORMATION_MESSAGE);
+        try {
+            if (db.depositar(Integer.parseInt(numCuenta), Double.parseDouble(monto), idCliente, false)) {
+                JOptionPane.showMessageDialog(null, "Depositaste a tu cuenta con numero: " + numCuenta + " el monto de: " + monto, "Deposito realizado", JOptionPane.INFORMATION_MESSAGE);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(DepositarPNL.class.getName()).log(Level.SEVERE, null, ex);
         }
 
     }//GEN-LAST:event_depositarBtnActionPerformed

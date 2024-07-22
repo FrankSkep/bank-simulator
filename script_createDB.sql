@@ -37,11 +37,8 @@ CREATE TABLE Transaccion (
 
 
 select * from usuario;
-
 select * from cuentabancaria;
-
 select * from transaccion;
-
 select * from cliente;
 
 DELETE FROM CuentaBancaria WHERE cliente_id = 8

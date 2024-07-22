@@ -2,10 +2,13 @@ package UI;
 
 import DAO.ClienteDAO;
 import DAO.CuentaBancariaDAO;
-import DAO.UsuarioDAO;
+import DAO.TransaccionDAO;
 import Modelos.Cliente;
 import Modelos.CuentaBancaria;
+import Modelos.Transaccion;
 import java.awt.BorderLayout;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -16,6 +19,10 @@ import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
 
 public class Tools {
+
+    private static final ClienteDAO clienteDAO = ClienteDAO.getInstance();
+    private static final CuentaBancariaDAO cuentaBancariaDAO = CuentaBancariaDAO.getInstance();
+    private static final TransaccionDAO transaccionDAO = TransaccionDAO.getInstance();
 
     public static void mouseListenerTable(JTable tabla, JTextField idTF, JTextField nombreTF,
             JTextField correoTF, JTextField telTF) {
@@ -43,65 +50,52 @@ public class Tools {
         });
     }
 
-    public static void limpiarFormulario(JTable tabla, JTextField idTF, JTextField nombreTF,
-            JTextField correoTF, JTextField telTF) {
-
-        idTF.setText("");
-        nombreTF.setText("");
-        correoTF.setText("");
-        telTF.setText("");
-
+    public static void limpiarFormulario(JTextField[] TFs) {
+        for (JTextField t : TFs) {
+            t.setText("");
+        }
     }
 
-    // Recibe una Tabla y la rellena con datos
-    public static void listarClientes(JTable tabla) {
+    // Llenar tabla de clientes
+    public static void entablarClientes(JTable tabla) {
+        actualizarTabla(tabla, clienteDAO.obtenerTodosLosClientes(),
+                cliente -> new Object[]{cliente.getID(), cliente.getNombre(), cliente.getCorreo(), cliente.getTelefono()},
+                new Object[]{"No hay clientes", "No hay clientes", "No hay clientes", "No hay clientes"});
+    }
 
-        // Obtener el modelo de la tabla
+    // Llenar tabla de cuentas bancarias
+    public static void entablarCuentas(JTable tabla, int idCliente) {
+        actualizarTabla(tabla, cuentaBancariaDAO.obtenerCuentasCliente(idCliente),
+                cuenta -> new Object[]{cuenta.getNumeroCuenta(), cuenta.getSaldo()},
+                new Object[]{"No hay cuentas", "No hay cuentas"});
+    }
+
+    // Llenar tabla de transacciones
+    public static void entablarTransacciones(JTable tabla, int idCliente) {
+        List<Integer> IDsCuentas = cuentaBancariaDAO.obtenerNUMsCuentas(idCliente);
+        List<Transaccion> transaccionesList = new ArrayList<>();
+
+        for (Integer numCuenta : IDsCuentas) {
+            transaccionesList.addAll(transaccionDAO.obtenerTransacciones(numCuenta));
+        }
+
+        DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
+        actualizarTabla(tabla, transaccionesList,
+                t -> new Object[]{t.getFecha().format(formato), t.getTipo(), t.getMonto(), t.getDescripcion(), t.getNumCuenta()},
+                new Object[]{"No hay transacciones"});
+    }
+
+    private static <T> void actualizarTabla(JTable tabla, List<T> elementos, java.util.function.Function<T, Object[]> mapper, Object[] filaVacia) {
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-
-        // Limpiar la tabla antes de agregar los nuevos datos
         model.setRowCount(0);
 
-        List<Cliente> clientes = new ClienteDAO().obtenerTodosLosClientes();
-
-        if (clientes.isEmpty()) {
-            Object[] row = {"No hay clientes", "No hay clientes", "No hay clientes", "No hay clientes"};
-            model.addRow(row);
-            return;
+        if (elementos.isEmpty()) {
+            model.addRow(filaVacia);
+        } else {
+            for (T elemento : elementos) {
+                model.addRow(mapper.apply(elemento));
+            }
         }
-
-        for (Cliente cliente : clientes) {
-            Object[] row = {cliente.getID(), cliente.getNombre(), cliente.getCorreo(), cliente.getTelefono()};
-            model.addRow(row);
-        }
-    }
-
-    // Recibe una Tabla y la rellena con datos
-    public static void listarCuentasB(JTable tabla, int idCliente) {
-
-        // Obtener el modelo de la tabla
-        DefaultTableModel model = (DefaultTableModel) tabla.getModel();
-
-        // Limpiar la tabla antes de agregar los nuevos datos
-        model.setRowCount(0);
-
-        List<CuentaBancaria> cuentasBancarias = new CuentaBancariaDAO().obtenerCuentasCliente(idCliente);
-
-        if (cuentasBancarias.isEmpty()) {
-            Object[] row = {"No hay cuentas", "No hay cuentas"};
-            model.addRow(row);
-            return;
-        }
-
-        for (CuentaBancaria cuenta : cuentasBancarias) {
-            Object[] row = {cuenta.getNumeroCuenta(), cuenta.getSaldo()};
-            model.addRow(row);
-        }
-    }
-
-    // Validar que no se dejen campos vacios
-    public static boolean existenCamposVacios(String nombre, String contrasenia, String nombreComp, String correo, String telefono) {
-        return nombre.isBlank() || correo.isBlank() || telefono.isBlank() || contrasenia.isBlank();
     }
 
     // Verifica si un correo es valido
@@ -120,14 +114,52 @@ public class Tools {
         return matcher.matches();
     }
 
-    // Validar todos los campos del formulario
-    public static boolean validarFormulario(String nombre, String contrasenia, String nombreComp, String correo, String telefono) {
+    // Verifica si una contraseña es valida
+    public static boolean esContraseniaValida(String pass) {
+        return !(pass.contains(" ") || pass.length() < 6);
+    }
 
-        if (Tools.existenCamposVacios(nombre, contrasenia, nombreComp, correo, telefono)) {
-            JOptionPane.showMessageDialog(null, "Por favor rellena todos los campos", "Advertencia", JOptionPane.WARNING_MESSAGE);
-            return false;
+    // Recibe un arreglo de strings y verifica si alguno esta vacio
+    public static boolean validarCamposVacios(String[] strs) {
+        for (String str : strs) {
+            if (str.isBlank()) {
+                return false;
+            }
         }
+        return true;
+    }
 
+    // Recibe una arreglo de numeros y verifica si alguno no es numerico
+    public static boolean sonNumericos(String[] numeros) {
+        for (String num : numeros) {
+            if (!esNumerico(num)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    // Cambia entre paneles
+    public static void showPanel(JPanel p, JPanel mainPanel) {
+        p.setSize(1060, 670);
+        p.setLocation(0, 0);
+
+        // Remover todos los componentes y sugerir recolección de basura
+        mainPanel.removeAll();
+        System.gc();
+
+        mainPanel.add(p, BorderLayout.CENTER);
+        mainPanel.revalidate();
+        mainPanel.repaint();
+    }
+
+    // Verifica si un valor es numerico
+    public static boolean esNumerico(String str) {
+        return str != null && str.matches("\\d*\\.?\\d+");
+    }
+
+    // Valida correo y telefono validos
+    public static boolean correoTelefonoValidos(String correo, String telefono) {
         if (!Tools.validarCorreo(correo)) {
             JOptionPane.showMessageDialog(null, "Por favor ingresa un correo valido", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return false;
@@ -138,21 +170,5 @@ public class Tools {
             return false;
         }
         return true;
-    }
-
-    // Cambia entre paneles
-    public static void showPanel(JPanel p, JPanel mainPanel) {
-        p.setSize(1060, 670);
-        p.setLocation(0, 0);
-
-        mainPanel.removeAll();
-        mainPanel.add(p, BorderLayout.CENTER);
-        mainPanel.revalidate();
-        mainPanel.repaint();
-    }
-
-    // Método para verificar si un String es numérico
-    public static boolean esNumerico(String str) {
-        return str != null && str.matches("\\d*\\.?\\d+");
     }
 }

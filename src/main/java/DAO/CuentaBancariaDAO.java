@@ -14,25 +14,36 @@ import javax.swing.JOptionPane;
 
 public class CuentaBancariaDAO {
 
-    private TransaccionDAO transDAO;
+    // Instancia única de CuentaBancariaDAO
+    private static CuentaBancariaDAO instance;
 
-    public CuentaBancariaDAO() {
-        transDAO = new TransaccionDAO();
+    // Constructor privado para evitar instanciación externa
+    private CuentaBancariaDAO() {}
+
+    // Método para obtener la instancia única de CuentaBancariaDAO
+    public static synchronized CuentaBancariaDAO getInstance() {
+        if (instance == null) {
+            instance = new CuentaBancariaDAO();
+        }
+        return instance;
     }
+
+    // Instancia de TransaccionDAO
+    private TransaccionDAO transDAO = TransaccionDAO.getInstance();
 
     // Metodo para guardar cuenta en la base de datos
     public void guardarCuenta(CuentaBancaria cuenta) {
         String query = "INSERT INTO CuentaBancaria (saldo, cliente_id) VALUES (?, ?)";
 
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
-            statement.setDouble(1, cuenta.getSaldo());
-            statement.setInt(2, cuenta.getClienteId());
+            st.setDouble(1, cuenta.getSaldo());
+            st.setInt(2, cuenta.getClienteId());
 
-            int affectedRows = statement.executeUpdate();
+            int affectedRows = st.executeUpdate();
 
             if (affectedRows > 0) {
-                try (ResultSet generatedKeys = statement.getGeneratedKeys()) {
+                try (ResultSet generatedKeys = st.getGeneratedKeys()) {
                     if (generatedKeys.next()) {
                         cuenta.setNumeroCuenta(generatedKeys.getInt(1));
                     }
@@ -43,107 +54,113 @@ public class CuentaBancariaDAO {
         }
     }
 
-    // Metodo para depositar saldo a una cuenta
-    public boolean depositar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) {
-
-        if (!esTransferencia) {
-            if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
-                JOptionPane.showMessageDialog(null, "No existe esa cuenta para el cliente con ID " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
-                return false;
-            }
+    // Método para transferir dinero
+    public boolean transferir(int numeroCuentaOrigen, int numeroCuentaDestino, double monto, int clienteId) {
+        if (!esPropietarioDeCuenta(numeroCuentaOrigen, clienteId)) {
+            JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta origen " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
 
-        String query = "UPDATE CuentaBancaria SET saldo = saldo + ? WHERE numeroCuenta = ?";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        Connection conexion = null;
+        try {
+            conexion = DatabaseConnection.getConnection();
+            conexion.setAutoCommit(false);
 
-            statement.setDouble(1, monto);
-            statement.setInt(2, numeroCuenta);
-            statement.executeUpdate();
-
-            if (!esTransferencia) {
-                // Registrar la transacción
-                LocalDateTime fechaTransaccion = LocalDateTime.now();
-                Transaccion transaccionOrigen = new Transaccion(numeroCuenta, fechaTransaccion, "Deposito", monto, "Deposito a mi cuenta numero : " + numeroCuenta);
-                transDAO.registrarTransaccion(transaccionOrigen);
+            // Retirar del origen
+            if (!retirar(numeroCuentaOrigen, monto, clienteId, true)) {
+                conexion.rollback();
+                return false;
             }
+
+            // Depositar en el destino
+            if (!depositar(numeroCuentaDestino, monto, clienteId, true)) {
+                conexion.rollback();
+                return false;
+            }
+
+            conexion.commit();
+
+            // Registrar la transacción bancaria
+            LocalDateTime fechaTransaccion = LocalDateTime.now();
+
+            Transaccion transaccionOrigen = new Transaccion(numeroCuentaOrigen, fechaTransaccion, "Transferencia", monto, "Transferencia a cuenta " + numeroCuentaDestino);
+            transDAO.registrarTransaccion(transaccionOrigen);
+
+            Transaccion transaccionDestino = new Transaccion(numeroCuentaDestino, fechaTransaccion, "Transferencia", monto, "Transferencia desde cuenta " + numeroCuentaOrigen);
+            transDAO.registrarTransaccion(transaccionDestino);
 
             return true;
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al transferir: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            if (conexion != null) {
+                try {
+                    conexion.rollback();
+                } catch (SQLException ex) {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un error al hacer rollback: " + ex.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            }
+        } finally {
+            if (conexion != null) {
+                try {
+                    conexion.setAutoCommit(true);
+                    conexion.close();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(null, "Ocurrio un error al cerrar la conexión: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+                }
+            }
         }
         return false;
     }
 
-    // Metodo para retirar saldo de una cuenta
-    public void retirar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) {
-        if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
-            JOptionPane.showMessageDialog(null, "No existe esa cuenta para el cliente con ID " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
-            return;
+    // Método para depositar saldo a una cuenta con conexión externa
+    public boolean depositar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) throws SQLException {
+        if (!esTransferencia && !esPropietarioDeCuenta(numeroCuenta, clienteId)) {
+            JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta origen " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
 
-        String query = "UPDATE CuentaBancaria SET saldo = saldo - ? WHERE numeroCuenta = ?";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        String query = "UPDATE CuentaBancaria SET saldo = saldo + ? WHERE numeroCuenta = ?";
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+            st.setDouble(1, monto);
+            st.setInt(2, numeroCuenta);
+            st.executeUpdate();
 
-            statement.setDouble(1, monto);
-            statement.setLong(2, numeroCuenta);
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-        }
-
-        if (!esTransferencia) {
             // Registrar la transacción
-            LocalDateTime fechaTransaccion = LocalDateTime.now();
-            Transaccion transaccionOrigen = new Transaccion(numeroCuenta, fechaTransaccion, "Retiro", monto, "Retiro de mi cuenta numero : " + numeroCuenta);
-            transDAO.registrarTransaccion(transaccionOrigen);
+            if (!esTransferencia) {
+                LocalDateTime fechaTransaccion = LocalDateTime.now();
+                Transaccion transaccionOrigen = new Transaccion(numeroCuenta, fechaTransaccion, "Deposito", monto, "Deposito a mi cuenta numero : " + numeroCuenta);
+                transDAO.registrarTransaccion(transaccionOrigen);
+            }
+            return true;
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al depositar: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            throw e;
         }
     }
 
-    // Método para transferir dinero
-    public void transferir(int numeroCuentaOrigen, int numeroCuentaDestino, double monto, int clienteId) {
-        if (!esPropietarioDeCuenta(numeroCuentaOrigen, clienteId)) {
-            System.out.println("El cliente no es propietario de la cuenta origen.");
-            return;
+    // Método para retirar saldo de una cuenta con conexión externa
+    public boolean retirar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) throws SQLException {
+        if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
+            JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta origen (" + numeroCuenta + ")", "Operacion fallida", JOptionPane.WARNING_MESSAGE);
+            return false;
         }
 
-        Connection connection = null;
-        try {
-            connection = DBConexion.getConnection();
-            connection.setAutoCommit(false);
+        String query = "UPDATE CuentaBancaria SET saldo = saldo - ? WHERE numeroCuenta = ?";
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+            st.setDouble(1, monto);
+            st.setInt(2, numeroCuenta);
+            st.executeUpdate();
 
-            // Retirar del origen
-            retirar(numeroCuentaOrigen, monto, clienteId, true);
-
-            // Depositar en el destino
-            depositar(numeroCuentaDestino, monto, clienteId, true);
-
-            connection.commit();
-
-//            // Registrar la transacción
-//            LocalDateTime fechaTransaccion = LocalDateTime.now();
-//            Transaccion transaccionOrigen = new Transaccion(numeroCuentaOrigen, fechaTransaccion, "Transferencia", monto, "Transferencia a cuenta " + numeroCuentaDestino);
-//            transDAO.registrarTransaccion(transaccionOrigen);
-//
-//            Transaccion transaccionDestino = new Transaccion(numeroCuentaDestino, fechaTransaccion, "Transferencia", monto, "Transferencia desde cuenta " + numeroCuentaOrigen);
-//            transDAO.registrarTransaccion(transaccionDestino);
+            // Registrar la transacción
+            if (!esTransferencia) {
+                LocalDateTime fechaTransaccion = LocalDateTime.now();
+                Transaccion transaccionOrigen = new Transaccion(numeroCuenta, fechaTransaccion, "Retiro", monto, "Retiro de mi cuenta numero : " + numeroCuenta);
+                transDAO.registrarTransaccion(transaccionOrigen);
+            }
+            return true;
         } catch (SQLException e) {
-            if (connection != null) {
-                try {
-                    connection.rollback();
-                } catch (SQLException ex) {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un error : " + ex.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-                }
-            }
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-        } finally {
-            if (connection != null) {
-                try {
-                    connection.setAutoCommit(true);
-                    connection.close();
-                } catch (SQLException e) {
-                    JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-                }
-            }
+            JOptionPane.showMessageDialog(null, "Ocurrio un error al retirar: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            throw e;
         }
     }
 
@@ -156,15 +173,15 @@ public class CuentaBancariaDAO {
 
         String query = "SELECT saldo FROM CuentaBancaria WHERE numeroCuenta = ?";
 
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
-            statement.setLong(1, numCuenta);
-            ResultSet resultSet = statement.executeQuery();
+            st.setLong(1, numCuenta);
+            ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getDouble("saldo");
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return 0;
     }
@@ -172,48 +189,32 @@ public class CuentaBancariaDAO {
     // Metodo para verificar si una cuenta le pertenece a un cliente
     public boolean esPropietarioDeCuenta(int numeroCuenta, int clienteId) {
         String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
-            statement.setLong(1, numeroCuenta);
-            ResultSet resultSet = statement.executeQuery();
+            st.setLong(1, numeroCuenta);
+            ResultSet resultSet = st.executeQuery();
             if (resultSet.next()) {
                 return resultSet.getInt("cliente_id") == clienteId;
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
     }
 
-    // Metodo para obtener id cliente, mediante numero de cuenta
-    public Integer getIDporNumCuenta(int numcuenta) {
-        String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query)) {
-
-            statement.setInt(1, numcuenta);
-            ResultSet resultSet = statement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("cliente_id");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Ocurrio un error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-        }
-        return null;
-    }
-
     // Método para obtener todas las cuentas bancarias asociadas a un cliente   
     public List<CuentaBancaria> obtenerCuentasCliente(int idCliente) {
+
         List<CuentaBancaria> cuentas = new ArrayList<>();
         String query = "SELECT numeroCuenta, saldo FROM CuentaBancaria WHERE cliente_id = ?";
 
-        try (Connection connection = DBConexion.getConnection(); PreparedStatement statement = connection.prepareStatement(query);) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
 
-            statement.setInt(1, idCliente);
+            st.setInt(1, idCliente);
 
-            ResultSet resultSet = statement.executeQuery();
+            ResultSet resultSet = st.executeQuery();
 
             while (resultSet.next()) {
-
                 // Guardar datos de la cuenta leida
                 int numeroCuenta = resultSet.getInt("numeroCuenta");
                 double saldo = resultSet.getDouble("saldo");
@@ -223,10 +224,47 @@ public class CuentaBancariaDAO {
                 cuentas.add(cuenta);
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Detalles del error : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
-
         return cuentas;
     }
 
+    // Metodo para obtener los ID de todas las cuentas de un cliente
+    public List<Integer> obtenerNUMsCuentas(int idCliente) {
+        List<Integer> numerosCuenta = new ArrayList<>();
+
+        String query = "SELECT numeroCuenta FROM CuentaBancaria WHERE cliente_id = ?";
+
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+
+            st.setInt(1, idCliente);
+
+            ResultSet resultSet = st.executeQuery();
+
+            while (resultSet.next()) {
+                // Guardar datos de la cuenta leida
+                int numeroCuenta = resultSet.getInt("numeroCuenta");
+                numerosCuenta.add(numeroCuenta);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        return numerosCuenta;
+    }
+
+    // Metodo para obtener el id del cliente propietario de una cuenta bancaria
+    public Integer getIDcliente_CuentaB(int numcuenta) {
+        String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+
+            st.setInt(1, numcuenta);
+            ResultSet resultSet = st.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("cliente_id");
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        return null;
+    }
 }
