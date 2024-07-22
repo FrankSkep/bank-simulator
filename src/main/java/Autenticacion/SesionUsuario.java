@@ -1,18 +1,17 @@
 package Autenticacion;
 
-import Modelos.Usuario;
+import Entidades.Usuario;
 
-public class SessionInstance {
+public class SesionUsuario {
 
-    private static SessionInstance instance;
+    private static SesionUsuario instance;
     private Usuario usuario;
 
-    private SessionInstance() {
-    }
+    private SesionUsuario() {}
 
-    public static SessionInstance getInstance() {
+    public static SesionUsuario getInstance() {
         if (instance == null) {
-            instance = new SessionInstance();
+            instance = new SesionUsuario();
         }
         return instance;
     }

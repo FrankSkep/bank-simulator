@@ -2,14 +2,14 @@ package Autenticacion;
 
 import DAO.ClienteDAO;
 import DAO.UsuarioDAO;
-import Modelos.Cliente;
+import Entidades.Cliente;
 
-public class Registro {
+public class RegistroUsuario {
 
     private UsuarioDAO usuarioDAO;
     private ClienteDAO clienteDAO;
 
-    public Registro() {
+    public RegistroUsuario() {
         usuarioDAO = UsuarioDAO.getInstance();
         clienteDAO = ClienteDAO.getInstance();
     }

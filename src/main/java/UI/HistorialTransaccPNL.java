@@ -1,7 +1,7 @@
 package UI;
 
-import Autenticacion.SessionInstance;
-import Modelos.Usuario;
+import Autenticacion.SesionUsuario;
+import Entidades.Usuario;
 import java.awt.Font;
 import javax.swing.table.JTableHeader;
 
@@ -13,7 +13,7 @@ public class HistorialTransaccPNL extends javax.swing.JPanel {
         initComponents();
 
         // Obtener el usuario autenticado
-        usuario = SessionInstance.getInstance().getUsuario();
+        usuario = SesionUsuario.getInstance().getUsuario();
 
         // Fuente header tabla
         JTableHeader header = tablaTransacciones.getTableHeader();

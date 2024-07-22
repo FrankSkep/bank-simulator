@@ -1,7 +1,7 @@
 package UI;
 
 import DAO.ClienteDAO;
-import Modelos.Cliente;
+import Entidades.Cliente;
 import java.awt.Font;
 import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;

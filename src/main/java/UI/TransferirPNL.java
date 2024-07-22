@@ -1,8 +1,8 @@
 package UI;
 
-import Autenticacion.SessionInstance;
+import Autenticacion.SesionUsuario;
 import DAO.CuentaBancariaDAO;
-import Modelos.Usuario;
+import Entidades.Usuario;
 import javax.swing.JOptionPane;
 
 public class TransferirPNL extends javax.swing.JPanel {
@@ -14,7 +14,7 @@ public class TransferirPNL extends javax.swing.JPanel {
         initComponents();
 
         // Obtener el usuario autenticado
-        usuario = SessionInstance.getInstance().getUsuario();
+        usuario = SesionUsuario.getInstance().getUsuario();
 
         // Obtener id del cliente
         idCliente = usuario.getClienteId();

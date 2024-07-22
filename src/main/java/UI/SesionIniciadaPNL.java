@@ -1,6 +1,6 @@
 package UI;
 
-import Autenticacion.SessionInstance;
+import Autenticacion.SesionUsuario;
 
 public class SesionIniciadaPNL extends javax.swing.JPanel {
 
@@ -8,7 +8,7 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         initComponents();
 
         // Obtener el usuario autenticado
-//        String usuario = SessionInstance.getInstance().getUsuario().getUsername();
+//        String usuario = SesionUsuario.getInstance().getUsuario().getUsername();
 //        
 //        nombreLBL.setText(usuario);
     }

@@ -1,9 +1,9 @@
 package UI;
 
-import Autenticacion.SessionInstance;
+import Autenticacion.SesionUsuario;
 import DAO.CuentaBancariaDAO;
 import DAO.DatabaseConnection;
-import Modelos.Usuario;
+import Entidades.Usuario;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.logging.Level;
@@ -19,7 +19,7 @@ public class RetirarPNL extends javax.swing.JPanel {
         initComponents();
 
         // Obtener el usuario autenticado
-        usuario = SessionInstance.getInstance().getUsuario();
+        usuario = SesionUsuario.getInstance().getUsuario();
 
         // Obtener id del cliente
         idCliente = usuario.getClienteId();

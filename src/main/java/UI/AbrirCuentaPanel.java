@@ -1,9 +1,9 @@
 package UI;
 
-import Autenticacion.SessionInstance;
+import Autenticacion.SesionUsuario;
 import DAO.CuentaBancariaDAO;
-import Modelos.CuentaBancaria;
-import Modelos.Usuario;
+import Entidades.CuentaBancaria;
+import Entidades.Usuario;
 import javax.swing.JOptionPane;
 
 public class AbrirCuentaPanel extends javax.swing.JPanel {
@@ -15,7 +15,7 @@ public class AbrirCuentaPanel extends javax.swing.JPanel {
         initComponents();
 
         // Obtener el usuario
-        usuario = SessionInstance.getInstance().getUsuario();
+        usuario = SesionUsuario.getInstance().getUsuario();
 
         idCliente = usuario.getClienteId();
 

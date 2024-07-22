@@ -1,7 +1,7 @@
 package UI;
 
-import Autenticacion.Registro;
-import Modelos.Cliente;
+import Autenticacion.RegistroUsuario;
+import Entidades.Cliente;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -164,7 +164,7 @@ public class RegistracionPNL extends javax.swing.JPanel {
             return;
         }
 
-        Registro reg = new Registro();
+        RegistroUsuario reg = new RegistroUsuario();
 
         Cliente cliente = new Cliente(nombreCompleto, correo, telefono);
         if (reg.registrarClienteYUsuario(nomUsuario, contrasenia, cliente)) {

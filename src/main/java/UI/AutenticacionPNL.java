@@ -1,8 +1,8 @@
 package UI;
 
-import Autenticacion.SessionInstance;
+import Autenticacion.SesionUsuario;
 import DAO.UsuarioDAO;
-import Modelos.Usuario;
+import Entidades.Usuario;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -139,7 +139,7 @@ public class AutenticacionPNL extends javax.swing.JPanel {
             JOptionPane.showInternalMessageDialog(null, "Has iniciado sesion correctamente.", "Autenticacion exitosa", JOptionPane.INFORMATION_MESSAGE);
 
             // Almacenar el usuario en la sesión    
-            SessionInstance.getInstance().setUsuario(usuario);
+            SesionUsuario.getInstance().setUsuario(usuario);
 
             // Actualizar el estado del Dashboard
             dashboard.actualizarEstado();

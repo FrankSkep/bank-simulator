@@ -1,8 +1,8 @@
 package UI;
 
-import Autenticacion.SessionInstance;
+import Autenticacion.SesionUsuario;
 import DAO.DatabaseConnection;
-import Modelos.Usuario;
+import Entidades.Usuario;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -340,7 +340,7 @@ public final class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_histTransaccionesBtnActionPerformed
 
     private void cerrarSesionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarSesionBtnActionPerformed
-        SessionInstance.getInstance().cerrarSesion();
+        SesionUsuario.getInstance().cerrarSesion();
         actualizarEstado();
         Tools.showPanel(inicio, contenidoPanel);
     }//GEN-LAST:event_cerrarSesionBtnActionPerformed
@@ -400,7 +400,7 @@ public final class Dashboard extends javax.swing.JFrame {
 
     // Método para actualizar el estado del Dashboard según el usuario autenticado
     public void actualizarEstado() {
-        Usuario usuario = SessionInstance.getInstance().getUsuario();
+        Usuario usuario = SesionUsuario.getInstance().getUsuario();
         if (usuario != null) {
             setModo(MODO.USER);
         } else {

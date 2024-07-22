@@ -1,6 +1,7 @@
 package DAO;
 
-import Modelos.Usuario;
+import Autenticacion.HashPassword;
+import Entidades.Usuario;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,7 +12,8 @@ public class UsuarioDAO {
 
     private static UsuarioDAO instance;
 
-    private UsuarioDAO() {}
+    private UsuarioDAO() {
+    }
 
     public static UsuarioDAO getInstance() {
         if (instance == null) {
@@ -22,8 +24,8 @@ public class UsuarioDAO {
 
     // Método para registrar un nuevo usuario
     public boolean registrarUsuario(String username, String password, int clienteId) {
-        String salt = HashingPassword.getSalt();
-        String hashedPassword = HashingPassword.hashPassword(password, salt);
+        String salt = HashPassword.getSalt();
+        String hashedPassword = HashPassword.hashPassword(password, salt);
         String query = "INSERT INTO Usuario (username, password, salt, cliente_id) VALUES (?, ?, ?, ?)";
         try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
@@ -51,7 +53,7 @@ public class UsuarioDAO {
             if (resultSet.next()) {
                 String storedPassword = resultSet.getString("password");
                 String storedSalt = resultSet.getString("salt"); // Recupera el salt de la base de datos
-                String hashedPassword = HashingPassword.hashPassword(password, storedSalt);
+                String hashedPassword = HashPassword.hashPassword(password, storedSalt);
 
                 // Compara la contraseña hasheada con la almacenada en la base de datos
                 if (storedPassword.equals(hashedPassword)) {
