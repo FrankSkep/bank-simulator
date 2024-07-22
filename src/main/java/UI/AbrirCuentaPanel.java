@@ -38,6 +38,7 @@ public class AbrirCuentaPanel extends javax.swing.JPanel {
         idClienteLabel = new javax.swing.JLabel();
         abrirCuentaBtn = new javax.swing.JButton();
         idClienteTF = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
         labelAbrirCuenta = new javax.swing.JLabel();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -110,29 +111,42 @@ public class AbrirCuentaPanel extends javax.swing.JPanel {
                 .addGap(41, 41, 41))
         );
 
-        labelAbrirCuenta.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        labelAbrirCuenta.setText("Abrir cuenta bancaria");
+        labelAbrirCuenta.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        labelAbrirCuenta.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        labelAbrirCuenta.setText("ABRIR CUENTA BANCARIA");
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(labelAbrirCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 463, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(291, 291, 291))
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addComponent(labelAbrirCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(33, Short.MAX_VALUE))
+        );
 
         javax.swing.GroupLayout abrirCuentaLayout = new javax.swing.GroupLayout(abrirCuenta);
         abrirCuenta.setLayout(abrirCuentaLayout);
         abrirCuentaLayout.setHorizontalGroup(
             abrirCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(abrirCuentaLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abrirCuentaLayout.createSequentialGroup()
                 .addGap(308, 308, 308)
-                .addGroup(abrirCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abrirCuentaLayout.createSequentialGroup()
-                        .addComponent(labelAbrirCuenta)
-                        .addGap(402, 402, 402))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, abrirCuentaLayout.createSequentialGroup()
-                        .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(287, 287, 287))))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(287, 287, 287))
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         abrirCuentaLayout.setVerticalGroup(
             abrirCuentaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(abrirCuentaLayout.createSequentialGroup()
-                .addGap(94, 94, 94)
-                .addComponent(labelAbrirCuenta)
-                .addGap(58, 58, 58)
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(69, 69, 69)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(173, Short.MAX_VALUE))
         );
@@ -178,6 +192,7 @@ public class AbrirCuentaPanel extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel labelAbrirCuenta;
     private javax.swing.JTextField numCuentaTF;
     private javax.swing.JTextField saldoTF;

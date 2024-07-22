@@ -1,7 +1,6 @@
 package UI;
 
 import Autenticacion.SesionUsuario;
-import DAO.DatabaseConnection;
 import Entidades.Usuario;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -17,8 +16,6 @@ public final class Dashboard extends javax.swing.JFrame {
     MODO modo;
 
     MenuSesionPNL inicio; // Interfaz de inicio de sesion o registro
-
-    DatabaseConnection db;
 
     public Dashboard() {
 
@@ -95,7 +92,6 @@ public final class Dashboard extends javax.swing.JFrame {
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setResizable(false);
 
         bg.setBackground(new java.awt.Color(51, 153, 255));
         bg.setPreferredSize(new java.awt.Dimension(1266, 670));
