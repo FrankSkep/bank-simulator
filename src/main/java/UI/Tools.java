@@ -3,8 +3,6 @@ package UI;
 import DAO.ClienteDAO;
 import DAO.CuentaBancariaDAO;
 import DAO.TransaccionDAO;
-import Entidades.Cliente;
-import Entidades.CuentaBancaria;
 import Entidades.Transaccion;
 import java.awt.BorderLayout;
 import java.time.format.DateTimeFormatter;

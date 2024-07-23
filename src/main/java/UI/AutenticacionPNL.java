@@ -150,7 +150,7 @@ public class AutenticacionPNL extends javax.swing.JPanel {
         if (usuario != null) {
             JOptionPane.showInternalMessageDialog(null, "Has iniciado sesion correctamente.", "Autenticacion exitosa", JOptionPane.INFORMATION_MESSAGE);
 
-            // Almacenar el usuario en la sesión    
+            // Almacenar el usuario en la sesión
             SesionUsuario.getInstance().setUsuario(usuario);
 
             // Actualizar el estado del Dashboard

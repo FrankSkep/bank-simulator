@@ -8,10 +8,10 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         initComponents();
 
         // Obtener el usuario autenticado
-        String usuario = SesionUsuario.getInstance().getUsuario().getUsername();
+        String username = SesionUsuario.getInstance().getUsuario().getUsername();
         String rol = SesionUsuario.getInstance().getUsuario().getRole();
 
-        nombreLBL.setText("USUARIO: " + usuario);
+        nombreLBL.setText("USUARIO: " + username);
         rolLBL.setText("ROL: " + rol);
     }
 
@@ -26,10 +26,14 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         rolLBL = new javax.swing.JLabel();
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(0, 0, 0));
         jLabel3.setText("EXPLORA LAS ACCIONES DISPONIBLES EN EL MENU IZQUIERDO");
 
         nombreLBL.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        nombreLBL.setForeground(new java.awt.Color(0, 0, 0));
         nombreLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nombreLBL.setText("nombre");
         nombreLBL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -59,6 +63,7 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         );
 
         rolLBL.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        rolLBL.setForeground(new java.awt.Color(0, 0, 0));
         rolLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         rolLBL.setText("rol");
         rolLBL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));

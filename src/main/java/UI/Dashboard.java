@@ -39,15 +39,7 @@ public final class Dashboard extends javax.swing.JFrame {
         inicio = new MenuSesionPNL(this); // Instancio interfaz, pasandole referencia a la clase actual
         Tools.showPanel(inicio, contenidoPanel); // Muestro la interfaz en el panel de contenido
 
-        setImageLabel(imgLBL, "src/main/resources/banco.png");
-        
-//        try {
-//            // Prueba conexion
-//            DatabaseConnection.getInstance().getConnection();
-//            JOptionPane.showMessageDialog(null, "Conexion correcta");
-//        } catch (SQLException ex) {
-//            JOptionPane.showMessageDialog(null, "Error al conectar");
-//        }
+//        setImageLabel(imgLBL, "src/main/resources/banco.png");
     }
 
     private void setImageLabel(JLabel labelName, String root) {
@@ -86,7 +78,6 @@ public final class Dashboard extends javax.swing.JFrame {
         volverBtn = new javax.swing.JButton();
         aggAdminBtn = new javax.swing.JButton();
         contenidoPanel = new javax.swing.JPanel();
-        imgLBL = new javax.swing.JLabel();
 
         jMenu1.setText("jMenu1");
 
@@ -290,17 +281,11 @@ public final class Dashboard extends javax.swing.JFrame {
         contenidoPanel.setLayout(contenidoPanelLayout);
         contenidoPanelLayout.setHorizontalGroup(
             contenidoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(contenidoPanelLayout.createSequentialGroup()
-                .addGap(200, 200, 200)
-                .addComponent(imgLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(773, Short.MAX_VALUE))
+            .addGap(0, 1052, Short.MAX_VALUE)
         );
         contenidoPanelLayout.setVerticalGroup(
             contenidoPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(contenidoPanelLayout.createSequentialGroup()
-                .addGap(89, 89, 89)
-                .addComponent(imgLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGap(0, 670, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
@@ -314,7 +299,7 @@ public final class Dashboard extends javax.swing.JFrame {
         );
         bgLayout.setVerticalGroup(
             bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(menuPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(menuPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(contenidoPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -326,7 +311,7 @@ public final class Dashboard extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(bg, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(bg, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         pack();
@@ -445,10 +430,12 @@ public final class Dashboard extends javax.swing.JFrame {
         Tools.showPanel(p, contenidoPanel);
     }//GEN-LAST:event_aggAdminBtnActionPerformed
 
+    // Boton para volver atras
     public void setVolverInicioBtn(boolean estado) {
         inicio_btn.setVisible(estado);
     }
 
+    // Obtener el panel de contenido
     public JPanel getContenidoPanel() {
         return this.contenidoPanel;
     }
@@ -468,6 +455,7 @@ public final class Dashboard extends javax.swing.JFrame {
         ocultarBotonesDeterminados();
     }
 
+    // Establecer modo
     void setModo(MODO modo) {
         this.modo = modo;
     }
@@ -484,7 +472,6 @@ public final class Dashboard extends javax.swing.JFrame {
     private javax.swing.JButton depositarBtn;
     private javax.swing.JButton elimClienteBtn;
     private javax.swing.JButton histTransaccionesBtn;
-    private javax.swing.JLabel imgLBL;
     private javax.swing.JButton inicio_btn;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JDialog jDialog1;
