@@ -1,3 +1,6 @@
+-- Crear base de datos
+CREATE DATABASE bancodb;
+
 -- Crear tabla Cliente
 CREATE TABLE Cliente (
     id SERIAL PRIMARY KEY,
@@ -13,6 +16,7 @@ CREATE TABLE Usuario (
     password VARCHAR(255) NOT NULL,
     salt VARCHAR(255) NOT NULL,
     cliente_id INT,
+    role VARCHAR(50),
     FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE
 );
 
@@ -34,20 +38,3 @@ CREATE TABLE Transaccion (
     cuentaBancaria_id BIGINT,
     FOREIGN KEY (cuentaBancaria_id) REFERENCES CuentaBancaria(numeroCuenta) ON DELETE CASCADE
 );
-
-
-select * from usuario;
-select * from cuentabancaria;
-select * from transaccion;
-select * from cliente;
-
-DELETE FROM CuentaBancaria WHERE cliente_id = 8
-DELETE FROM Cliente WHERE id = 2;
-
---- Agregar columna "ROLE"
-ALTER TABLE Usuario ADD COLUMN role VARCHAR(50);
-
-UPDATE usuario SET role = 'USER';
-
-
-
