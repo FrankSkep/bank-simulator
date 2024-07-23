@@ -24,7 +24,8 @@ public final class Dashboard extends javax.swing.JFrame {
     public Dashboard() {
 
         try {
-            UIManager.setLookAndFeel("javax.swing.plaf.nimbus.NimbusLookAndFeel");
+            UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
+            // "com.sun.java.swing.plaf.windows.WindowsLookAndFeel"
             // "javax.swing.plaf.nimbus.NimbusLookAndFeel"
         } catch (ClassNotFoundException | IllegalAccessException | InstantiationException | UnsupportedLookAndFeelException e) {
         }
