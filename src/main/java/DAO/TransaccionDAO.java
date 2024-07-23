@@ -59,13 +59,12 @@ public class TransaccionDAO {
 
     // Eliminar todas las transacciones asociadas a un cliente
     public boolean eliminarTransacciones(int clienteId) {
-        String query = "DELETE FROM Transaccion WHERE numeroCuenta IN (SELECT numeroCuenta FROM CuentaBancaria WHERE cliente_id = ?)";
+        String query = "DELETE FROM Transaccion WHERE cuentabancaria_id IN (SELECT numeroCuenta FROM CuentaBancaria WHERE cliente_id = ?)";
 
         try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
             st.setInt(1, clienteId);
             int affectedRows = st.executeUpdate();
             if (affectedRows > 0) {
-                JOptionPane.showMessageDialog(null, "Transacciones eliminadas exitosamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
                 return true;
             }
         } catch (SQLException e) {

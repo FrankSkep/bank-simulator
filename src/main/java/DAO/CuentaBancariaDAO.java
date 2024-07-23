@@ -56,13 +56,13 @@ public class CuentaBancariaDAO {
             conexion.setAutoCommit(false);
 
             // Retirar del origen
-            if (!retirar(numeroCuentaOrigen, monto, clienteId, true, conexion)) {
+            if (!retirar(numeroCuentaOrigen, monto, clienteId, true)) {
                 conexion.rollback();
                 return false;
             }
 
             // Depositar en el destino
-            if (!depositar(numeroCuentaDestino, monto, clienteId, true, conexion)) {
+            if (!depositar(numeroCuentaDestino, monto, clienteId, true)) {
                 conexion.rollback();
                 return false;
             }
@@ -102,16 +102,14 @@ public class CuentaBancariaDAO {
     }
 
     // Método para depositar saldo a una cuenta con conexión externa
-    public boolean depositar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia, Connection conexion) throws SQLException {
+    public boolean depositar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) {
         if (!esTransferencia && !esPropietarioDeCuenta(numeroCuenta, clienteId)) {
             JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta origen " + clienteId, "Operacion fallida", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo + ? WHERE numeroCuenta = ?";
-        try {
-            conexion = conexion == null ? DatabaseConnection.getConnection() : conexion;
-            PreparedStatement st = conexion.prepareStatement(query);
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
             st.setDouble(1, monto);
             st.setInt(2, numeroCuenta);
             st.executeUpdate();
@@ -125,21 +123,19 @@ public class CuentaBancariaDAO {
             return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al depositar: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-            throw e;
         }
+        return false;
     }
 
     // Método para retirar saldo de una cuenta con conexión externa
-    public boolean retirar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia, Connection conexion) throws SQLException {
+    public boolean retirar(int numeroCuenta, double monto, int clienteId, boolean esTransferencia) {
         if (!esPropietarioDeCuenta(numeroCuenta, clienteId)) {
             JOptionPane.showMessageDialog(null, "No eres propietario de la cuenta origen (" + numeroCuenta + ")", "Operacion fallida", JOptionPane.WARNING_MESSAGE);
             return false;
         }
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo - ? WHERE numeroCuenta = ?";
-        try {
-            conexion = conexion == null ? DatabaseConnection.getConnection() : conexion;
-            PreparedStatement st = conexion.prepareStatement(query);
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
             st.setDouble(1, monto);
             st.setInt(2, numeroCuenta);
             st.executeUpdate();
@@ -153,8 +149,8 @@ public class CuentaBancariaDAO {
             return true;
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrio un error al retirar: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-            throw e;
         }
+        return false;
     }
 
     // Metodo para consultar saldo de una cuenta

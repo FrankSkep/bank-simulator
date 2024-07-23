@@ -1,25 +1,26 @@
 package UI;
 
 import Autenticacion.SesionUsuario;
-import Entidades.Usuario;
+import DAO.TransaccionDAO;
 import java.awt.Font;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableRowSorter;
 
 public class ListaTransaccionesPNL extends javax.swing.JPanel {
-
-    private Usuario usuario;
-
+    
+    private String username;
+    private int clienteId;
+    
     public ListaTransaccionesPNL() {
         initComponents();
 
         // Obtener el usuario autenticado
-        usuario = SesionUsuario.getInstance().getUsuario();
+        username = SesionUsuario.getInstance().getUsuario().getUsername();
+        clienteId = SesionUsuario.getInstance().getUsuario().getId();
 
         // Fuente header tabla
         JTableHeader header = tablaTransacciones.getTableHeader();
@@ -31,7 +32,7 @@ public class ListaTransaccionesPNL extends javax.swing.JPanel {
         renderer.setHorizontalAlignment(JLabel.CENTER);
 
         // Enlistar transacciones
-        Tools.entablarTransacciones(tablaTransacciones, usuario.getClienteId());
+        Tools.entablarTransacciones(tablaTransacciones, clienteId);
 
         // Crear el sorter y aplicarlo a la tabla
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tablaTransacciones.getModel());
@@ -39,10 +40,10 @@ public class ListaTransaccionesPNL extends javax.swing.JPanel {
 
         // Deshabilitar ordenamiento en columna descripcion
         sorter.setSortable(3, false);
-
-        labelClienteName.setText("CLIENTE : " + usuario.getUsername());
+        
+        labelClienteName.setText("CLIENTE : " + username);
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -53,8 +54,9 @@ public class ListaTransaccionesPNL extends javax.swing.JPanel {
         tablaTransacciones = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        elimBtn = new javax.swing.JButton();
 
-        labelClienteName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        labelClienteName.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         labelClienteName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelClienteName.setText("CLIENTE : ");
         labelClienteName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
@@ -127,18 +129,30 @@ public class ListaTransaccionesPNL extends javax.swing.JPanel {
                 .addContainerGap(34, Short.MAX_VALUE))
         );
 
+        elimBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        elimBtn.setText("ELIMINAR TRANSACCIONES");
+        elimBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                elimBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(elimBtn)
+                .addGap(422, 422, 422))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(101, 101, 101)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(339, 339, 339)
+                        .addGap(349, 349, 349)
                         .addComponent(labelClienteName, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(102, Short.MAX_VALUE))
         );
@@ -148,9 +162,11 @@ public class ListaTransaccionesPNL extends javax.swing.JPanel {
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelClienteName)
-                .addGap(35, 35, 35)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(elimBtn)
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -165,8 +181,19 @@ public class ListaTransaccionesPNL extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void elimBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elimBtnActionPerformed
+        TransaccionDAO db = new TransaccionDAO();
+        if (db.eliminarTransacciones(clienteId)) {
+            JOptionPane.showMessageDialog(null, "Transacciones eliminadas exitosamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+            Tools.entablarTransacciones(tablaTransacciones, clienteId);
+        } else {
+            JOptionPane.showMessageDialog(null, "No hay transacciones que eliminar.", "Informacion", JOptionPane.WARNING_MESSAGE);
+        }
+    }//GEN-LAST:event_elimBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton elimBtn;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

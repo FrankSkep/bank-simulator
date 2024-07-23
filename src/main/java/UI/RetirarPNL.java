@@ -180,15 +180,11 @@ public class RetirarPNL extends javax.swing.JPanel {
             return;
         }
 
-        try (Connection conexion = DatabaseConnection.getConnection();) {
-            if (db.retirar(Integer.parseInt(numCuenta), montoTransferir, idCliente, false, conexion)) {
-                JOptionPane.showInternalMessageDialog(null, "Has retirado de tu cuenta numero : " + numCuenta + " el monto de : " + monto, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-            }
-            saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuenta), idCliente);
-            saldoTF.setText(String.valueOf(saldoDisponible));
-        } catch (SQLException ex) {
-            Logger.getLogger(RetirarPNL.class.getName()).log(Level.SEVERE, null, ex);
+        if (db.retirar(Integer.parseInt(numCuenta), montoTransferir, idCliente, false)) {
+            JOptionPane.showInternalMessageDialog(null, "Has retirado de tu cuenta numero : " + numCuenta + " el monto de : " + monto, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
         }
+        saldoDisponible = db.consultarSaldo(Integer.parseInt(numCuenta), idCliente);
+        saldoTF.setText(String.valueOf(saldoDisponible));
     }//GEN-LAST:event_retirarBtnActionPerformed
 
 
