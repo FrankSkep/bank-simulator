@@ -5,14 +5,16 @@ public class Usuario {
     private int id;
     private String username;
     private String password;
-    private int clienteId;
+    private Integer clienteId;
+    private String role;
 
     // Constructor
-    public Usuario(int id, String username, String password, int clienteId) {
+    public Usuario(int id, String username, String password, Integer clienteId, String role) {
         this.id = id;
         this.username = username;
         this.password = password;
         this.clienteId = clienteId;
+        this.role = role;
     }
 
     // Getters y Setters
@@ -46,5 +48,13 @@ public class Usuario {
 
     public void setClienteId(int clienteId) {
         this.clienteId = clienteId;
+    }
+
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
     }
 }

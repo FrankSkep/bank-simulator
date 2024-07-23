@@ -43,3 +43,11 @@ select * from cliente;
 
 DELETE FROM CuentaBancaria WHERE cliente_id = 8
 DELETE FROM Cliente WHERE id = 2;
+
+--- Agregar columna "ROLE"
+ALTER TABLE Usuario ADD COLUMN role VARCHAR(50);
+
+UPDATE usuario SET role = 'USER';
+
+
+

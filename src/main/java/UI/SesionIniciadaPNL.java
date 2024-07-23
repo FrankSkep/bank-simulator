@@ -8,9 +8,11 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         initComponents();
 
         // Obtener el usuario autenticado
-//        String usuario = SesionUsuario.getInstance().getUsuario().getUsername();
-//        
-//        nombreLBL.setText(usuario);
+        String usuario = SesionUsuario.getInstance().getUsuario().getUsername();
+        String rol = SesionUsuario.getInstance().getUsuario().getRole();
+
+        nombreLBL.setText("USUARIO: " + usuario);
+        rolLBL.setText("ROL: " + rol);
     }
 
     @SuppressWarnings("unchecked")
@@ -22,6 +24,7 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         nombreLBL = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        rolLBL = new javax.swing.JLabel();
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel3.setText("EXPLORA LAS ACCIONES DISPONIBLES EN EL MENU IZQUIERDO");
@@ -29,6 +32,7 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         nombreLBL.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         nombreLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         nombreLBL.setText("nombre");
+        nombreLBL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 
@@ -42,7 +46,7 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(427, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(416, 416, 416))
         );
@@ -54,29 +58,39 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
                 .addGap(33, 33, 33))
         );
 
+        rolLBL.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        rolLBL.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        rolLBL.setText("rol");
+        rolLBL.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(259, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(253, 253, 253))
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(297, 297, 297)
-                .addComponent(nombreLBL, javax.swing.GroupLayout.PREFERRED_SIZE, 231, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addGap(242, 242, 242))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(nombreLBL, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(rolLBL, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 369, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(342, 342, 342))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(173, 173, 173)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 140, Short.MAX_VALUE)
                 .addComponent(nombreLBL)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 195, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(rolLBL)
+                .addGap(158, 158, 158)
                 .addComponent(jLabel3)
-                .addGap(146, 146, 146))
+                .addGap(142, 142, 142))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -87,7 +101,7 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -98,5 +112,6 @@ public class SesionIniciadaPNL extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel nombreLBL;
+    private javax.swing.JLabel rolLBL;
     // End of variables declaration//GEN-END:variables
 }

@@ -49,6 +49,7 @@ public class HistorialTransaccPNL extends javax.swing.JPanel {
         labelClienteName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         labelClienteName.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         labelClienteName.setText("CLIENTE : ");
+        labelClienteName.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         tablaTransacciones.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaTransacciones.setModel(new javax.swing.table.DefaultTableModel(
@@ -70,6 +71,7 @@ public class HistorialTransaccPNL extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tablaTransacciones.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaTransacciones.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaTransacciones);
         if (tablaTransacciones.getColumnModel().getColumnCount() > 0) {
@@ -118,22 +120,22 @@ public class HistorialTransaccPNL extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(338, 338, 338)
-                        .addComponent(labelClienteName, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(101, 101, 101)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(95, 95, 95)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 857, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(108, Short.MAX_VALUE))
+                        .addGap(339, 339, 339)
+                        .addComponent(labelClienteName, javax.swing.GroupLayout.PREFERRED_SIZE, 343, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(labelClienteName)
-                .addGap(31, 31, 31)
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

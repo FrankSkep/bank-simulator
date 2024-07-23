@@ -116,12 +116,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="aggAdminBtn" max="32767" attributes="0"/>
                           <Component id="cerrarSesionBtn" pref="194" max="32767" attributes="0"/>
                           <Component id="consultaBtn" pref="194" max="32767" attributes="0"/>
-                          <Component id="elimClienteBtn" pref="194" max="32767" attributes="0"/>
                           <Component id="buscarClienteBtn" alignment="0" pref="194" max="32767" attributes="0"/>
                           <Component id="depositarBtn" alignment="0" pref="194" max="32767" attributes="0"/>
                           <Component id="retirarBtn" alignment="0" pref="194" max="32767" attributes="0"/>
@@ -130,6 +130,7 @@
                           <Component id="abrirCuentaBtn" alignment="0" pref="194" max="32767" attributes="0"/>
                           <Component id="cerrarCuentaBtn" pref="194" max="32767" attributes="0"/>
                           <Component id="inicio_btn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="elimClienteBtn" max="32767" attributes="0"/>
                           <Component id="volverBtn" alignment="0" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace pref="8" max="32767" attributes="0"/>
@@ -138,12 +139,14 @@
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="-2" pref="132" max="-2" attributes="0"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
                       <Component id="volverBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
+                      <Component id="aggAdminBtn" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="elimClienteBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
                       <Component id="buscarClienteBtn" min="-2" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Component id="depositarBtn" min="-2" pref="27" max="-2" attributes="0"/>
@@ -157,7 +160,7 @@
                       <Component id="consultaBtn" min="-2" pref="27" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="cerrarSesionBtn" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="135" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                       <Component id="abrirCuentaBtn" min="-2" pref="27" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Component id="cerrarCuentaBtn" min="-2" pref="27" max="-2" attributes="0"/>
@@ -284,7 +287,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Segoe UI" size="14" style="1"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Volver a inicio"/>
+                <Property name="text" type="java.lang.String" value="Volver atras"/>
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inicio_btnActionPerformed"/>
@@ -299,6 +302,17 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="volverBtnActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="aggAdminBtn">
+              <Properties>
+                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                  <Font name="Segoe UI" size="14" style="1"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="Agregar administrador"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="aggAdminBtnActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

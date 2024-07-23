@@ -163,6 +163,7 @@ public class ElimClientePNL extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
+        tabla_clientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tabla_clientes.setShowHorizontalLines(true);
         tabla_clientes.setShowVerticalLines(true);
         tabla_clientes.setSurrendersFocusOnKeystroke(true);

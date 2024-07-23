@@ -35,8 +35,7 @@
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="382" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="inAdminBtn" pref="0" max="32767" attributes="0"/>
-                      <Component id="InClienteBtn" alignment="0" max="32767" attributes="0"/>
+                      <Component id="iniciarSesionBtn" alignment="0" max="32767" attributes="0"/>
                       <Component id="registrarseBtn" alignment="1" min="-2" pref="305" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="373" max="-2" attributes="0"/>
@@ -48,18 +47,16 @@
               <Group type="102" alignment="0" attributes="0">
                   <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="167" max="32767" attributes="0"/>
-                  <Component id="InClienteBtn" min="-2" max="-2" attributes="0"/>
+                  <Component id="iniciarSesionBtn" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="registrarseBtn" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="165" max="-2" attributes="0"/>
-                  <Component id="inAdminBtn" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="280" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
       </Layout>
       <SubComponents>
-        <Component class="javax.swing.JButton" name="InClienteBtn">
+        <Component class="javax.swing.JButton" name="iniciarSesionBtn">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Segoe UI" size="18" style="1"/>
@@ -67,7 +64,7 @@
             <Property name="text" type="java.lang.String" value="INICIAR SESION"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="InClienteBtnActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="iniciarSesionBtnActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="registrarseBtn">
@@ -79,17 +76,6 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="registrarseBtnActionPerformed"/>
-          </Events>
-        </Component>
-        <Component class="javax.swing.JButton" name="inAdminBtn">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Segoe UI" size="18" style="1"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="INICIAR COMO ADMINISTRADOR"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="inAdminBtnActionPerformed"/>
           </Events>
         </Component>
         <Container class="javax.swing.JPanel" name="jPanel2">
