@@ -5,13 +5,17 @@ import Entidades.Usuario;
 import java.awt.Font;
 import javax.swing.JLabel;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.table.TableColumnModel;
+import javax.swing.table.TableRowSorter;
 
-public class HistorialTransaccPNL extends javax.swing.JPanel {
+public class ListaTransaccionesPNL extends javax.swing.JPanel {
 
     private Usuario usuario;
 
-    public HistorialTransaccPNL() {
+    public ListaTransaccionesPNL() {
         initComponents();
 
         // Obtener el usuario autenticado
@@ -28,6 +32,13 @@ public class HistorialTransaccPNL extends javax.swing.JPanel {
 
         // Enlistar transacciones
         Tools.entablarTransacciones(tablaTransacciones, usuario.getClienteId());
+
+        // Crear el sorter y aplicarlo a la tabla
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tablaTransacciones.getModel());
+        tablaTransacciones.setRowSorter(sorter);
+
+        // Deshabilitar ordenamiento en columna descripcion
+        sorter.setSortable(3, false);
 
         labelClienteName.setText("CLIENTE : " + usuario.getUsername());
     }
@@ -60,9 +71,16 @@ public class HistorialTransaccPNL extends javax.swing.JPanel {
                 "FECHA", "TIPO", "MONTO", "DESCRIPCION", "ID CUENTA"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Double.class, java.lang.Object.class, java.lang.Object.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false, false, false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];

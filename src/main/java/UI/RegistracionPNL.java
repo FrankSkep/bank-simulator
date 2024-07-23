@@ -204,7 +204,7 @@ public class RegistracionPNL extends javax.swing.JPanel {
                              Se registro correctamente\n
                              ID de cliente : """ + cliente.getID();
             JOptionPane.showMessageDialog(null, mensaje, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-            Tools.showPanel(new MenuSesionPNL(this.dashboard), (JPanel) this.getParent());
+            Tools.showPanel(new Iniciar_o_Registrar_PNL(this.dashboard), (JPanel) this.getParent());
         } else {
             JOptionPane.showMessageDialog(null, "Ya existe un cliente registrado con ese nombre de usuario", "Operacion fallida", JOptionPane.INFORMATION_MESSAGE);
         }

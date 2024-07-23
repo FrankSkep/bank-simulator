@@ -5,11 +5,11 @@ import DAO.UsuarioDAO;
 import Entidades.Usuario;
 import javax.swing.JOptionPane;
 
-public class AutenticacionPNL extends javax.swing.JPanel {
+public class AutenticarPNL extends javax.swing.JPanel {
 
     private Dashboard dashboard;
 
-    public AutenticacionPNL(Dashboard dashboard, String role) {
+    public AutenticarPNL(Dashboard dashboard, String role) {
         this.dashboard = dashboard;
         initComponents();
     }

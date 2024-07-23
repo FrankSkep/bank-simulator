@@ -8,27 +8,37 @@ import javax.swing.JOptionPane;
 import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
+import javax.swing.table.TableRowSorter;
 
-public class BuscarClientesPNL extends javax.swing.JPanel {
+public class ListaClientesPNL extends javax.swing.JPanel {
 
-    public BuscarClientesPNL() {
+    public ListaClientesPNL() {
         initComponents();
 
         // Agrega listener para seleccionar filas de la tabla
-        Tools.mouseListenerTable(tabla_clientes, idTF, nombreTF, correoTF, telTF);
+        Tools.mouseListenerTable(tablaClientes, idTF, nombreTF, correoTF, telTF);
 
         // Muestra la lista de clientes al entrar al panel
-        Tools.entablarClientes(tabla_clientes);
+        Tools.entablarClientes(tablaClientes);
 
         // Fuente header tabla
-        JTableHeader header = tabla_clientes.getTableHeader();
+        JTableHeader header = tablaClientes.getTableHeader();
         Font headerFont = new Font("Segoe UI", Font.BOLD, 14);
         header.setFont(headerFont);
 
         // Crear un renderizador para centrar el texto del encabezado
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) header.getDefaultRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
+        
+        // Crear el sorter y aplicarlo a la tabla
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tablaClientes.getModel());
+        tablaClientes.setRowSorter(sorter);
+
+        // Deshabilitar ordenamiento en columnas correo y telefono
+        sorter.setSortable(2, false);
+        sorter.setSortable(3, false);
     }
 
     @SuppressWarnings("unchecked")
@@ -47,7 +57,7 @@ public class BuscarClientesPNL extends javax.swing.JPanel {
         telefonoLabel = new javax.swing.JLabel();
         telTF = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
-        tabla_clientes = new javax.swing.JTable();
+        tablaClientes = new javax.swing.JTable();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -127,8 +137,8 @@ public class BuscarClientesPNL extends javax.swing.JPanel {
                 .addContainerGap(32, Short.MAX_VALUE))
         );
 
-        tabla_clientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        tabla_clientes.setModel(new javax.swing.table.DefaultTableModel(
+        tablaClientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -151,19 +161,19 @@ public class BuscarClientesPNL extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tabla_clientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        tabla_clientes.setShowHorizontalLines(true);
-        tabla_clientes.setShowVerticalLines(true);
-        tabla_clientes.setSurrendersFocusOnKeystroke(true);
-        tabla_clientes.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tabla_clientes);
-        if (tabla_clientes.getColumnModel().getColumnCount() > 0) {
-            tabla_clientes.getColumnModel().getColumn(0).setMinWidth(70);
-            tabla_clientes.getColumnModel().getColumn(0).setPreferredWidth(70);
-            tabla_clientes.getColumnModel().getColumn(0).setMaxWidth(70);
-            tabla_clientes.getColumnModel().getColumn(3).setMinWidth(120);
-            tabla_clientes.getColumnModel().getColumn(3).setPreferredWidth(120);
-            tabla_clientes.getColumnModel().getColumn(3).setMaxWidth(120);
+        tablaClientes.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        tablaClientes.setShowHorizontalLines(true);
+        tablaClientes.setShowVerticalLines(true);
+        tablaClientes.setSurrendersFocusOnKeystroke(true);
+        tablaClientes.getTableHeader().setReorderingAllowed(false);
+        jScrollPane2.setViewportView(tablaClientes);
+        if (tablaClientes.getColumnModel().getColumnCount() > 0) {
+            tablaClientes.getColumnModel().getColumn(0).setMinWidth(70);
+            tablaClientes.getColumnModel().getColumn(0).setPreferredWidth(70);
+            tablaClientes.getColumnModel().getColumn(0).setMaxWidth(70);
+            tablaClientes.getColumnModel().getColumn(3).setMinWidth(120);
+            tablaClientes.getColumnModel().getColumn(3).setPreferredWidth(120);
+            tablaClientes.getColumnModel().getColumn(3).setMaxWidth(120);
         }
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
@@ -258,7 +268,7 @@ public class BuscarClientesPNL extends javax.swing.JPanel {
 
             if (db.actualizarCliente(cliente, Integer.parseInt(id))) {
                 JOptionPane.showMessageDialog(null, "Se ha actualizado el cliente con ID " + id, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-                Tools.entablarClientes(tabla_clientes);
+                Tools.entablarClientes(tablaClientes);
             }
             Tools.limpiarFormulario(new JTextField[]{idTF, nombreTF, correoTF, telTF});
         }
@@ -277,7 +287,7 @@ public class BuscarClientesPNL extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel nombreLabel;
     private javax.swing.JTextField nombreTF;
-    private javax.swing.JTable tabla_clientes;
+    private javax.swing.JTable tablaClientes;
     private javax.swing.JTextField telTF;
     private javax.swing.JLabel telefonoLabel;
     // End of variables declaration//GEN-END:variables

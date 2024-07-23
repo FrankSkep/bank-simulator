@@ -79,7 +79,7 @@ public class Tools {
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         actualizarTabla(tabla, transaccionesList,
-                t -> new Object[]{t.getFecha().format(formato), t.getTipo(), t.getMonto(), t.getDescripcion(), t.getNumCuenta()},
+                t -> new Object[]{t.getFecha().format(formato), t.getTipo(), (double) t.getMonto(), t.getDescripcion(), t.getNumCuenta()},
                 new Object[]{"No hay transacciones"});
     }
 

@@ -91,7 +91,7 @@
                   <Table columnCount="5" rowCount="4">
                     <Column editable="false" title="FECHA" type="java.lang.Object"/>
                     <Column editable="false" title="TIPO" type="java.lang.Object"/>
-                    <Column editable="false" title="MONTO" type="java.lang.Object"/>
+                    <Column editable="false" title="MONTO" type="java.lang.Double"/>
                     <Column editable="false" title="DESCRIPCION" type="java.lang.Object"/>
                     <Column editable="false" title="ID CUENTA" type="java.lang.Object"/>
                   </Table>

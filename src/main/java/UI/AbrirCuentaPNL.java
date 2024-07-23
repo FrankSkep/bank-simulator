@@ -5,11 +5,11 @@ import DAO.CuentaBancariaDAO;
 import Entidades.CuentaBancaria;
 import javax.swing.JOptionPane;
 
-public class AbrirCuentaPanel extends javax.swing.JPanel {
+public class AbrirCuentaPNL extends javax.swing.JPanel {
 
     private int idCliente;
 
-    public AbrirCuentaPanel() {
+    public AbrirCuentaPNL() {
         initComponents();
 
         // Obtener ID cliente autenticado

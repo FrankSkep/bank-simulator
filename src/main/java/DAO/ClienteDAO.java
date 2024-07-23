@@ -151,39 +151,4 @@ public class ClienteDAO {
 
         return clientes;
     }
-
-    public boolean obtenerCliente(int idBuscado) {
-        String query = "SELECT * FROM Cliente WHERE id = ?";
-
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
-
-            st.setInt(1, idBuscado);
-            ResultSet resultSet = st.executeQuery();
-
-            if (resultSet.next()) {
-                return true;
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-        }
-        return false;
-    }
-
-    // Método para obtener el ID del cliente por su nombre
-    public int obtenerIdPorNombre(String nombre) {
-        String query = "SELECT id FROM Cliente WHERE nombre = ?";
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
-
-            st.setString(1, nombre);
-            ResultSet resultSet = st.executeQuery();
-
-            if (resultSet.next()) {
-                return resultSet.getInt("id");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-        }
-        return -1; // Retorna -1 si el cliente no se encuentra
-    }
-
 }

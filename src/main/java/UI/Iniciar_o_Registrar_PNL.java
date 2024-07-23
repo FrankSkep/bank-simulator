@@ -1,10 +1,10 @@
 package UI;
 
-public class MenuSesionPNL extends javax.swing.JPanel {
+public class Iniciar_o_Registrar_PNL extends javax.swing.JPanel {
 
     Dashboard dashboard;
 
-    public MenuSesionPNL(Dashboard dashboard) {
+    public Iniciar_o_Registrar_PNL(Dashboard dashboard) {
         this.dashboard = dashboard;
         initComponents();
     }
@@ -94,7 +94,7 @@ public class MenuSesionPNL extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void iniciarSesionBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_iniciarSesionBtnActionPerformed
-        AutenticacionPNL p = new AutenticacionPNL(this.dashboard, "USER");
+        AutenticarPNL p = new AutenticarPNL(this.dashboard, "USER");
         Tools.showPanel(p, this.dashboard.getContenidoPanel());
         dashboard.setVolverInicioBtn(true);
     }//GEN-LAST:event_iniciarSesionBtnActionPerformed

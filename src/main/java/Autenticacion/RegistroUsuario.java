@@ -39,10 +39,7 @@ public class RegistroUsuario {
             return false; // Si fallo el registro
         }
 
-        // Obtener el ID del cliente recién registrado
-        int clienteId = clienteDAO.obtenerIdPorNombre(cliente.getNombre()); // Implementa este método en ClienteDAO
-
         // 2. Registrar el nuevo usuario y asociarlo al cliente
-        return usuarioDAO.registrarUsuario(username, password, clienteId, "USER");
+        return usuarioDAO.registrarUsuario(username, password, cliente.getID(), "USER");
     }
 }
