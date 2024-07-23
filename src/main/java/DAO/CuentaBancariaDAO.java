@@ -24,7 +24,7 @@ public class CuentaBancariaDAO {
     public void guardarCuenta(CuentaBancaria cuenta) {
         String query = "INSERT INTO CuentaBancaria (saldo, cliente_id) VALUES (?, ?)";
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             st.setDouble(1, cuenta.getSaldo());
             st.setInt(2, cuenta.getClienteId());
@@ -52,7 +52,7 @@ public class CuentaBancariaDAO {
 
         Connection conexion = null;
         try {
-            conexion = DatabaseConnection.getInstance().getConnection();
+            conexion = DatabaseConnection.getConnection();
             conexion.setAutoCommit(false);
 
             // Retirar del origen
@@ -110,7 +110,7 @@ public class CuentaBancariaDAO {
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo + ? WHERE numeroCuenta = ?";
         try {
-            conexion = conexion == null ? DatabaseConnection.getInstance().getConnection() : conexion;
+            conexion = conexion == null ? DatabaseConnection.getConnection() : conexion;
             PreparedStatement st = conexion.prepareStatement(query);
             st.setDouble(1, monto);
             st.setInt(2, numeroCuenta);
@@ -138,7 +138,7 @@ public class CuentaBancariaDAO {
 
         String query = "UPDATE CuentaBancaria SET saldo = saldo - ? WHERE numeroCuenta = ?";
         try {
-            conexion = conexion == null ? DatabaseConnection.getInstance().getConnection() : conexion;
+            conexion = conexion == null ? DatabaseConnection.getConnection() : conexion;
             PreparedStatement st = conexion.prepareStatement(query);
             st.setDouble(1, monto);
             st.setInt(2, numeroCuenta);
@@ -166,7 +166,7 @@ public class CuentaBancariaDAO {
 
         String query = "SELECT saldo FROM CuentaBancaria WHERE numeroCuenta = ?";
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setLong(1, numCuenta);
             ResultSet resultSet = st.executeQuery();
@@ -182,7 +182,7 @@ public class CuentaBancariaDAO {
     // Metodo para verificar si una cuenta le pertenece a un cliente
     public boolean esPropietarioDeCuenta(int numeroCuenta, int clienteId) {
         String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setLong(1, numeroCuenta);
             ResultSet resultSet = st.executeQuery();
@@ -201,7 +201,7 @@ public class CuentaBancariaDAO {
         List<CuentaBancaria> cuentas = new ArrayList<>();
         String query = "SELECT numeroCuenta, saldo FROM CuentaBancaria WHERE cliente_id = ?";
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
 
             st.setInt(1, idCliente);
 
@@ -228,7 +228,7 @@ public class CuentaBancariaDAO {
 
         String query = "SELECT numeroCuenta FROM CuentaBancaria WHERE cliente_id = ?";
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
 
             st.setInt(1, idCliente);
 
@@ -248,7 +248,7 @@ public class CuentaBancariaDAO {
     // Metodo para obtener el id del cliente propietario de una cuenta bancaria
     public Integer getIDcliente_CuentaB(int numcuenta) {
         String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setInt(1, numcuenta);
             ResultSet resultSet = st.executeQuery();
@@ -270,7 +270,7 @@ public class CuentaBancariaDAO {
         }
         String query = "DELETE FROM CuentaBancaria WHERE numeroCuenta = ?";
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
 
             st.setInt(1, numCuenta);
             int affectedRows = st.executeUpdate();

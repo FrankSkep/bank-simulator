@@ -159,7 +159,7 @@ public class DepositarPNL extends javax.swing.JPanel {
 
         CuentaBancariaDAO db = new CuentaBancariaDAO();
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection();) {
+        try (Connection conexion = DatabaseConnection.getConnection();) {
             if (db.depositar(Integer.parseInt(numCuenta), Double.parseDouble(monto), idCliente, false, conexion)) {
                 JOptionPane.showMessageDialog(null, "Depositaste a tu cuenta con numero: " + numCuenta + " el monto de: " + monto, "Deposito realizado", JOptionPane.INFORMATION_MESSAGE);
             }

@@ -180,7 +180,7 @@ public class RetirarPNL extends javax.swing.JPanel {
             return;
         }
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection();) {
+        try (Connection conexion = DatabaseConnection.getConnection();) {
             if (db.retirar(Integer.parseInt(numCuenta), montoTransferir, idCliente, false, conexion)) {
                 JOptionPane.showInternalMessageDialog(null, "Has retirado de tu cuenta numero : " + numCuenta + " el monto de : " + monto, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
             }

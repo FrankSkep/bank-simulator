@@ -16,7 +16,7 @@ public class ClienteDAO {
     public boolean registrarCliente(Cliente cliente) {
         String query = "INSERT INTO Cliente (nombre, correo, telefono) VALUES (?, ?, ?)";
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 
             st.setString(1, cliente.getNombre());
             st.setString(2, cliente.getCorreo());
@@ -41,7 +41,7 @@ public class ClienteDAO {
     // Metodo para actualizar datos de un cliente
     public boolean actualizarCliente(Cliente cliente, int clienteId) {
         String query = "UPDATE Cliente SET nombre = ?, correo = ?, telefono = ? WHERE id = ?";
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setString(1, cliente.getNombre());
             st.setString(2, cliente.getCorreo());
@@ -69,7 +69,7 @@ public class ClienteDAO {
         PreparedStatement stCliente = null;
 
         try {
-            conexion = DatabaseConnection.getInstance().getConnection();
+            conexion = DatabaseConnection.getConnection();
             conexion.setAutoCommit(false); // Iniciar transacción
 
             // Eliminar usuario asociado
@@ -133,7 +133,7 @@ public class ClienteDAO {
         List<Cliente> clientes = new ArrayList<>();
         String query = "SELECT id, nombre, correo, telefono FROM Cliente";
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query); ResultSet resultSet = st.executeQuery()) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query); ResultSet resultSet = st.executeQuery()) {
 
             while (resultSet.next()) {
                 int id = resultSet.getInt("id");
@@ -155,7 +155,7 @@ public class ClienteDAO {
     public boolean obtenerCliente(int idBuscado) {
         String query = "SELECT * FROM Cliente WHERE id = ?";
 
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setInt(1, idBuscado);
             ResultSet resultSet = st.executeQuery();
@@ -172,7 +172,7 @@ public class ClienteDAO {
     // Método para obtener el ID del cliente por su nombre
     public int obtenerIdPorNombre(String nombre) {
         String query = "SELECT id FROM Cliente WHERE nombre = ?";
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
 
             st.setString(1, nombre);
             ResultSet resultSet = st.executeQuery();

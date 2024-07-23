@@ -15,7 +15,7 @@ public class UsuarioDAO {
         String salt = HashPassword.getSalt();
         String hashedPassword = HashPassword.hashPassword(password, salt);
         String query = "INSERT INTO Usuario (username, password, salt, cliente_id, role) VALUES (?, ?, ?, ?, ?)";
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             statement.setString(2, hashedPassword);
@@ -45,7 +45,7 @@ public class UsuarioDAO {
     // Método para verificar las credenciales de usuario
     public Usuario autenticar(String username, String password) {
         String query = "SELECT id, username, password, salt, cliente_id, role FROM Usuario WHERE username = ?";
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             ResultSet resultSet = statement.executeQuery();
@@ -72,7 +72,7 @@ public class UsuarioDAO {
     // Método para verificar si el nombre de usuario ya existe
     public boolean usernameExiste(String username) {
         String query = "SELECT 1 FROM Usuario WHERE username = ?";
-        try (Connection conexion = DatabaseConnection.getInstance().getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement statement = conexion.prepareStatement(query)) {
 
             statement.setString(1, username);
             return statement.executeQuery().next();
