@@ -11,10 +11,10 @@ import javax.swing.table.JTableHeader;
 import javax.swing.table.TableRowSorter;
 
 public class ListaTransaccionesPNL extends javax.swing.JPanel {
-    
+
     private String username;
     private int clienteId;
-    
+
     public ListaTransaccionesPNL() {
         initComponents();
 
@@ -40,10 +40,10 @@ public class ListaTransaccionesPNL extends javax.swing.JPanel {
 
         // Deshabilitar ordenamiento en columna descripcion
         sorter.setSortable(3, false);
-        
+
         labelClienteName.setText("CLIENTE : " + username);
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -182,12 +182,16 @@ public class ListaTransaccionesPNL extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void elimBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elimBtnActionPerformed
-        TransaccionDAO db = new TransaccionDAO();
-        if (db.eliminarTransacciones(clienteId)) {
-            JOptionPane.showMessageDialog(null, "Transacciones eliminadas exitosamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
-            Tools.entablarTransacciones(tablaTransacciones, clienteId);
-        } else {
-            JOptionPane.showMessageDialog(null, "No hay transacciones que eliminar.", "Informacion", JOptionPane.WARNING_MESSAGE);
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar sus transacciones?", "Confirmacion", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE);
+
+        if (opcion == JOptionPane.YES_OPTION) {
+            TransaccionDAO db = new TransaccionDAO();
+            if (db.eliminarTransacciones(clienteId)) {
+                JOptionPane.showMessageDialog(null, "Transacciones eliminadas exitosamente", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                Tools.entablarTransacciones(tablaTransacciones, clienteId);
+            } else {
+                JOptionPane.showMessageDialog(null, "No hay transacciones que eliminar.", "Informacion", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_elimBtnActionPerformed
 
