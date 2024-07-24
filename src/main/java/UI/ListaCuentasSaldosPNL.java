@@ -76,6 +76,8 @@ public class ListaCuentasSaldosPNL extends javax.swing.JPanel {
         });
         tablaCuentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaCuentas.setShowGrid(false);
+        tablaCuentas.setShowHorizontalLines(true);
+        tablaCuentas.setShowVerticalLines(true);
         tablaCuentas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaCuentas);
 

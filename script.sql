@@ -1,7 +1,4 @@
--- Crear base de datos
-CREATE DATABASE bancodb;
-
--- Crear tabla Cliente
+-- Creacion de tabla Cliente
 CREATE TABLE Cliente (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -9,7 +6,7 @@ CREATE TABLE Cliente (
     telefono VARCHAR(20)
 );
 
--- Crear tabla Usuario con referencia a Cliente
+-- Creacion de tabla Usuario con referencia a Cliente
 CREATE TABLE Usuario (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -20,7 +17,7 @@ CREATE TABLE Usuario (
     FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE
 );
 
--- Crear tabla CuentaBancaria con referencia a Cliente
+-- Creacion de tabla CuentaBancaria con referencia a Cliente
 CREATE TABLE CuentaBancaria (
     numerocuenta SERIAL PRIMARY KEY,
     saldo NUMERIC(15, 2) NOT NULL,
@@ -28,7 +25,7 @@ CREATE TABLE CuentaBancaria (
     FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE
 );
 
--- Crear tabla Transaccion con referencia a CuentaBancaria
+-- Creacion de tabla Transaccion con referencia a CuentaBancaria
 CREATE TABLE Transaccion (
     id SERIAL PRIMARY KEY,
     fecha TIMESTAMP NOT NULL,
@@ -36,5 +33,5 @@ CREATE TABLE Transaccion (
     monto NUMERIC(15, 2) NOT NULL,
     descripcion VARCHAR(255) NOT NULL,
     cuentaBancaria_id BIGINT,
-    FOREIGN KEY (cuentaBancaria_id) REFERENCES CuentaBancaria(numeroCuenta) ON DELETE CASCADE
+    FOREIGN KEY (cuentaBancaria_id) REFERENCES CuentaBancaria(numerocuenta) ON DELETE CASCADE
 );

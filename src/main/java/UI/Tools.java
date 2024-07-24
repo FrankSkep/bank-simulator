@@ -64,7 +64,7 @@ public class Tools {
     // Llenar tabla de cuentas bancarias
     public static void entablarCuentas(JTable tabla, int idCliente) {
         actualizarTabla(tabla, cuentaBancariaDAO.obtenerCuentasCliente(idCliente),
-                cuenta -> new Object[]{(int) cuenta.getNumeroCuenta(), (double) cuenta.getSaldo()},
+                cuenta -> new Object[]{(Integer) cuenta.getNumeroCuenta(), (Double) cuenta.getSaldo()},
                 new Object[]{"No hay cuentas", "No hay cuentas"});
     }
 
