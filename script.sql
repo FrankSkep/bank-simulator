@@ -1,4 +1,4 @@
--- Este archivo contiene las instrucciones necesarias para la creacion de la base de datos y tablas correspondientes a este sistema.
+-- Este archivo contiene el codigo necesario para la creacion de la base de datos y tablas correspondientes a este sistema.
 
 -- Creacion de base de datos
 CREATE DATABASE bancodb;
