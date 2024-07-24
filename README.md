@@ -14,7 +14,7 @@ Simulacion de sistema bancario desarrollado en Java que proporciona funcionalida
 - **Administrador**:
   - Agregar nuevos administradores.
   - Eliminar clientes.
-  - Modificar datos de clientes (nombre, correo, teléfono).
+  - Modificar algunos datos de clientes.
   - Cerrar sesión.
 
 - **Usuario**:
@@ -54,4 +54,4 @@ Simulacion de sistema bancario desarrollado en Java que proporciona funcionalida
 - **Librerías de terceros**:
   - HikariCP
   - JDBC
-  - Swing para la interfaz gráfica
+  - Swing
