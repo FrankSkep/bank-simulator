@@ -2,13 +2,13 @@
 
 ## Descripción
 
-Este proyecto es un sistema bancario desarrollado en Java que proporciona funcionalidades completas para la gestión de cuentas bancarias y transacciones. Incluye autenticación segura, hashing de contraseñas, y una gestión de roles diferenciada para administradores y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la accesibilidad a la base de datos.
+Simulacion de sistema bancario desarrollado en Java que proporciona funcionalidades completas para la gestión de cuentas bancarias y transacciones. Incluye autenticación segura, hashing de contraseñas, y una gestión de roles diferenciada para administradores y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la accesibilidad a la base de datos.
 
 ## Funcionalidades
 
 ### Autenticación
 - **Autenticación de usuarios**: Permite el acceso seguro al sistema.
-- **Hashing y salt de contraseñas**: Utiliza el algoritmo SHA-256 para asegurar las contraseñas.
+- **Hashing y salt de contraseñas**: Utiliza el algoritmo criptografico SHA-256 para asegurar las contraseñas.
 
 ### Roles
 - **Administrador**:
@@ -28,7 +28,7 @@ Este proyecto es un sistema bancario desarrollado en Java que proporciona funcio
   - Cerrar sesión.
 
 ### Características
-- **HikariCP**: Utiliza un pool de conexiones para mejorar el rendimiento de acceso a la base de datos.
+- **HikariCP**: Se utiliza para hacer un pool de conexiones para mejorar el rendimiento de acceso a la base de datos.
 - **Patrón Singleton**: Se utiliza para gestionar la sesión del usuario, asegurando que solo haya una instancia de la sesión activa en cualquier momento.
 - **Ordenamiento de tablas**: Permite ordenar las tablas haciendo clic en las columnas.
 - **Eliminación de transacciones**: Los usuarios pueden eliminar todas sus transacciones.
