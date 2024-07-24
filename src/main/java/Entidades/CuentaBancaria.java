@@ -13,7 +13,7 @@ public class CuentaBancaria {
     }
 
     // Getters y Setters
-    public long getNumeroCuenta() {
+    public int getNumeroCuenta() {
         return numeroCuenta;
     }
 

@@ -59,14 +59,22 @@ public class ListaCuentasSaldosPNL extends javax.swing.JPanel {
                 "NUMERO DE CUENTA", "SALDO"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.Integer.class, java.lang.Double.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
+        tablaCuentas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         tablaCuentas.setShowGrid(false);
         tablaCuentas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaCuentas);
@@ -76,7 +84,7 @@ public class ListaCuentasSaldosPNL extends javax.swing.JPanel {
         labelTitulo.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         labelTitulo.setForeground(new java.awt.Color(255, 255, 255));
         labelTitulo.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        labelTitulo.setText("SALDO DE TUS CUENTAS BANCARIAS");
+        labelTitulo.setText("TUS CUENTAS BANCARIAS");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
