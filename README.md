@@ -8,7 +8,7 @@ Simulacion de sistema bancario desarrollado en Java que proporciona funcionalida
 
 ### Autenticación
 - **Autenticación de usuarios**: Permite el acceso seguro al sistema.
-- **Hashing y salt de contraseñas**: Utiliza el algoritmo SHA-256 para asegurar las contraseñas.
+- **Hashing y salt de contraseñas**: Utiliza el algoritmo criptografico SHA-256 para asegurar las contraseñas.
 
 ### Roles
 - **Administrador**:
