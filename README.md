@@ -28,7 +28,7 @@ Simulacion de sistema bancario desarrollado en Java que proporciona funcionalida
   - Cerrar sesión.
 
 ### Características
-- **HikariCP**: Utiliza un pool de conexiones para mejorar el rendimiento de acceso a la base de datos.
+- **HikariCP**: Se utiliza para hacer un pool de conexiones para mejorar el rendimiento de acceso a la base de datos.
 - **Patrón Singleton**: Se utiliza para gestionar la sesión del usuario, asegurando que solo haya una instancia de la sesión activa en cualquier momento.
 - **Ordenamiento de tablas**: Permite ordenar las tablas haciendo clic en las columnas.
 - **Eliminación de transacciones**: Los usuarios pueden eliminar todas sus transacciones.
