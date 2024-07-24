@@ -5,10 +5,16 @@ import DAO.CuentaBancariaDAO;
 import DAO.TransaccionDAO;
 import Entidades.Transaccion;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTable;
@@ -42,6 +48,22 @@ public class Tools {
                     nombreTF.setText(nombre);
                     correoTF.setText(correo);
                     telTF.setText(telefono);
+                }
+            }
+        });
+    }
+
+    public static void setImageLabel(JLabel label, String root) {
+        label.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                try {
+                    ImageIcon image = new ImageIcon(root);
+                    Icon icon = new ImageIcon(image.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
+                    label.setIcon(icon);
+                    label.repaint();
+                } catch (Exception ex) {
+                    System.out.println("Error: " + ex.toString());
                 }
             }
         });

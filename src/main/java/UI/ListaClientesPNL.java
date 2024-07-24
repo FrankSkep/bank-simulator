@@ -61,34 +61,34 @@ public class ListaClientesPNL extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
 
-        buscarEditForm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
+        buscarEditForm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DATOS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
 
-        idLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        idLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         idLabel.setText("ID:");
 
         actualizarBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        actualizarBtn.setText("Actualizar");
+        actualizarBtn.setText("ACTUALIZAR");
         actualizarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actualizarBtnActionPerformed(evt);
             }
         });
 
-        nombreLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        nombreLabel.setText("Nombre:");
+        nombreLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        nombreLabel.setText("NOMBRE:");
 
         nombreTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
         idTF.setEditable(false);
         idTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        correoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        correoLabel.setText("Correo electronico:");
+        correoLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        correoLabel.setText("CORREO ELECTRONICO:");
 
         correoTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
-        telefonoLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        telefonoLabel.setText("Telefono:");
+        telefonoLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        telefonoLabel.setText("TELEFONO:");
 
         telTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
@@ -97,21 +97,21 @@ public class ListaClientesPNL extends javax.swing.JPanel {
         buscarEditFormLayout.setHorizontalGroup(
             buscarEditFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(buscarEditFormLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addGroup(buscarEditFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(telefonoLabel)
-                    .addComponent(correoLabel)
-                    .addComponent(nombreLabel)
                     .addComponent(idLabel)
                     .addComponent(idTF, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
                     .addComponent(nombreTF)
                     .addComponent(correoTF)
-                    .addComponent(telTF))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, buscarEditFormLayout.createSequentialGroup()
-                .addContainerGap(129, Short.MAX_VALUE)
+                    .addComponent(telTF)
+                    .addComponent(telefonoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(correoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
+            .addGroup(buscarEditFormLayout.createSequentialGroup()
+                .addGap(113, 113, 113)
                 .addComponent(actualizarBtn)
-                .addGap(121, 121, 121))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         buscarEditFormLayout.setVerticalGroup(
             buscarEditFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

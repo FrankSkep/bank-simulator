@@ -6,10 +6,6 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
-import java.awt.Image;
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import javax.swing.JLabel;
 
 public final class Dashboard extends javax.swing.JFrame {
 
@@ -39,19 +35,6 @@ public final class Dashboard extends javax.swing.JFrame {
 
         inicio = new Iniciar_o_Registrar_PNL(this); // Instancio interfaz, pasandole referencia a la clase actual
         Tools.showPanel(inicio, contenidoPanel); // Muestro la interfaz en el panel de contenido
-
-//        setImageLabel(imgLBL, "src/main/resources/banco.png");
-    }
-
-    public void setImageLabel(JLabel label, String root) {
-        try {
-            ImageIcon image = new ImageIcon(root);
-            Icon icon = new ImageIcon(image.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_DEFAULT));
-            label.setIcon(icon);
-            this.repaint();
-        } catch (Exception e) {
-            System.out.println("Error: " + e.toString());
-        }
     }
 
     @SuppressWarnings("unchecked")

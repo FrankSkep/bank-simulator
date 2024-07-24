@@ -39,7 +39,7 @@ public class UsuarioDAO {
 
     // Sobrecarga de metodo, para registrar usuario administrador
     public boolean registrarUsuario(String username, String password, String role) {
-        return registrarUsuario(username, password, null, role); // Llama al método principal con clienteId como null
+        return registrarUsuario(username, password, null, role);
     }
 
     // Método para verificar las credenciales de usuario

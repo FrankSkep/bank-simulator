@@ -17,10 +17,10 @@ public class RegistroUsuario {
     public boolean registrarAdmin(String username, String password) {
         // Validar si el nombre de usuario esta disponible
         if (usuarioDAO.usernameExiste(username)) {
-            return false; // El nombre de usuario ya existe
+            return false;
         }
 
-        // 2. Registrar el nuevo usuario administrador
+        // Registrar el nuevo usuario administrador
         return usuarioDAO.registrarUsuario(username, password, "ADMIN");
     }
 
@@ -29,17 +29,17 @@ public class RegistroUsuario {
 
         // Validar si el nombre de usuario esta disponible
         if (usuarioDAO.usernameExiste(username)) {
-            return false; // El nombre de usuario ya existe
+            return false;
         }
 
-        // 1. Registrar el nuevo cliente
+        // Registrar el nuevo cliente
         boolean clienteRegistrado = clienteDAO.registrarCliente(cliente);
 
         if (!clienteRegistrado) {
-            return false; // Si fallo el registro
+            return false;
         }
 
-        // 2. Registrar el nuevo usuario y asociarlo al cliente
+        // Registrar el nuevo usuario y asociarlo al cliente
         return usuarioDAO.registrarUsuario(username, password, cliente.getID(), "USER");
     }
 }

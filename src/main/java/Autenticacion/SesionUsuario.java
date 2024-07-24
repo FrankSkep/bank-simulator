@@ -16,21 +16,17 @@ public class SesionUsuario {
         return instance;
     }
 
+    public void cerrarSesion() {
+        if (this.usuario != null) {
+            this.usuario = null;
+        }
+    }
+
     public Usuario getUsuario() {
         return usuario;
     }
 
     public void setUsuario(Usuario usuario) {
         this.usuario = usuario;
-    }
-
-    public String getUsername() {
-        return this.usuario.getUsername();
-    }
-
-    public void cerrarSesion() {
-        if (this.usuario != null) {
-            this.usuario = null;
-        }
     }
 }

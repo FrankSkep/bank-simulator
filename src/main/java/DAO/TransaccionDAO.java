@@ -71,7 +71,6 @@ public class TransaccionDAO {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al eliminar las transacciones: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
-
         return transaccionesList;
     }
 }

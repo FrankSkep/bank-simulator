@@ -3,13 +3,12 @@ package Entidades;
 import java.time.LocalDateTime;
 
 public class Transaccion {
-    
+
     private int idCuentaBancaria;
     private LocalDateTime fecha;
     private String tipo; // (Deposito, Retiro o Transferencia)
     private double monto;
     private String descripcion;
-    
 
     // Constructor
     public Transaccion(int idCuenta, LocalDateTime fecha, String tipo, double monto, String descripcion) {

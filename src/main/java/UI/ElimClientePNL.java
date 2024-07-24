@@ -30,7 +30,7 @@ public class ElimClientePNL extends javax.swing.JPanel {
         // Crear un renderizador para centrar el texto del encabezado
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) header.getDefaultRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
-        
+
         // Crear el sorter y aplicarlo a la tabla
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tablaClientes.getModel());
         tablaClientes.setRowSorter(sorter);
@@ -45,106 +45,22 @@ public class ElimClientePNL extends javax.swing.JPanel {
     private void initComponents() {
 
         ElimClienteForm = new javax.swing.JPanel();
-        eliminarForm = new javax.swing.JPanel();
-        id_label = new javax.swing.JLabel();
-        eliminarBtn = new javax.swing.JButton();
-        nombreLabel = new javax.swing.JLabel();
-        idTF = new javax.swing.JTextField();
-        nombreTF = new javax.swing.JTextField();
-        direccLabel = new javax.swing.JLabel();
-        correoTF = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        telTF = new javax.swing.JTextField();
         jScrollPane2 = new javax.swing.JScrollPane();
         tablaClientes = new javax.swing.JTable();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        buscarEditForm = new javax.swing.JPanel();
+        idLabel = new javax.swing.JLabel();
+        eliminarBtn = new javax.swing.JButton();
+        nombreLabel = new javax.swing.JLabel();
+        nombreTF = new javax.swing.JTextField();
+        idTF = new javax.swing.JTextField();
+        correoLabel = new javax.swing.JLabel();
+        correoTF = new javax.swing.JTextField();
+        telefonoLabel = new javax.swing.JLabel();
+        telTF = new javax.swing.JTextField();
 
         ElimClienteForm.setEnabled(false);
-
-        eliminarForm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Datos", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 0, 14))); // NOI18N
-
-        id_label.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        id_label.setText("ID:");
-
-        eliminarBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        eliminarBtn.setText("Eliminar");
-        eliminarBtn.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                eliminarBtnActionPerformed(evt);
-            }
-        });
-
-        nombreLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        nombreLabel.setText("Nombre:");
-
-        idTF.setEditable(false);
-        idTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        nombreTF.setEditable(false);
-        nombreTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        direccLabel.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        direccLabel.setText("Correo electronico:");
-
-        correoTF.setEditable(false);
-        correoTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        jLabel2.setText("Telefono:");
-
-        telTF.setEditable(false);
-        telTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-
-        javax.swing.GroupLayout eliminarFormLayout = new javax.swing.GroupLayout(eliminarForm);
-        eliminarForm.setLayout(eliminarFormLayout);
-        eliminarFormLayout.setHorizontalGroup(
-            eliminarFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(eliminarFormLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addGroup(eliminarFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, eliminarFormLayout.createSequentialGroup()
-                        .addGroup(eliminarFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel2)
-                            .addComponent(direccLabel)
-                            .addComponent(id_label)
-                            .addComponent(nombreLabel))
-                        .addGap(196, 196, 196))
-                    .addGroup(eliminarFormLayout.createSequentialGroup()
-                        .addGroup(eliminarFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(nombreTF, javax.swing.GroupLayout.DEFAULT_SIZE, 287, Short.MAX_VALUE)
-                            .addComponent(correoTF)
-                            .addComponent(telTF)
-                            .addComponent(idTF))
-                        .addContainerGap())))
-            .addGroup(eliminarFormLayout.createSequentialGroup()
-                .addGap(131, 131, 131)
-                .addComponent(eliminarBtn)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        eliminarFormLayout.setVerticalGroup(
-            eliminarFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(eliminarFormLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(id_label)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(idTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(nombreLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(nombreTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(direccLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(correoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(telTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(eliminarBtn)
-                .addContainerGap(29, Short.MAX_VALUE))
-        );
 
         tablaClientes.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         tablaClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -209,14 +125,93 @@ public class ElimClientePNL extends javax.swing.JPanel {
                 .addGap(33, 33, 33))
         );
 
+        buscarEditForm.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "DATOS", javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Segoe UI", 1, 14))); // NOI18N
+
+        idLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        idLabel.setText("ID:");
+
+        eliminarBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        eliminarBtn.setText("ELIMINAR");
+        eliminarBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                eliminarBtnActionPerformed(evt);
+            }
+        });
+
+        nombreLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        nombreLabel.setText("NOMBRE:");
+
+        nombreTF.setEditable(false);
+        nombreTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        idTF.setEditable(false);
+        idTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        correoLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        correoLabel.setText("CORREO ELECTRONICO:");
+
+        correoTF.setEditable(false);
+        correoTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        telefonoLabel.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        telefonoLabel.setText("TELEFONO:");
+
+        telTF.setEditable(false);
+        telTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+
+        javax.swing.GroupLayout buscarEditFormLayout = new javax.swing.GroupLayout(buscarEditForm);
+        buscarEditForm.setLayout(buscarEditFormLayout);
+        buscarEditFormLayout.setHorizontalGroup(
+            buscarEditFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buscarEditFormLayout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(buscarEditFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(idLabel)
+                    .addComponent(idTF, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)
+                    .addComponent(nombreTF)
+                    .addComponent(correoTF)
+                    .addComponent(telTF)
+                    .addComponent(telefonoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 79, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nombreLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 88, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(correoLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(28, Short.MAX_VALUE))
+            .addGroup(buscarEditFormLayout.createSequentialGroup()
+                .addGap(122, 122, 122)
+                .addComponent(eliminarBtn)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        buscarEditFormLayout.setVerticalGroup(
+            buscarEditFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(buscarEditFormLayout.createSequentialGroup()
+                .addGap(31, 31, 31)
+                .addComponent(idLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(idTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(nombreLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(nombreTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(correoLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(correoTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(telefonoLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(telTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(eliminarBtn)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout ElimClienteFormLayout = new javax.swing.GroupLayout(ElimClienteForm);
         ElimClienteForm.setLayout(ElimClienteFormLayout);
         ElimClienteFormLayout.setHorizontalGroup(
             ElimClienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(ElimClienteFormLayout.createSequentialGroup()
-                .addGap(30, 30, 30)
-                .addComponent(eliminarForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(buscarEditForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(37, 37, 37))
@@ -228,7 +223,7 @@ public class ElimClientePNL extends javax.swing.JPanel {
                 .addGap(47, 47, 47)
                 .addGroup(ElimClienteFormLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 453, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(eliminarForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(buscarEditForm, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(55, Short.MAX_VALUE))
         );
 
@@ -244,9 +239,7 @@ public class ElimClientePNL extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    // Acciones boton "Eliminar" en el formulario
     private void eliminarBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eliminarBtnActionPerformed
-
         if (idTF.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione un elemento de la tabla", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
@@ -264,24 +257,23 @@ public class ElimClientePNL extends javax.swing.JPanel {
             }
             Tools.limpiarFormulario(new JTextField[]{idTF, nombreTF, correoTF, telTF});
         }
-
     }//GEN-LAST:event_eliminarBtnActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel ElimClienteForm;
+    private javax.swing.JPanel buscarEditForm;
+    private javax.swing.JLabel correoLabel;
     private javax.swing.JTextField correoTF;
-    private javax.swing.JLabel direccLabel;
     private javax.swing.JButton eliminarBtn;
-    private javax.swing.JPanel eliminarForm;
+    private javax.swing.JLabel idLabel;
     private javax.swing.JTextField idTF;
-    private javax.swing.JLabel id_label;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel nombreLabel;
     private javax.swing.JTextField nombreTF;
     private javax.swing.JTable tablaClientes;
     private javax.swing.JTextField telTF;
+    private javax.swing.JLabel telefonoLabel;
     // End of variables declaration//GEN-END:variables
 }
