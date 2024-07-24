@@ -14,14 +14,14 @@ Simulacion de sistema bancario desarrollado en Java que proporciona funcionalida
 - **Administrador**:
   - Agregar nuevos administradores.
   - Eliminar clientes.
-  - Modificar algunos datos de clientes.
+  - Modificar datos de clientes.
   - Cerrar sesión.
 
 - **Usuario**:
   - Depositar dinero en cuentas propias.
   - Retirar dinero de cuentas propias.
   - Transferir dinero entre cuentas propias y de otros clientes.
-  - Ver transacciones en formato de tabla, con detalles como fecha, tipo, monto, descripción e ID de cuenta.
+  - Ver historial de transacciones en formato de tabla, con detalles como fecha, tipo, monto, descripción e ID de la cuenta.
   - Consultar saldos de todas las cuentas asociadas.
   - Abrir nuevas cuentas bancarias.
   - Cerrar cuentas bancarias, eliminando también sus transacciones.
