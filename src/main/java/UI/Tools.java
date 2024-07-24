@@ -6,7 +6,6 @@ import DAO.TransaccionDAO;
 import Entidades.Transaccion;
 import java.awt.BorderLayout;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -70,12 +69,8 @@ public class Tools {
 
     // Llenar tabla de transacciones
     public static void entablarTransacciones(JTable tabla, int idCliente) {
-        List<Integer> IDsCuentas = cuentaBancariaDAO.obtenerNUMsCuentas(idCliente);
-        List<Transaccion> transaccionesList = new ArrayList<>();
 
-        for (Integer numCuenta : IDsCuentas) {
-            transaccionesList.addAll(transaccionDAO.obtenerTransacciones(numCuenta));
-        }
+        List<Transaccion> transaccionesList = transaccionDAO.obtenerTransaccionesCliente(idCliente);
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         actualizarTabla(tabla, transaccionesList,

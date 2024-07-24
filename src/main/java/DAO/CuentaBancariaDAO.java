@@ -218,29 +218,6 @@ public class CuentaBancariaDAO {
         return cuentas;
     }
 
-    // Metodo para obtener los ID de todas las cuentas de un cliente
-    public List<Integer> obtenerNUMsCuentas(int idCliente) {
-        List<Integer> numerosCuenta = new ArrayList<>();
-
-        String query = "SELECT numeroCuenta FROM CuentaBancaria WHERE cliente_id = ?";
-
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query);) {
-
-            st.setInt(1, idCliente);
-
-            ResultSet resultSet = st.executeQuery();
-
-            while (resultSet.next()) {
-                // Guardar datos de la cuenta leida
-                int numeroCuenta = resultSet.getInt("numeroCuenta");
-                numerosCuenta.add(numeroCuenta);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
-        }
-        return numerosCuenta;
-    }
-
     // Metodo para obtener el id del cliente propietario de una cuenta bancaria
     public Integer getIDcliente_CuentaB(int numcuenta) {
         String query = "SELECT cliente_id FROM CuentaBancaria WHERE numeroCuenta = ?";

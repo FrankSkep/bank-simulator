@@ -2,7 +2,6 @@ package UI;
 
 import Autenticacion.SesionUsuario;
 import DAO.CuentaBancariaDAO;
-import Entidades.Usuario;
 import javax.swing.JOptionPane;
 
 public class TransferirPNL extends javax.swing.JPanel {

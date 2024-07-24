@@ -2,11 +2,6 @@ package UI;
 
 import Autenticacion.SesionUsuario;
 import DAO.CuentaBancariaDAO;
-import DAO.DatabaseConnection;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class RetirarPNL extends javax.swing.JPanel {

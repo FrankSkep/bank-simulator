@@ -2,12 +2,6 @@ package UI;
 
 import Autenticacion.SesionUsuario;
 import DAO.CuentaBancariaDAO;
-import DAO.DatabaseConnection;
-import Entidades.Usuario;
-import java.sql.Connection;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 
 public class DepositarPNL extends javax.swing.JPanel {

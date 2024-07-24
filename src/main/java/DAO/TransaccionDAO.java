@@ -31,32 +31,6 @@ public class TransaccionDAO {
         }
     }
 
-    // Obtener todas las transacciones de una cuenta bancaria
-    public List<Transaccion> obtenerTransacciones(int idCuentaBancaria) {
-        List<Transaccion> transacciones = new ArrayList<>();
-
-        String query = "SELECT fecha, tipo, monto, descripcion FROM Transaccion WHERE cuentaBancaria_id = ?";
-
-        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
-
-            st.setInt(1, idCuentaBancaria);
-            ResultSet resultSet = st.executeQuery();
-
-            while (resultSet.next()) {
-                LocalDateTime fecha = resultSet.getObject("fecha", LocalDateTime.class);
-                String tipo = resultSet.getString("tipo");
-                double monto = resultSet.getDouble("monto");
-                String descripcion = resultSet.getString("descripcion");
-
-                Transaccion transaccion = new Transaccion(idCuentaBancaria, fecha, tipo, monto, descripcion);
-                transacciones.add(transaccion);
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Ocurrio un error", JOptionPane.WARNING_MESSAGE);
-        }
-        return transacciones;
-    }
-
     // Eliminar todas las transacciones asociadas a un cliente
     public boolean eliminarTransacciones(int clienteId) {
         String query = "DELETE FROM Transaccion WHERE cuentabancaria_id IN (SELECT numeroCuenta FROM CuentaBancaria WHERE cliente_id = ?)";
@@ -71,5 +45,33 @@ public class TransaccionDAO {
             JOptionPane.showMessageDialog(null, "Ocurrió un error al eliminar las transacciones: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
+    }
+
+    // Obtener todas las transacciones de un cliente
+    public List<Transaccion> obtenerTransaccionesCliente(int clienteId) {
+        List<Transaccion> transaccionesList = new ArrayList<>();
+
+        String query = "SELECT * FROM Transaccion WHERE cuentabancaria_id IN (SELECT numeroCuenta FROM CuentaBancaria WHERE cliente_id = ?)";
+
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+            st.setInt(1, clienteId);
+
+            ResultSet resultSet = st.executeQuery();
+
+            while (resultSet.next()) {
+                LocalDateTime fecha = resultSet.getObject("fecha", LocalDateTime.class);
+                String tipo = resultSet.getString("tipo");
+                double monto = resultSet.getDouble("monto");
+                String descripcion = resultSet.getString("descripcion");
+                int numCuenta = resultSet.getInt("cuentabancaria_id");
+
+                Transaccion transaccion = new Transaccion(numCuenta, fecha, tipo, monto, descripcion);
+                transaccionesList.add(transaccion);
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Ocurrió un error al eliminar las transacciones: " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+
+        return transaccionesList;
     }
 }
