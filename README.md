@@ -28,19 +28,16 @@ Simulacion de sistema bancario desarrollado en Java que proporciona funcionalida
   - Cerrar sesión.
 
 ### Características
-- **HikariCP**: Se utiliza para hacer un pool de conexiones para mejorar el rendimiento de acceso a la base de datos.
-- **Patrón Singleton**: Se utiliza para gestionar la sesión del usuario, asegurando que solo haya una instancia de la sesión activa en cualquier momento.
-- **Ordenamiento de tablas**: Permite ordenar las tablas haciendo clic en las columnas.
-- **Eliminación de transacciones**: Los usuarios pueden eliminar todas sus transacciones.
-- **Edición de datos de usuario**: Los usuarios pueden editar sus datos personales, excepto nombre de usuario, contraseña e ID de cliente.
-- **Interfaz gráfica**: Implementada utilizando Swing para una experiencia de usuario intuitiva.
+
+- **HikariCP**: Implementación de un pool de conexiones para mejorar significativamente el rendimiento de acceso a la base de datos.
+- **Patrón Singleton**: Gestión eficiente de la sesión del usuario, garantizando que solo una instancia de la sesión esté activa en cualquier momento.
+- **Ordenamiento de tablas**: Funcionalidad que permite ordenar las tablas dinámicamente al hacer clic en los encabezados de las columnas.
+- **Eliminación de transacciones**: Capacidad para que los usuarios eliminen todas sus transacciones de manera segura.
+- **Edición de datos de usuario**: Permite a los usuarios actualizar su información personal (nombre, correo y teléfono), excepto el nombre de usuario, la contraseña y el ID de cliente.
+- **Interfaz gráfica**: Diseñada con Swing para ofrecer una experiencia de usuario intuitiva y amigable.
 
 ### Base de Datos
-- **Tablas**:
-  - `cliente`: Información de los clientes del banco.
-  - `usuario`: Información de los usuarios del sistema.
-  - `cuentaBancaria`: Información sobre las cuentas bancarias.
-  - `transaccion`: Registro de todas las transacciones realizadas.
+![Diagrama entidad relacion](assets/images/diagrama_ER.png)
 
 - **Relaciones**:
   - Cada `cliente` puede tener múltiples `cuentasBancarias`.
