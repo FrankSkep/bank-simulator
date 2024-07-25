@@ -2,12 +2,12 @@ package UI;
 
 public class Iniciar_o_Registrar_PNL extends javax.swing.JPanel {
 
-    Dashboard dashboard;
+    private Dashboard dashboard;
 
     public Iniciar_o_Registrar_PNL(Dashboard dashboard) {
         this.dashboard = dashboard;
         initComponents();
-        
+
         Tools.setImageLabel(identiLBL, "src/main/resources/identidad.png");
     }
 

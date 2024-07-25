@@ -121,20 +121,18 @@
                       <EmptySpace pref="8" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                           <Component id="miInfoBtn" pref="194" max="32767" attributes="0"/>
-                          <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="aggAdminBtn" pref="194" max="32767" attributes="0"/>
-                              <Component id="buscarClienteBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="depositarBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="retirarBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="histTransaccionesBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="elimClienteBtn" pref="194" max="32767" attributes="0"/>
-                              <Component id="volverBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="consultaBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="cerrarCuentaBtn" pref="194" max="32767" attributes="0"/>
-                              <Component id="abrirCuentaBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="transBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                              <Component id="cerrarSesionBtn" alignment="0" pref="194" max="32767" attributes="0"/>
-                          </Group>
+                          <Component id="aggAdminBtn" pref="194" max="32767" attributes="0"/>
+                          <Component id="buscarClienteBtn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="depositarBtn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="retirarBtn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="histTransaccionesBtn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="elimClienteBtn" pref="194" max="32767" attributes="0"/>
+                          <Component id="volverBtn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="consultaBtn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="cerrarCuentaBtn" pref="194" max="32767" attributes="0"/>
+                          <Component id="abrirCuentaBtn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="transBtn" alignment="0" pref="194" max="32767" attributes="0"/>
+                          <Component id="cerrarSesionBtn" alignment="0" pref="194" max="32767" attributes="0"/>
                           <Component id="inicio_btn" alignment="0" pref="194" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>

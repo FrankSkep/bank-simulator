@@ -9,20 +9,19 @@ import static javax.swing.JOptionPane.QUESTION_MESSAGE;
 
 public class MiInformacion extends javax.swing.JPanel {
 
+    private Dashboard dashboard;
     private Usuario usuario;
     private ClienteDAO db;
     private Cliente cliente;
     private int idC;
 
-    public MiInformacion() {
+    public MiInformacion(Dashboard dashboard) {
+
         initComponents();
 
+        this.dashboard = dashboard;
+
         usuario = SesionUsuario.getInstance().getUsuario();
-        System.out.println("ID: " + usuario.getId());
-        System.out.println("Username: " + usuario.getUsername());
-        System.out.println("Contra: " + usuario.getPassword());
-        System.out.println("cliente id: " + usuario.getClienteId());
-        System.out.println("Role: " + usuario.getRole());
 
         db = new ClienteDAO();
 
@@ -56,6 +55,7 @@ public class MiInformacion extends javax.swing.JPanel {
         telTF = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
         idTF = new javax.swing.JTextField();
+        elimCuentaBtn = new javax.swing.JButton();
         actualizarBtn = new javax.swing.JButton();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
@@ -89,8 +89,16 @@ public class MiInformacion extends javax.swing.JPanel {
         idTF.setEditable(false);
         idTF.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        elimCuentaBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
+        elimCuentaBtn.setText("ELIMINAR MI CUENTA");
+        elimCuentaBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                elimCuentaBtnActionPerformed(evt);
+            }
+        });
+
         actualizarBtn.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
-        actualizarBtn.setText("ACTUALIZAR");
+        actualizarBtn.setText("ACTUALIZAR DATOS");
         actualizarBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 actualizarBtnActionPerformed(evt);
@@ -102,23 +110,24 @@ public class MiInformacion extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(userTF)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(nombreTF)
-                    .addComponent(correoTF)
-                    .addComponent(telTF, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(idTF))
+                .addContainerGap(28, Short.MAX_VALUE)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(elimCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(actualizarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(userTF)
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nombreTF)
+                        .addComponent(correoTF)
+                        .addComponent(telTF, javax.swing.GroupLayout.DEFAULT_SIZE, 375, Short.MAX_VALUE)
+                        .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 195, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(idTF)))
                 .addGap(25, 25, 25))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(151, 151, 151)
-                .addComponent(actualizarBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(157, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -144,7 +153,9 @@ public class MiInformacion extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(telTF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(actualizarBtn)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(elimCuentaBtn)
+                    .addComponent(actualizarBtn))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
@@ -238,10 +249,23 @@ public class MiInformacion extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_actualizarBtnActionPerformed
 
+    private void elimCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_elimCuentaBtnActionPerformed
+
+        int res = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas eliminar tu cuenta? Esta accione es irreversible.", "Advertencia", JOptionPane.WARNING_MESSAGE);
+
+        if (res == JOptionPane.YES_OPTION) {
+            if (db.eliminarClienteCompleto(idC)) {
+                JOptionPane.showMessageDialog(null, "Se ha eliminado la cuenta con ID " + idC + " y todos sus datos asociados.", "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);
+                dashboard.cerrarSesion();
+            }
+        }
+    }//GEN-LAST:event_elimCuentaBtnActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton actualizarBtn;
     private javax.swing.JTextField correoTF;
+    private javax.swing.JButton elimCuentaBtn;
     private javax.swing.JTextField idTF;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

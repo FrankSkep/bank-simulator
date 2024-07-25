@@ -9,11 +9,11 @@ import javax.swing.UnsupportedLookAndFeelException;
 
 public final class Dashboard extends javax.swing.JFrame {
 
-    enum MODO {
+    enum STATE {
         ADMIN, USER, NOTHING
     }
 
-    MODO modo;
+    STATE role;
 
     private Iniciar_o_Registrar_PNL inicio; // Interfaz de inicio de sesion o registro
 
@@ -30,8 +30,8 @@ public final class Dashboard extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         setTitle("Sistema bancario");
 
-        modo = MODO.NOTHING; // Inicialmente, no tiene ningun rol
-        ocultarBotonesDeterminados(); // Muestra solo los botones necesarios para el rol nothing
+        role = STATE.NOTHING; // Inicialmente, no tiene ningun rol
+        ocultarBotonesDeterminados(); // Muestra solo los botones necesarios para el rol
 
         inicio = new Iniciar_o_Registrar_PNL(this); // Instancio interfaz, pasandole referencia a la clase actual
         Tools.showPanel(inicio, contenidoPanel); // Muestro la interfaz en el panel de contenido
@@ -216,19 +216,18 @@ public final class Dashboard extends javax.swing.JFrame {
                 .addContainerGap(8, Short.MAX_VALUE)
                 .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(miInfoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(aggAdminBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(buscarClienteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(depositarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(retirarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(histTransaccionesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(elimClienteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(volverBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(consultaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(cerrarCuentaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(abrirCuentaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(transBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
-                        .addComponent(cerrarSesionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
+                    .addComponent(aggAdminBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(buscarClienteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(depositarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(retirarBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(histTransaccionesBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(elimClienteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(volverBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(consultaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(cerrarCuentaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(abrirCuentaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(transBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
+                    .addComponent(cerrarSesionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                     .addComponent(inicio_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
                 .addContainerGap())
         );
@@ -311,7 +310,8 @@ public final class Dashboard extends javax.swing.JFrame {
     // Muestra los botones determinados en cada caso
     void ocultarBotonesDeterminados() {
 
-        switch (modo) {
+        switch (role) {
+
             case ADMIN -> {
                 elimClienteBtn.setVisible(true);
                 buscarClienteBtn.setVisible(true);
@@ -363,11 +363,15 @@ public final class Dashboard extends javax.swing.JFrame {
         int cerrar = JOptionPane.showConfirmDialog(null, "¿Seguro que deseas cerrar la sesion?", "Confirmacion", JOptionPane.YES_NO_OPTION);
 
         if (cerrar == JOptionPane.YES_OPTION) {
-            SesionUsuario.getInstance().cerrarSesion();
-            actualizarEstado();
-            Tools.showPanel(inicio, contenidoPanel);
+            cerrarSesion();
         }
     }//GEN-LAST:event_cerrarSesionBtnActionPerformed
+
+    public void cerrarSesion() {
+        SesionUsuario.getInstance().cerrarSesion();
+        actualizarEstado();
+        Tools.showPanel(inicio, contenidoPanel);
+    }
 
     private void cerrarCuentaBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cerrarCuentaBtnActionPerformed
         CerrarCuentaPNL p = new CerrarCuentaPNL();
@@ -424,7 +428,7 @@ public final class Dashboard extends javax.swing.JFrame {
     }//GEN-LAST:event_aggAdminBtnActionPerformed
 
     private void miInfoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miInfoBtnActionPerformed
-        MiInformacion p = new MiInformacion();
+        MiInformacion p = new MiInformacion(this);
         Tools.showPanel(p, contenidoPanel);
     }//GEN-LAST:event_miInfoBtnActionPerformed
 
@@ -443,19 +447,19 @@ public final class Dashboard extends javax.swing.JFrame {
         Usuario usuario = SesionUsuario.getInstance().getUsuario();
         if (usuario != null) {
             if (usuario.getRole().equals("ADMIN")) {
-                setModo(MODO.ADMIN);
+                setRoleState(STATE.ADMIN);
             } else {
-                setModo(MODO.USER);
+                setRoleState(STATE.USER);
             }
         } else {
-            setModo(MODO.NOTHING);
+            setRoleState(STATE.NOTHING);
         }
         ocultarBotonesDeterminados();
     }
 
-    // Establecer modo
-    void setModo(MODO modo) {
-        this.modo = modo;
+    // Establecer role
+    void setRoleState(STATE modo) {
+        this.role = modo;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
