@@ -1,8 +1,5 @@
 -- Este archivo contiene el codigo necesario para la creacion de la base de datos correspondiente a este sistema.
 
--- Creacion de la base de datos
-CREATE DATABASE bancodb;
-
 -- Creacion de tabla Cliente
 CREATE TABLE Cliente (
     id SERIAL PRIMARY KEY,
