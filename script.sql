@@ -1,6 +1,6 @@
--- Este archivo contiene el codigo necesario para la creacion de la base de datos y tablas correspondientes a este sistema.
+-- Este archivo contiene el codigo necesario para la creacion de la base de datos correspondiente a este sistema.
 
--- Creacion de base de datos
+-- Creacion de la base de datos
 CREATE DATABASE bancodb;
 
 -- Creacion de tabla Cliente
@@ -11,7 +11,7 @@ CREATE TABLE Cliente (
     telefono VARCHAR(20)
 );
 
--- Creacion de tabla Usuario con referencia a Cliente
+-- Creacion de tabla Usuario con referencia a Cliente.id
 CREATE TABLE Usuario (
     id SERIAL PRIMARY KEY,
     username VARCHAR(50) NOT NULL,
@@ -22,7 +22,7 @@ CREATE TABLE Usuario (
     FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE
 );
 
--- Creacion de tabla CuentaBancaria con referencia a Cliente
+-- Creacion de tabla CuentaBancaria con referencia a Cliente.id
 CREATE TABLE CuentaBancaria (
     numerocuenta SERIAL PRIMARY KEY,
     saldo NUMERIC(15, 2) NOT NULL,
@@ -30,7 +30,7 @@ CREATE TABLE CuentaBancaria (
     FOREIGN KEY (cliente_id) REFERENCES Cliente(id) ON DELETE CASCADE
 );
 
--- Creacion de tabla Transaccion con referencia a CuentaBancaria
+-- Creacion de tabla Transaccion con referencia a CuentaBancaria.numerocuenta
 CREATE TABLE Transaccion (
     id SERIAL PRIMARY KEY,
     fecha TIMESTAMP NOT NULL,
