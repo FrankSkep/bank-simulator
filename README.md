@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Simulador de sistema bancario desarrollado en Java que proporciona funcionalidades completas para la gestión de cuentas bancarias y transacciones. Incluye autenticación segura, hashing de contraseñas, y una gestión de roles diferenciada para administradores y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la accesibilidad a la base de datos.
+Simulador de sistema bancario desarrollado en Java que proporciona funcionalidades completas para la gestión de clientes, cuentas bancarias y transacciones. Incluye autenticación segura con hashing de contraseñas, y una gestión de roles diferenciada para administradores y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la accesibilidad a la base de datos.
 
 ## Funcionalidades
 
