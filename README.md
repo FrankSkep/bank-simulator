@@ -2,7 +2,7 @@
 
 ## Descripción
 
-Simulacion de sistema bancario desarrollado en Java que proporciona funcionalidades completas para la gestión de cuentas bancarias y transacciones. Incluye autenticación segura, hashing de contraseñas, y una gestión de roles diferenciada para administradores y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la accesibilidad a la base de datos.
+Simulador de sistema bancario desarrollado en Java que proporciona funcionalidades completas para la gestión de cuentas bancarias y transacciones. Incluye autenticación segura, hashing de contraseñas, y una gestión de roles diferenciada para administradores y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la accesibilidad a la base de datos.
 
 ## Funcionalidades
 
@@ -37,6 +37,7 @@ Simulacion de sistema bancario desarrollado en Java que proporciona funcionalida
 - **Interfaz gráfica**: Diseñada con Swing para ofrecer una experiencia de usuario intuitiva y amigable.
 
 ### Base de Datos
+A continuación se muestra el diagrama entidad-relación (ERD) que representa la estructura de la base de datos:
 ![Diagrama entidad relacion](assets/images/diagrama_ER.png)
 
 - **Relaciones**:
@@ -47,8 +48,9 @@ Simulacion de sistema bancario desarrollado en Java que proporciona funcionalida
 ## Requisitos
 
 - **Java JDK 17 o superior**
+- **Maven 3.9.8**
 - **PostgreSQL 16.3 o superior**
 - **Librerías de terceros**:
-  - HikariCP
+  - HikariCP 5.1.0
   - JDBC
   - Swing
