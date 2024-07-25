@@ -101,7 +101,7 @@ public final class Dashboard extends javax.swing.JFrame {
         });
 
         consultaBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        consultaBtn.setText("Tus cuentas y saldo");
+        consultaBtn.setText("Mis cuentas y saldo");
         consultaBtn.setPreferredSize(new java.awt.Dimension(118, 27));
         consultaBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -167,7 +167,7 @@ public final class Dashboard extends javax.swing.JFrame {
         });
 
         histTransaccionesBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        histTransaccionesBtn.setText("Tus transacciones");
+        histTransaccionesBtn.setText("Mis transacciones");
         histTransaccionesBtn.setPreferredSize(new java.awt.Dimension(11, 27));
         histTransaccionesBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
