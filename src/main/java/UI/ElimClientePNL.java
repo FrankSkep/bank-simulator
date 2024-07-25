@@ -13,8 +13,12 @@ import javax.swing.table.TableRowSorter;
 
 public class ElimClientePNL extends javax.swing.JPanel {
 
+    private ClienteDAO db;
+
     public ElimClientePNL() {
         initComponents();
+
+        db = new ClienteDAO();
 
         // Agrega listener para seleccionar filas de la tabla
         Tools.mouseListenerTable(tablaClientes, idTF, nombreTF, correoTF, telTF);
@@ -244,8 +248,6 @@ public class ElimClientePNL extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Por favor, seleccione un elemento de la tabla", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
-
-        ClienteDAO db = new ClienteDAO();
 
         int res = JOptionPane.showConfirmDialog(null, "¿Seguro que desea eliminar?", "Confirmacion requerida", JOptionPane.YES_NO_OPTION, QUESTION_MESSAGE);
 

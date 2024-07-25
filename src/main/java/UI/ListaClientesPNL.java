@@ -14,8 +14,12 @@ import javax.swing.table.TableRowSorter;
 
 public class ListaClientesPNL extends javax.swing.JPanel {
 
+    private ClienteDAO db;
+
     public ListaClientesPNL() {
         initComponents();
+
+        db = new ClienteDAO();
 
         // Agrega listener para seleccionar filas de la tabla
         Tools.mouseListenerTable(tablaClientes, idTF, nombreTF, correoTF, telTF);
@@ -31,7 +35,7 @@ public class ListaClientesPNL extends javax.swing.JPanel {
         // Crear un renderizador para centrar el texto del encabezado
         DefaultTableCellRenderer renderer = (DefaultTableCellRenderer) header.getDefaultRenderer();
         renderer.setHorizontalAlignment(JLabel.CENTER);
-        
+
         // Crear el sorter y aplicarlo a la tabla
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>((DefaultTableModel) tablaClientes.getModel());
         tablaClientes.setRowSorter(sorter);
@@ -263,9 +267,8 @@ public class ListaClientesPNL extends javax.swing.JPanel {
         if (res == JOptionPane.YES_OPTION) {
 
             // Crea un objeto de cliente con los nuevos datos y lo sobreescribe en la db
-            Cliente cliente = new Cliente(nombreTF.getText(), correoTF.getText(), telTF.getText());
+            Cliente cliente = new Cliente(nombre, correo, telefono);
             cliente.setID(Integer.parseInt(id));
-            ClienteDAO db = new ClienteDAO();
 
             if (db.actualizarCliente(cliente, Integer.parseInt(id))) {
                 JOptionPane.showMessageDialog(null, "Se ha actualizado el cliente con ID " + id, "Operacion exitosa", JOptionPane.INFORMATION_MESSAGE);

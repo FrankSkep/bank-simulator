@@ -61,6 +61,7 @@ public final class Dashboard extends javax.swing.JFrame {
         inicio_btn = new javax.swing.JButton();
         volverBtn = new javax.swing.JButton();
         aggAdminBtn = new javax.swing.JButton();
+        miInfoBtn = new javax.swing.JButton();
         contenidoPanel = new javax.swing.JPanel();
 
         jMenu1.setText("jMenu1");
@@ -199,13 +200,22 @@ public final class Dashboard extends javax.swing.JFrame {
             }
         });
 
+        miInfoBtn.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        miInfoBtn.setText("Mi informacion");
+        miInfoBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miInfoBtnActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
         menuPanel.setLayout(menuPanelLayout);
         menuPanelLayout.setHorizontalGroup(
             menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuPanelLayout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPanelLayout.createSequentialGroup()
                 .addContainerGap(8, Short.MAX_VALUE)
-                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(miInfoBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(aggAdminBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                         .addComponent(buscarClienteBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
@@ -219,7 +229,7 @@ public final class Dashboard extends javax.swing.JFrame {
                         .addComponent(abrirCuentaBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                         .addComponent(transBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE)
                         .addComponent(cerrarSesionBtn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
-                    .addComponent(inicio_btn, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(inicio_btn, javax.swing.GroupLayout.DEFAULT_SIZE, 194, Short.MAX_VALUE))
                 .addContainerGap())
         );
         menuPanelLayout.setVerticalGroup(
@@ -247,6 +257,8 @@ public final class Dashboard extends javax.swing.JFrame {
                 .addComponent(abrirCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(cerrarCuentaBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(miInfoBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cerrarSesionBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -308,6 +320,7 @@ public final class Dashboard extends javax.swing.JFrame {
                 volverBtn.setVisible(true);
                 inicio_btn.setVisible(false);
                 aggAdminBtn.setVisible(true);
+                miInfoBtn.setVisible(false);
             }
             case USER -> {
                 abrirCuentaBtn.setVisible(true);
@@ -320,6 +333,7 @@ public final class Dashboard extends javax.swing.JFrame {
                 cerrarSesionBtn.setVisible(true);
                 volverBtn.setVisible(true);
                 inicio_btn.setVisible(false);
+                miInfoBtn.setVisible(true);
             }
             case NOTHING -> {
                 elimClienteBtn.setVisible(false);
@@ -335,6 +349,7 @@ public final class Dashboard extends javax.swing.JFrame {
                 inicio_btn.setVisible(false);
                 volverBtn.setVisible(false);
                 aggAdminBtn.setVisible(false);
+                miInfoBtn.setVisible(false);
             }
         }
     }
@@ -408,6 +423,11 @@ public final class Dashboard extends javax.swing.JFrame {
         Tools.showPanel(p, contenidoPanel);
     }//GEN-LAST:event_aggAdminBtnActionPerformed
 
+    private void miInfoBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miInfoBtnActionPerformed
+        MiInformacion p = new MiInformacion();
+        Tools.showPanel(p, contenidoPanel);
+    }//GEN-LAST:event_miInfoBtnActionPerformed
+
     // Boton para volver atras
     public void setVolverInicioBtn(boolean estado) {
         inicio_btn.setVisible(estado);
@@ -457,6 +477,7 @@ public final class Dashboard extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JPanel menuPanel;
+    private javax.swing.JButton miInfoBtn;
     private javax.swing.JButton retirarBtn;
     private javax.swing.JButton transBtn;
     private javax.swing.JButton volverBtn;

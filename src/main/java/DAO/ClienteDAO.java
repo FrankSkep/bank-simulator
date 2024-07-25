@@ -46,7 +46,7 @@ public class ClienteDAO {
             st.setString(1, cliente.getNombre());
             st.setString(2, cliente.getCorreo());
             st.setString(3, cliente.getTelefono());
-            st.setInt(4, clienteId);
+            st.setInt(4, cliente.getID());
 
             int rowsAffected = st.executeUpdate();
 
@@ -55,6 +55,32 @@ public class ClienteDAO {
             JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
         }
         return false;
+    }
+
+    // Metodo para obtener un cliente por su id
+    public Cliente obtenerCliente(int clienteId) {
+        String query = "SELECT * FROM Cliente WHERE id = ?";
+        Cliente cliente = null;
+
+        try (Connection conexion = DatabaseConnection.getConnection(); PreparedStatement st = conexion.prepareStatement(query)) {
+
+            st.setInt(1, clienteId);
+
+            try (ResultSet resultSet = st.executeQuery()) {
+                if (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String nombre = resultSet.getString("nombre");
+                    String correo = resultSet.getString("correo");
+                    String telefono = resultSet.getString("telefono");
+
+                    cliente = new Cliente(nombre, correo, telefono);
+                    cliente.setID(id);
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Detalles : " + e.toString(), "Error", JOptionPane.WARNING_MESSAGE);
+        }
+        return cliente;
     }
 
     // Método para eliminar un cliente, su usuario, cuentas bancarias y transacciones asociadas
