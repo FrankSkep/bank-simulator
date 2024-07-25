@@ -18,10 +18,16 @@ public class MiInformacion extends javax.swing.JPanel {
         initComponents();
 
         usuario = SesionUsuario.getInstance().getUsuario();
+        System.out.println("ID: " + usuario.getId());
+        System.out.println("Username: " + usuario.getUsername());
+        System.out.println("Contra: " + usuario.getPassword());
+        System.out.println("cliente id: " + usuario.getClienteId());
+        System.out.println("Role: " + usuario.getRole());
+
         db = new ClienteDAO();
 
         // Mostrar los datos no modificables
-        idC = usuario.getId();
+        idC = usuario.getClienteId();
         idTF.setText("" + idC);
         userTF.setText(usuario.getUsername());
 

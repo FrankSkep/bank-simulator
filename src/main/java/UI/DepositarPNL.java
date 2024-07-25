@@ -13,7 +13,6 @@ public class DepositarPNL extends javax.swing.JPanel {
 
         // Obtener id del cliente
         idCliente = SesionUsuario.getInstance().getUsuario().getClienteId();
-        Tools.setImageLabel(imgLBL, "src/main/resources/depositar.png");
     }
 
     @SuppressWarnings("unchecked")

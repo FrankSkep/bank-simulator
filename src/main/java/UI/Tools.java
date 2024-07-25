@@ -3,6 +3,7 @@ package UI;
 import DAO.ClienteDAO;
 import DAO.CuentaBancariaDAO;
 import DAO.TransaccionDAO;
+import Entidades.CuentaBancaria;
 import Entidades.Transaccion;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -79,14 +80,16 @@ public class Tools {
     public static void entablarClientes(JTable tabla) {
         actualizarTabla(tabla, clienteDAO.obtenerTodosLosClientes(),
                 cliente -> new Object[]{cliente.getID(), cliente.getNombre(), cliente.getCorreo(), cliente.getTelefono()},
-                new Object[]{"No hay clientes", "No hay clientes", "No hay clientes", "No hay clientes"});
+                "No hay clientes.");
     }
 
     // Llenar tabla de cuentas bancarias
     public static void entablarCuentas(JTable tabla, int idCliente) {
-        actualizarTabla(tabla, cuentaBancariaDAO.obtenerCuentasCliente(idCliente),
+        List<CuentaBancaria> cuentasList = cuentaBancariaDAO.obtenerCuentasCliente(idCliente);
+
+        actualizarTabla(tabla, cuentasList,
                 cuenta -> new Object[]{(Integer) cuenta.getNumeroCuenta(), (Double) cuenta.getSaldo()},
-                new Object[]{"No hay cuentas", "No hay cuentas"});
+                "Aun no tienes cuentas bancarias.");
     }
 
     // Llenar tabla de transacciones
@@ -96,16 +99,16 @@ public class Tools {
 
         DateTimeFormatter formato = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm");
         actualizarTabla(tabla, transaccionesList,
-                t -> new Object[]{t.getFecha().format(formato), t.getTipo(), (double) t.getMonto(), t.getDescripcion(), (int)t.getNumCuenta()},
-                new Object[]{"No hay transacciones"});
+                t -> new Object[]{t.getFecha().format(formato), t.getTipo(), (double) t.getMonto(), t.getDescripcion(), (int) t.getNumCuenta()},
+                "Aun no tienes transacciones.");
     }
 
-    private static <T> void actualizarTabla(JTable tabla, List<T> elementos, java.util.function.Function<T, Object[]> mapper, Object[] filaVacia) {
+    private static <T> void actualizarTabla(JTable tabla, List<T> elementos, java.util.function.Function<T, Object[]> mapper, String mensaje) {
         DefaultTableModel model = (DefaultTableModel) tabla.getModel();
         model.setRowCount(0);
 
         if (elementos.isEmpty()) {
-            model.addRow(filaVacia);
+            JOptionPane.showInternalMessageDialog(null, mensaje);
         } else {
             for (T elemento : elementos) {
                 model.addRow(mapper.apply(elemento));

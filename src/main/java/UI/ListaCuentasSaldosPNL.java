@@ -80,6 +80,10 @@ public class ListaCuentasSaldosPNL extends javax.swing.JPanel {
         tablaCuentas.setShowVerticalLines(true);
         tablaCuentas.getTableHeader().setReorderingAllowed(false);
         jScrollPane1.setViewportView(tablaCuentas);
+        if (tablaCuentas.getColumnModel().getColumnCount() > 0) {
+            tablaCuentas.getColumnModel().getColumn(0).setResizable(false);
+            tablaCuentas.getColumnModel().getColumn(1).setResizable(false);
+        }
 
         jPanel2.setBackground(new java.awt.Color(51, 153, 255));
 

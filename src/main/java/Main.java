@@ -1,4 +1,4 @@
-package Banco;
+
 
 import UI.Dashboard;
 import javax.swing.SwingUtilities;

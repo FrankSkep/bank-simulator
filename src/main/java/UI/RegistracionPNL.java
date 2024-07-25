@@ -193,7 +193,7 @@ public class RegistracionPNL extends javax.swing.JPanel {
             return;
         }
 
-        if (!Tools.esContraseniaValida(correo)) {
+        if (!Tools.esContraseniaValida(contrasenia)) {
             JOptionPane.showMessageDialog(null, "Ingresa una contraseña valida, debe tener mas de 6 caracteres, sin espacios", "Advertencia", JOptionPane.WARNING_MESSAGE);
             return;
         }
