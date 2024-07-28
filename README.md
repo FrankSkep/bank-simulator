@@ -3,8 +3,8 @@
 ## Descripción
 
 Sistema de Gestión de banco, desarrollado en Java.
-Proporciona funcionalidades completas para la gestión de clientes,
- cuentas bancarias y transacciones. Incluye autenticación segura con
+Cuenta con funcionalidades completas para la gestión de clientes,
+ cuentas bancarias y transacciones. Incluye autenticación segura,
  hashing de contraseñas, y una gestión de roles diferenciada para administradores
  y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la
  accesibilidad a la base de datos.
