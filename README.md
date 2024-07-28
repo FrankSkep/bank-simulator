@@ -9,6 +9,8 @@ Proporciona funcionalidades completas para la gestión de clientes,
  y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la
  accesibilidad a la base de datos.
 
+### [Pantallas de la aplicacion](https://github.com/FrankSkep/Bank_System/blob/main/assets/views.md)
+
 ## Funcionalidades
 
 ### Autenticación
