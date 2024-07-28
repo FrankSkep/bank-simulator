@@ -1,7 +1,16 @@
 # Screenshots
 
-Aqui hay algunas capturas de pantalla de la aplicacion:
-
-1. ![Screenshot 1](/assets/images/screenshot1.png)
-2. ![Screenshot 2](/assets/images/screenshot2.png)
-3. ![Screenshot 3](/assets/images/screenshot3.png)
+![Screenshot 1](/assets/images/ss1.png)
+![Screenshot 1](/assets/images/ss2.png)
+![Screenshot 1](/assets/images/ss3.png)
+![Screenshot 1](/assets/images/ss4.png)
+![Screenshot 1](/assets/images/ss5.png)
+![Screenshot 1](/assets/images/ss6.png)
+![Screenshot 1](/assets/images/ss7.png)
+![Screenshot 1](/assets/images/ss8.png)
+![Screenshot 1](/assets/images/ss9.png)
+![Screenshot 1](/assets/images/ss10.png)
+![Screenshot 1](/assets/images/ss11.png)
+![Screenshot 1](/assets/images/ss12.png)
+![Screenshot 1](/assets/images/ss13.png)
+![Screenshot 1](/assets/images/ss14.png)
