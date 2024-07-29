@@ -1,4 +1,4 @@
--- Este archivo contiene el codigo necesario para la creacion de la base de datos correspondiente a este sistema.
+-- Este archivo contiene el codigo necesario para la creacion de las tablas de la base de datos correspondiente a este sistema.
 
 -- Creacion de tabla Cliente
 CREATE TABLE Cliente (
