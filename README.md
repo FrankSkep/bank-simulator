@@ -58,3 +58,9 @@ A continuación se muestra el diagrama entidad-relación (ERD) que representa la
   - HikariCP 5.1.0
   - JDBC
   - Swing
+
+## Licencia
+
+Este proyecto, **bank-simulator**, tiene la licencia [GNU Affero General Public License v3.0] (LICENCIA).
+
+© 2024 FrankSkep. Usted es libre de utilizar, modificar y distribuir este software según los términos de GPL-3.0. Para obtener más detalles, consulte el archivo completo [LICENCIA](LICENSE).
