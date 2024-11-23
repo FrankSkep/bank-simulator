@@ -4,7 +4,7 @@
 
 Sistema de Gestión de banco, desarrollado en Java. Cuenta con funcionalidades para la gestión de clientes, cuentas bancarias y transacciones. Incluye autenticación segura, hashing de contraseñas, y una gestión de roles diferenciada para administradores y usuarios. El sistema utiliza HikariCP para optimizar el rendimiento y la accesibilidad a la base de datos.
 
-* ### [Pantallas de la aplicacion](https://github.com/FrankSkep/Bank_System/blob/main/assets/views.md)
+* ### [Screenshots](https://github.com/FrankSkep/Bank_System/blob/main/assets/views.md)
 
 ## Funcionalidades
 
